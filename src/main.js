@@ -6,6 +6,8 @@ import router from './router'
 import BootstrapVue from 'bootstrap-vue'
 import 'bootstrap/dist/css/bootstrap.css'
 import 'bootstrap-vue/dist/bootstrap-vue.css'
+import './assets/scss/layout.min.scss'
+import './assets/scss/nav-bar.scss'
 //import css from 'nav-bar'
 
 Vue.use(BootstrapVue)

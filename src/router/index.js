@@ -2,6 +2,9 @@ import Vue from 'vue'
 import Router from 'vue-router'
 import Hello from '@/components/Hello'
 import PostsManager from '@/components/PostsManager'
+import Technologies from '@/components/Technologies'
+import CtfEvents from '@/components/CtfEvents'
+import InfrastructureCreator from '@/components/InfrastructureCreator'
 import Auth from '@okta/okta-vue'
 
 Vue.use(Auth, {
@@ -32,6 +35,24 @@ let router = new Router({
       meta: {
         requiresAuth: true
       }
+    },
+    {
+      path: '/technologies',
+        name: 'Technologies',
+        component: Technologies,
+        
+    },
+    {
+        path: '/ctf-events',
+        name: 'CtfEvents',
+        component: CtfEvents,
+        
+    },
+    {
+        path: '/infrastructure-creator',
+        name: 'InfrastructureCreator',
+        component: InfrastructureCreator,
+        
     }
   ]
 })

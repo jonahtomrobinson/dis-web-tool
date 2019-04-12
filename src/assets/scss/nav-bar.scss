@@ -1,0 +1,29 @@
+/*------------------------------------*\
+  #NAVBAR
+\*------------------------------------*/
+
+@import url('https://fonts.googleapis.com/css?family=Roboto');
+
+.auth-nav{
+    
+}
+
+.navbar{
+  /*font-weight: bold !important;*/
+  font-family: 'Roboto', sans-serif;
+  
+}
+
+
+#nav_collapse{
+    align-content: center;
+}
+
+.navbar a:hover{
+  color: #E43230 !important;
+}
+
+.navbar a, span
+{
+  color: white !important;
+}

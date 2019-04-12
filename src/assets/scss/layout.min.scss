@@ -1,0 +1,72 @@
+/*------------------------------------*\
+  #GENERAL-LAYOUT
+\*------------------------------------*/
+
+@import url('https://fonts.googleapis.com/css?family=Roboto');
+@import url('https://fonts.googleapis.com/css?family=Lato');
+
+body, .body {
+  font-family:'Lato', sans-serif;
+  background-color: #fff;
+}
+
+.cntr {
+  text-align: center;
+}
+
+.delb, .noconfirm {
+  color:red;
+}
+
+.actb,.admb,.editb,.delb,.devb,.reqb,.rdob,.disb,.keyb,.plusb,.minusb,.historyb {
+  cursor: pointer;
+}
+
+.fadis{
+  color:#aaa;
+}
+
+/*------------------------------------*\
+  #CUSTOM-BOOTSTRAP
+\*------------------------------------*/
+
+.bg-yellow{
+  background-color: #E43230 !important;
+}
+
+.bg-dark{
+  background-color: #353535 !important;
+}
+
+.border-yellow{
+  border: 1px solid !important;
+  border-color: #E43230 !important;
+}
+
+.border-dark{
+  border: 1px solid !important;
+  border-color: #353535 !important;
+}
+
+/*------------------------------------*\
+  #BUTTONS
+\*------------------------------------*/
+
+.btn-primary{
+  background-color: #E43230 !important;
+  border: 1px solid #E43230 !important;
+  color: #353535 !important;
+  font-family: 'Roboto', sans-serif !important;
+  font-weight: bold !important;
+}
+
+.btn-primary:hover{
+  border: 1px solid #353535 !important;
+}
+
+.btn-primary:focus{
+  background-color: #353535 !important;
+  border: 1px solid #E43230 !important;
+  color: #E43230 !important;
+  outline: #E43230 !important;
+}

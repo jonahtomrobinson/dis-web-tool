@@ -13,6 +13,7 @@ const oktaJwtVerifier = new OktaJwtVerifier({
 let app = express()
 app.use(cors())
 app.use(bodyParser.json())
+app.use(express.static(__dirname + '/assets/css'));
 
 // verify JWT token middleware
 app.use((req, res, next) => {
