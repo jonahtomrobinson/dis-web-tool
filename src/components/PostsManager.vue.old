@@ -61,7 +61,7 @@ export default {
   methods: {
     async refreshPosts () {
       this.loading = true
-      this.posts = await api.getManyREST('posts')
+      this.posts = await api.getPosts()
       this.loading = false
     },
     async populatePostToEdit (post) {
@@ -69,9 +69,9 @@ export default {
     },
     async savePost () {
       if (this.model.id) {
-        await api.updateREST('posts', this.model.id, this.model)
+        await api.updatePost(this.model.id, this.model)
       } else {
-        await api.createREST('posts', this.model)
+        await api.createPost(this.model)
       }
       this.model = {} // reset form
       await this.refreshPosts()
@@ -82,7 +82,7 @@ export default {
         if (this.model.id === id) {
           this.model = {}
         }
-        await api.deleteREST('posts', id)
+        await api.deletePost(id)
         await this.refreshPosts()
       }
     }

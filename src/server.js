@@ -37,7 +37,7 @@ app.use((req, res, next) => {
 // For ease of this tutorial, we are going to use SQLite to limit dependencies
 let database = new Sequelize({
   dialect: 'sqlite',
-  storage: './test.sqlite'
+  storage: './database.sqlite'
 })
 
 // Define our Post model
@@ -47,6 +47,16 @@ let Post = database.define('posts', {
   body: Sequelize.TEXT
 })
 
+// Define our Technology model
+// id, createdAt, and updatedAt are added by sequelize automatically
+let Tech = database.define('technology', {
+    logo: Sequelize.BLOB,
+    name: Sequelize.STRING,
+    cost: Sequelize.STRING,
+    purpose: Sequelize.STRING,
+    description: Sequelize.STRING
+  })
+
 // Initialize epilogue
 epilogue.initialize({
   app: app,
@@ -54,14 +64,20 @@ epilogue.initialize({
 })
 
 // Create the dynamic REST resource for our Post model
-let userResource = epilogue.resource({
+let postResource = epilogue.resource({
   model: Post,
   endpoints: ['/posts', '/posts/:id']
 })
 
+// Create the dynamic REST resource for our Tech model
+let techResource = epilogue.resource({
+    model: Tech,
+    endpoints: ['/techs', '/techs/:id']
+  })
+
 // Resets the database and launches the express app on :8081
 database
-  //.sync({ force: true })
+  .sync({ force: true })
     app.listen(8081, () => {
     console.log('listening to port localhost:8081')
     

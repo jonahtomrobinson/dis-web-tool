@@ -5,6 +5,9 @@ import PostsManager from '@/components/PostsManager'
 import Technologies from '@/components/Technologies'
 import CtfEvents from '@/components/CtfEvents'
 import InfrastructureCreator from '@/components/InfrastructureCreator'
+import AdminTechnologies from '@/components/AdminTechnologies'
+import AdminCtfEvents from '@/components/AdminCtfEvents'
+import Admin from '@/components/Admin'
 import Auth from '@okta/okta-vue'
 
 Vue.use(Auth, {
@@ -39,20 +42,41 @@ let router = new Router({
     {
       path: '/technologies',
         name: 'Technologies',
-        component: Technologies,
-        
+        component: Technologies 
     },
     {
         path: '/ctf-events',
         name: 'CtfEvents',
-        component: CtfEvents,
-        
+        component: CtfEvents
     },
     {
         path: '/infrastructure-creator',
         name: 'InfrastructureCreator',
-        component: InfrastructureCreator,
-        
+        component: InfrastructureCreator
+    },
+    {
+        path: '/admin',
+        name: 'Admin',
+        component: Admin,
+        meta: {
+            requiresAuth: true
+        }
+    },
+    {
+        path: '/admin/technologies',
+        name: 'AdminTechnologies',
+        component: AdminTechnologies,
+        meta: {
+            requiresAuth: true
+        }
+    },
+    {
+        path: '/admin/ctf-events',
+        name: 'AdminCtfEvents',
+        component: AdminCtfEvents,
+        meta: {
+            requiresAuth: true
+        }
     }
   ]
 })
