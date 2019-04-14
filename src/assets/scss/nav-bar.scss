@@ -2,28 +2,32 @@
   #NAVBAR
 \*------------------------------------*/
 
-@import url('https://fonts.googleapis.com/css?family=Roboto');
-
-.auth-nav{
-    
-}
+@import url('https://fonts.googleapis.com/css?family=Varela+Round');
 
 .navbar{
   /*font-weight: bold !important;*/
-  font-family: 'Roboto', sans-serif;
-  
+  font-family: 'Varela Round', sans-serif;
 }
 
+.navbar-nav{
+    align-content: center !important;
+    float:left !important;
+}
 
-#nav_collapse{
-    align-content: center;
+.navbar-nav .nav-link {
+  color: black !important;
 }
 
 .navbar a:hover{
   color: #E43230 !important;
+  border-bottom: 1px solid !important;
+  border-color: #E43230 !important;
 }
 
 .navbar a, span
 {
   color: white !important;
+  border-bottom: 1px solid !important;
+  border-color: white !important;
 }
+

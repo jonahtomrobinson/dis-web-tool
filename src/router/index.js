@@ -7,6 +7,7 @@ import CtfEvents from '@/components/CtfEvents'
 import InfrastructureCreator from '@/components/InfrastructureCreator'
 import AdminTechnologies from '@/components/AdminTechnologies'
 import AdminCtfEvents from '@/components/AdminCtfEvents'
+import AdminPurposes from '@/components/AdminPurposes'
 import Admin from '@/components/Admin'
 import Auth from '@okta/okta-vue'
 
@@ -77,7 +78,15 @@ let router = new Router({
         meta: {
             requiresAuth: true
         }
-    }
+    },
+    {
+        path: '/admin/purposes',
+        name: 'AdminPurposes',
+        component: AdminPurposes,
+        meta: {
+            requiresAuth: true
+        }
+    },
   ]
 })
 

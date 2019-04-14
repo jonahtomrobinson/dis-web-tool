@@ -1,38 +1,36 @@
 
 <template>
-  <div class="container-fluid mt-4">
-    <!--<div class="mt-4 mb-4">
-        <h1 class="h1">Admin</h1>
-        <b-button to="/admin">Admin</b-button>
-        <b-button to="/admin/technologies">Techs</b-button>
-    </div>-->
-        <h1 class="h1">Admin</h1>
-
+  <div>
         <div id="body">
-                    <div v-for="component in componentsArray" :key="component.index">
-                        
-                    </div>
-                    <b-button @click="swapComponent(0)">Technologies</b-button>
-                    <b-button @click="swapComponent(1)">CTF Events</b-button>
-                <div :is="currentComponent"></div>
-            </div>
+            <b-button class="mr-1" @click="swapComponent(0)">Technologies</b-button>
+            <b-button class="mr-1" @click="swapComponent(1)">CTF Events</b-button>
+            <b-button class="mr-1" @click="swapComponent(3)">Assign Techs / Events</b-button>
+            <b-button class="mr-1" @click="swapComponent(4)">Challenge Categories</b-button>
+            <b-button class="mr-1" @click="swapComponent(5)">Purposes</b-button>
+            <div :is="currentComponent"></div>
+        </div>
   </div>
 </template>
 
 <script>
 import AdminTechnologies from '@/components/AdminTechnologies'
 import AdminCtfEvents from '@/components/AdminCtfEvents'
+import AdminPurposes from '@/components/AdminPurposes'
 export default {
   name: 'body',
   data () {
     return {
         currentComponent: null,
-        componentsArray: ['AdminTechnologies', 'AdminCtfEvents']
+        componentsArray: ['AdminTechnologies', 'AdminCtfEvents', 'AdminAssign', 'AdminCategories', 'AdminPurposes']
     }
+  },
+  async created () {
+    this.swapComponent(0)
   },
   components: {
         AdminTechnologies,
         AdminCtfEvents,
+        AdminPurposes
     },
   methods: {
     swapComponent: function(index)

@@ -21,7 +21,7 @@ export default {
       return req.data
     })
   },
-  getPosts () {
+  /*getPosts () {
     return this.execute('get', '/posts')
   },
   getPost (id) {
@@ -35,7 +35,7 @@ export default {
   },
   deletePost (id) {
     return this.execute('delete', `/posts/${id}`)
-  },
+  },*/
 
   getManyREST (item) {
     return this.execute('get', '/'+item)

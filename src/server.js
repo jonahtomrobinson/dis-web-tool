@@ -5,6 +5,7 @@ const Sequelize = require('sequelize')
 const epilogue = require('epilogue')
 const OktaJwtVerifier = require('@okta/jwt-verifier')
 
+// Okta JWTVerifier credientials
 const oktaJwtVerifier = new OktaJwtVerifier({
   clientId: '0oagr3dglwp1CJEYp356',
   issuer: 'https://dev-715478.okta.com/oauth2/default'
@@ -34,46 +35,90 @@ app.use((req, res, next) => {
     .catch(next) // jwt did not verify!
 })
 
-// For ease of this tutorial, we are going to use SQLite to limit dependencies
+// Setup database.
 let database = new Sequelize({
   dialect: 'sqlite',
   storage: './database.sqlite'
 })
 
+
+/*------------------------------------*\
+  Defining models
+  id, createdAt, and updatedAt are added by sequelize automatically
+\*------------------------------------*/
+
 // Define our Post model
-// id, createdAt, and updatedAt are added by sequelize automatically
 let Post = database.define('posts', {
   title: Sequelize.STRING,
   body: Sequelize.TEXT
 })
 
+let Purpose = database.define('Purpose', {
+    text: Sequelize.STRING,
+  })
+
+
 // Define our Technology model
-// id, createdAt, and updatedAt are added by sequelize automatically
-let Tech = database.define('technology', {
+let Tech = database.define('Technology', {
     logo: Sequelize.BLOB,
     name: Sequelize.STRING,
     cost: Sequelize.STRING,
-    purpose: Sequelize.STRING,
+    /*purpose: {
+        type: Sequelize.STRING,
+        references: 'Purposes',
+        referencesKey: 'id'
+    },*/
     description: Sequelize.STRING
+})
+
+Purpose.hasOne(Tech, { foreignKey: 'purpose_id' , foreignKeyConstraint: true})
+
+// Define our Event model
+let Event = database.define('Event', {
+    logo: Sequelize.BLOB,
+    name: Sequelize.STRING,
+    date: Sequelize.DATEONLY,
+    num_of_users: Sequelize.INTEGER.UNSIGNED,
+    hardware_info: Sequelize.STRING,
+    additional_info: Sequelize.STRING
   })
+
+
+  /*------------------------------------*\
+  Initialising epilogue 
+  Create the dynamic REST resources for models
+\*------------------------------------*/
 
 // Initialize epilogue
 epilogue.initialize({
   app: app,
   sequelize: database
-})
+  })
 
-// Create the dynamic REST resource for our Post model
+// Post model
 let postResource = epilogue.resource({
   model: Post,
   endpoints: ['/posts', '/posts/:id']
-})
+  })
 
-// Create the dynamic REST resource for our Tech model
+// Tech model
 let techResource = epilogue.resource({
     model: Tech,
     endpoints: ['/techs', '/techs/:id']
   })
+
+// Event model
+let eventResource = epilogue.resource({
+    model: Event,
+    endpoints: ['/events', '/events/:id']
+  })
+
+// Purpose model
+let purposeResource = epilogue.resource({
+    model: Purpose,
+    endpoints: ['/purposes', '/purposes/:id']
+  })
+
 
 // Resets the database and launches the express app on :8081
 database
@@ -82,3 +127,15 @@ database
     console.log('listening to port localhost:8081')
     
   })
+
+  /*
+  database
+  .sync({ force: true })
+  .then(function() {
+    server.listen(function() {
+      var host = server.address().address,
+          port = server.address().port;
+
+      console.log('listening at http://%s:%s', host, port);
+    });
+  });*/
