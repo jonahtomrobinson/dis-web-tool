@@ -6,7 +6,10 @@ import router from './router'
 import BootstrapVue from 'bootstrap-vue'
 import 'bootstrap/dist/css/bootstrap.css'
 import 'bootstrap-vue/dist/bootstrap-vue.css'
-//import css from 'nav-bar'
+
+// Import custom CSS
+import './assets/scss/layout.min.scss'
+import './assets/scss/nav-bar.scss'
 
 Vue.use(BootstrapVue)
 Vue.config.productionTip = false
