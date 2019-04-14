@@ -59,13 +59,15 @@
               <b-form-input type="text" v-model="model.cost"></b-form-input>
             </b-form-group>
             <b-form-group label="Purpose">
-              <b-form-textarea v-model="model.purpose"></b-form-textarea>
+                <b-form-select type="integer" v-model="model.purpose_id">
+                    <option v-for="purpose in purposes" :key="purpose.id" :value="purpose.id">{{ purpose.text }}</option>
+                </b-form-select>
             </b-form-group>
             <b-form-group label="Description">
               <b-form-textarea rows="3" v-model="model.description"></b-form-textarea>
             </b-form-group>
             <div>
-              <b-btn type="submit" variant="success">Save Technology</b-btn>
+              <b-btn type="submit" variant="success">Save</b-btn>
             </div>
           </form>
         </b-card>
@@ -81,17 +83,35 @@ export default {
     return {
       loading: false,
       techs: [],
+      purposes: [],
       model: {}
     }
   },
   async created () {
+    this.refreshPurposes()
     this.refreshTechs()
   },
   methods: {
     async refreshTechs () {
-      this.loading = true
-      this.techs = await api.getManyREST("techs")
-      this.loading = false
+        this.loading = true
+        this.techs = await api.getManyREST("techs")
+
+        // Update purposes values from id.
+        for (var i = 0; i < this.techs.length; i++){
+            for (var p = 0; p < this.purposes.length; p++){
+                if (this.techs[i].purpose_id == this.purposes[p].id){
+                    this.techs[i].purpose = this.purposes[p].text
+                }
+            }
+            if (this.techs[i].purpose == null){
+                this.techs[i].purpose = "-"
+            }
+         }
+     
+     this.loading = false
+    },
+    async refreshPurposes(){
+        this.purposes = await api.getManyREST("purposes");
     },
     async populateTechToEdit (tech) {
       this.model = Object.assign({}, tech)
@@ -106,7 +126,7 @@ export default {
             // Check new technology has been added to the database.
             this.techs = await api.getManyREST("techs")
             if (this.techs[this.techs.length-1].name == this.model.name){
-                alert("Technology added: "+this.model.name);
+                alert("Technology added: "+this.model.name+ " purpose id: "+(typeof this.model.purpose_id));
             }
             else{
                 alert("Failed to add: "+this.model.name);

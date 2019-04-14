@@ -67,11 +67,14 @@
             <b-form-group label="Hardware info">
               <b-form-textarea rows="2" v-model="model.hardware_info"></b-form-textarea>
             </b-form-group>
+            <b-form-group label="Hardware info">
+              <b-form-textarea rows="2" v-model="model.hardware_info"></b-form-textarea>
+            </b-form-group>
             <b-form-group label="Additional info">
               <b-form-textarea rows="2" v-model="model.additional_info"></b-form-textarea>
             </b-form-group>
             <div>
-              <b-btn type="submit" variant="success">Save CTF Event</b-btn>
+              <b-btn type="submit" variant="success">Save</b-btn>
             </div>
           </form>
         </b-card>

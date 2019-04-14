@@ -4,9 +4,9 @@
         <div id="body">
             <b-button class="mr-1" @click="swapComponent(0)">Technologies</b-button>
             <b-button class="mr-1" @click="swapComponent(1)">CTF Events</b-button>
-            <b-button class="mr-1" @click="swapComponent(3)">Assign Techs / Events</b-button>
-            <b-button class="mr-1" @click="swapComponent(4)">Challenge Categories</b-button>
-            <b-button class="mr-1" @click="swapComponent(5)">Purposes</b-button>
+            <b-button class="mr-1" @click="swapComponent(2)">Assign Techs / Events</b-button>
+            <b-button class="mr-1" @click="swapComponent(3)">Challenge Categories</b-button>
+            <b-button class="mr-1" @click="swapComponent(4)">Purposes</b-button>
             <div :is="currentComponent"></div>
         </div>
   </div>
@@ -16,6 +16,7 @@
 import AdminTechnologies from '@/components/AdminTechnologies'
 import AdminCtfEvents from '@/components/AdminCtfEvents'
 import AdminPurposes from '@/components/AdminPurposes'
+import AdminCategories from '@/components/AdminCategories'
 export default {
   name: 'body',
   data () {
@@ -30,7 +31,8 @@ export default {
   components: {
         AdminTechnologies,
         AdminCtfEvents,
-        AdminPurposes
+        AdminPurposes,
+        AdminCategories
     },
   methods: {
     swapComponent: function(index)

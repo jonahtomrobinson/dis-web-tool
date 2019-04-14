@@ -51,26 +51,20 @@ let database = new Sequelize({
 let Post = database.define('posts', {
   title: Sequelize.STRING,
   body: Sequelize.TEXT
-})
+  })
 
+// Define our Purpose model
 let Purpose = database.define('Purpose', {
     text: Sequelize.STRING,
   })
-
 
 // Define our Technology model
 let Tech = database.define('Technology', {
     logo: Sequelize.BLOB,
     name: Sequelize.STRING,
-    cost: Sequelize.STRING,
-    /*purpose: {
-        type: Sequelize.STRING,
-        references: 'Purposes',
-        referencesKey: 'id'
-    },*/
+    cost: Sequelize.STRING,  
     description: Sequelize.STRING
-})
-
+  })
 Purpose.hasOne(Tech, { foreignKey: 'purpose_id' , foreignKeyConstraint: true})
 
 // Define our Event model
@@ -83,6 +77,14 @@ let Event = database.define('Event', {
     additional_info: Sequelize.STRING
   })
 
+// Define our Category model
+let Category = database.define('Category', {
+    text: Sequelize.STRING,
+  })
+
+let CategoryEvent = database.define('CategoryEvent')
+Event.hasMany(CategoryEvent, { foreignKey: 'category_id' , foreignKeyConstraint: true})
+Category.hasMany(CategoryEvent, { foreignKey: 'event_id' , foreignKeyConstraint: true})
 
   /*------------------------------------*\
   Initialising epilogue 
@@ -117,6 +119,12 @@ let eventResource = epilogue.resource({
 let purposeResource = epilogue.resource({
     model: Purpose,
     endpoints: ['/purposes', '/purposes/:id']
+  })
+
+// Category model
+let categoryResource = epilogue.resource({
+    model: Purpose,
+    endpoints: ['/categories', '/categories/:id']
   })
 
 

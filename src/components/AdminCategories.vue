@@ -15,12 +15,12 @@
 
             <!-- Table body -->  
           <tbody>
-            <tr v-for="purpose in purposes" :key="purpose.id">
-              <td>{{ purpose.id }}</td>
-              <td>{{ purpose.text }}</td>
+            <tr v-for="category in categories" :key="category.id">
+              <td>{{ category.id }}</td>
+              <td>{{ category.text }}</td>
               <td class="text-right">
-                <a href="#" @click.prevent="populatePurposeToEdit(purpose)">Edit</a> -
-                <a href="#" @click.prevent="deletePurpose(purpose.id)">Delete</a>
+                <a href="#" @click.prevent="populatePurposeToEdit(category)">Edit</a> -
+                <a href="#" @click.prevent="deletePurpose(category.id)">Delete</a>
               </td>
             </tr>
           </tbody>
@@ -29,7 +29,7 @@
 
         <!-- Form -->  
       <b-col lg="3">
-        <b-card :title="(model.id ? 'Edit Purpose ' + model.text : 'Add new purpose')">
+        <b-card :title="(model.id ? 'Edit Category ' + model.text : 'Add new category')">
           <form enctype="multipart/form-data" @submit.prevent="savePurpose">
             <b-form-group label="Text">
               <b-form-textarea rows="3" v-model="model.text"></b-form-textarea>
@@ -50,7 +50,7 @@ export default {
   data () {
     return {
       loading: false,
-      purposes: [],
+      categories: [],
       model: {}
     }
   },
@@ -60,23 +60,23 @@ export default {
   methods: {
     async refreshPurposes () {
       this.loading = true
-      this.purposes = await api.getManyREST("purposes")
+      this.categories = await api.getManyREST("categories")
       this.loading = false
     },
-    async populatePurposeToEdit (purpose) {
-      this.model = Object.assign({}, purpose)
+    async populatePurposeToEdit (category) {
+      this.model = Object.assign({}, category)
     },
     async savePurpose () {
         if (this.model.id) {
-            await api.updateREST("purposes",this.model.id,this.model)
+            await api.updateREST("categories",this.model.id,this.model)
         }
         else{
-            await api.createREST("purposes", this.model)
+            await api.createREST("categories", this.model)
 
-            // Check new purpose has been added to the database.
-            this.purposes = await api.getManyREST("purposes")
-            if (this.purposes[this.purposes.length-1].text == this.model.text){
-                alert("Purpose added: "+this.model.text);
+            // Check new category has been added to the database.
+            this.categories = await api.getManyREST("categories")
+            if (this.categories[this.categories.length-1].text == this.model.text){
+                alert("Category added: "+this.model.text);
             }
             else{
                 alert("Failed to add: "+this.model.text);
@@ -86,12 +86,12 @@ export default {
         this.refreshPurposes()
     },
     async deletePurpose (id) {
-      if (confirm('Are you sure you want to delete this purpose?')) {
-        // if we are editing a purpose we deleted, remove it from the form
+      if (confirm('Are you sure you want to delete this category?')) {
+        // if we are editing a category we deleted, remove it from the form
         if (this.model.id === id) {
           this.model = {}
         }
-        await api.deleteREST('purposes', id)
+        await api.deleteREST('categories', id)
         await this.refreshPurposes()
       }
     }
