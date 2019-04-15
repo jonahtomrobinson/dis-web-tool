@@ -1,6 +1,7 @@
 import Vue from 'vue'
 import axios from 'axios'
 
+
 const client = axios.create({
   baseURL: 'http://localhost:8081/',
   json: true
@@ -21,7 +22,24 @@ export default {
       return req.data
     })
   },
-  /*getPosts () {
+  getManyREST (item) {
+    return this.execute('get', '/'+item)
+  },
+  getSingleREST (item, id) {
+    return this.execute('get', '/'+item+`/${id}`)
+  },
+  createREST (item, data) {
+    return this.execute('post', '/'+item, data)
+  },
+  updateREST (item, id, data) {
+    return this.execute('put', '/'+item+`/${id}`, data)
+  },
+  deleteREST (item, id) {
+    return this.execute('delete', '/'+item+`/${id}`)
+  },
+
+  /*
+  getPosts () {
     return this.execute('get', '/posts')
   },
   getPost (id) {
@@ -37,20 +55,4 @@ export default {
     return this.execute('delete', `/posts/${id}`)
   },*/
 
-  getManyREST (item) {
-    return this.execute('get', '/'+item)
-  },
-  getSingleREST (item, id) {
-    return this.execute('get', '/'+item+`/${id}`)
-  },
-  createREST (item,data) {
-    return this.execute('post', '/'+item, data)
-  },
-  updateREST (item, id, data) {
-    return this.execute('put', '/'+item+`/${id}`, data)
-  },
-  deleteREST (item, id) {
-    return this.execute('delete', '/'+item+`/${id}`)
-  },
-  
 }

@@ -1,14 +1,14 @@
 
 <template>
   <div>
-        <div id="body">
-            <b-button class="mr-1" @click="swapComponent(0)">Technologies</b-button>
-            <b-button class="mr-1" @click="swapComponent(1)">CTF Events</b-button>
-            <b-button class="mr-1" @click="swapComponent(2)">Assign Techs / Events</b-button>
-            <b-button class="mr-1" @click="swapComponent(3)">Challenge Categories</b-button>
-            <b-button class="mr-1" @click="swapComponent(4)">Purposes</b-button>
-            <div :is="currentComponent"></div>
-        </div>
+    <div id="body">
+        <b-button class="mr-1" @click="swapComponent(0)">Technologies</b-button>
+        <b-button class="mr-1" @click="swapComponent(1)">CTF Events</b-button>
+        <b-button class="mr-1" @click="swapComponent(2)">Assign Techs / Events</b-button>
+        <b-button class="mr-1" @click="swapComponent(3)">Challenge Categories</b-button>
+        <b-button class="mr-1" @click="swapComponent(4)">Purposes</b-button>
+        <div :is="currentComponent"></div>
+    </div>
   </div>
 </template>
 

@@ -83,8 +83,8 @@ let Category = database.define('Category', {
   })
 
 let CategoryEvent = database.define('CategoryEvent')
-Event.hasMany(CategoryEvent, { foreignKey: 'category_id' , foreignKeyConstraint: true})
-Category.hasMany(CategoryEvent, { foreignKey: 'event_id' , foreignKeyConstraint: true})
+Event.hasMany(CategoryEvent, { foreignKey: 'event_id' , foreignKeyConstraint: true})
+Category.hasMany(CategoryEvent, { foreignKey: 'category_id' , foreignKeyConstraint: true})
 
   /*------------------------------------*\
   Initialising epilogue 
@@ -123,10 +123,19 @@ let purposeResource = epilogue.resource({
 
 // Category model
 let categoryResource = epilogue.resource({
-    model: Purpose,
+    model: Category,
     endpoints: ['/categories', '/categories/:id']
   })
 
+// CategoryEvent model
+let categoryEventResource = epilogue.resource({
+    model: CategoryEvent,
+    endpoints: ['/categoryEvents', '/categoryEvents/:id']
+  })
+
+  /*------------------------------------*\
+  Tesing ORM requests
+\*------------------------------------*/
 
 // Resets the database and launches the express app on :8081
 database
@@ -135,6 +144,8 @@ database
     console.log('listening to port localhost:8081')
     
   })
+
+
 
   /*
   database

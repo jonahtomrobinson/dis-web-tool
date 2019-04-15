@@ -19,8 +19,8 @@
               <td>{{ category.id }}</td>
               <td>{{ category.text }}</td>
               <td class="text-right">
-                <a href="#" @click.prevent="populatePurposeToEdit(category)">Edit</a> -
-                <a href="#" @click.prevent="deletePurpose(category.id)">Delete</a>
+                <a href="#" @click.prevent="populateCategoryToEdit(category)">Edit</a> -
+                <a href="#" @click.prevent="deleteCategory(category.id)">Delete</a>
               </td>
             </tr>
           </tbody>
@@ -30,7 +30,7 @@
         <!-- Form -->  
       <b-col lg="3">
         <b-card :title="(model.id ? 'Edit Category ' + model.text : 'Add new category')">
-          <form enctype="multipart/form-data" @submit.prevent="savePurpose">
+          <form enctype="multipart/form-data" @submit.prevent="saveCategory">
             <b-form-group label="Text">
               <b-form-textarea rows="3" v-model="model.text"></b-form-textarea>
             </b-form-group>
@@ -55,27 +55,27 @@ export default {
     }
   },
   async created () {
-    this.refreshPurposes()
+    this.refreshCategory()
   },
   methods: {
-    async refreshPurposes () {
+    async refreshCategory () {
       this.loading = true
       this.categories = await api.getManyREST("categories")
       this.loading = false
     },
-    async populatePurposeToEdit (category) {
+    async populateCategoryToEdit (category) {
       this.model = Object.assign({}, category)
     },
-    async savePurpose () {
+    async saveCategory () {
         if (this.model.id) {
             await api.updateREST("categories",this.model.id,this.model)
         }
         else{
-            await api.createREST("categories", this.model)
+            this.model = await api.createREST("categories", this.model)
 
             // Check new category has been added to the database.
             this.categories = await api.getManyREST("categories")
-            if (this.categories[this.categories.length-1].text == this.model.text){
+            if (this.categories[this.categories.length-1].id == this.model.id){
                 alert("Category added: "+this.model.text);
             }
             else{
@@ -83,16 +83,16 @@ export default {
             }
         }
         this.model = {} // reset form
-        this.refreshPurposes()
+        this.refreshCategory()
     },
-    async deletePurpose (id) {
+    async deleteCategory (id) {
       if (confirm('Are you sure you want to delete this category?')) {
         // if we are editing a category we deleted, remove it from the form
         if (this.model.id === id) {
           this.model = {}
         }
         await api.deleteREST('categories', id)
-        await this.refreshPurposes()
+        await this.refreshCategory()
       }
     }
   }

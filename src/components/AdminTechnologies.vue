@@ -121,12 +121,12 @@ export default {
             await api.updateREST("techs",this.model.id,this.model)
         }
         else{
-            await api.createREST("techs",this.model)
+            this.model = await api.createREST("techs",this.model)
 
             // Check new technology has been added to the database.
             this.techs = await api.getManyREST("techs")
-            if (this.techs[this.techs.length-1].name == this.model.name){
-                alert("Technology added: "+this.model.name+ " purpose id: "+(typeof this.model.purpose_id));
+            if (this.techs[this.techs.length-1].id == this.model.id){
+                alert("Technology added: "+this.model.name);
             }
             else{
                 alert("Failed to add: "+this.model.name);

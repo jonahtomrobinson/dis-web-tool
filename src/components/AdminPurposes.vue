@@ -71,11 +71,11 @@ export default {
             await api.updateREST("purposes",this.model.id,this.model)
         }
         else{
-            await api.createREST("purposes", this.model)
+            this.model = await api.createREST("purposes", this.model)
 
             // Check new purpose has been added to the database.
             this.purposes = await api.getManyREST("purposes")
-            if (this.purposes[this.purposes.length-1].text == this.model.text){
+            if (this.purposes[this.purposes.length-1].id == this.model.id){
                 alert("Purpose added: "+this.model.text);
             }
             else{
