@@ -1,6 +1,9 @@
 <template>
   <div class="test">
-    <div>
+      <div v-if="!loading">
+          <p class="loading">Loading...</p>
+      </div>
+    <div v-else>
          <div class="row item-row">
             <div class="col-md mb-3 mt-3">
 
@@ -34,7 +37,7 @@
 
                     <hr>
                     <p class="card-title-header">CTF Events {{assignEvents.length}}</p>
-                    <div style="overflow-y: scroll; height:232px;" class="row item-row">
+                    <div v-if="modal == false" style="overflow-y: scroll; height:232px;" class="row item-row">
                             <div class="col-md-4 mb-3 mt-3" v-for="assignEvent in assignEvents" :key="assignEvent.id">
 
                                 <b-card class="card-item-small">
@@ -77,21 +80,23 @@ export default {
       bestScalibility: 0,
       purpose: {},
       assignedCategories: {},
-      loaded: false
     }
   },
-  props: ['selectedTechnology'],
+  props: ['selectedTechnology', 'modal'],
   watch: {
       selectedTechnology : function() {
         this.refresh()
       }
   },
   async created () {
-    this.refresh()
+      if (this.selectedTechnology == undefined){
+          this.selectedTechnology = await api.getSingleREST("techs", 5)
+      }
+    await this.refresh()
   },
   methods: {
     async refresh () {
-        this.loaded = false
+        this.loading = false
         this.getPurpose()
         this.techs = await api.getManyREST("techs")
         this.events = await api.getManyREST("events")
@@ -99,7 +104,7 @@ export default {
         this.chosenCategories = []
         this.categories = {}
         await this.getEvents()
-        this.loaded = true
+        this.loading = true
     },
     async getCategories(id){
         var event = []

@@ -13,11 +13,11 @@
 </template>
 
 <script>
-import AdminTechnologies from '@/components/AdminTechnologies'
-import AdminCtfEvents from '@/components/AdminCtfEvents'
-import AdminAssign from '@/components/AdminAssign'
-import AdminPurposes from '@/components/AdminPurposes'
-import AdminCategories from '@/components/AdminCategories'
+import AdminTechnologies from './AdminTechnologies'
+import AdminCtfEvents from './AdminCtfEvents'
+import AdminAssign from './AdminAssign'
+import AdminPurposes from './AdminPurposes'
+import AdminCategories from './AdminCategories'
 export default {
   name: 'body',
   data () {

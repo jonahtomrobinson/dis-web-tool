@@ -1,6 +1,9 @@
 <template>
   <div class="test">
-    <div>
+    <div v-if="!loading">
+          <p class="loading">Loading...</p>
+      </div>
+    <div v-else>
          <div class="row item-row">
             
             
@@ -110,7 +113,6 @@ export default {
       assignEvents: [],
       bestScalibility: 0,
       assignedCategories: {},
-      loaded: false
     }
   },
   props: ['compareTech1','compareTech2'],
@@ -124,7 +126,7 @@ export default {
   },
   methods: {
     async refresh () {
-        this.loaded = false
+        this.loading = false
         this.getPurpose()
         this.techs = await api.getManyREST("techs")
         this.events = await api.getManyREST("events")
@@ -132,7 +134,7 @@ export default {
         this.chosenCategories = []
         this.categories = {}
         await this.getEvents()
-        this.loaded = true
+        this.loading = true
     },
     async getCategories(id, tech){
         var event = []

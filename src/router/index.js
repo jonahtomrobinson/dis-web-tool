@@ -1,16 +1,10 @@
 import Vue from 'vue'
 import Router from 'vue-router'
 import Hello from '@/components/Hello'
-import PostsManager from '@/components/PostsManager'
-import Technologies from '@/components/Technologies'
-import CtfEvents from '@/components/CtfEvents'
+import Technologies from '@/components/technology/Technologies'
+import CtfEvents from '@/components/event/CtfEvents'
 import InfrastructureCreator from '@/components/InfrastructureCreator'
-import AdminTechnologies from '@/components/AdminTechnologies'
-import AdminCtfEvents from '@/components/AdminCtfEvents'
-import AdminAssign from '@/components/AdminAssign'
-import AdminPurposes from '@/components/AdminPurposes'
-import AdminCategories from '@/components/AdminCategories'
-import Admin from '@/components/Admin'
+import Admin from '@/components/admin/Admin'
 import Auth from '@okta/okta-vue'
 
 Vue.use(Auth, {
@@ -27,20 +21,12 @@ let router = new Router({
   routes: [
     {
       path: '/',
-      name: 'Hello',
-      component: Hello
+      name: '/',
+      component: Technologies
     },
     {
       path: '/implicit/callback',
       component: Auth.handleCallback()
-    },
-    {
-      path: '/posts-manager',
-      name: 'PostsManager',
-      component: PostsManager,
-      meta: {
-        requiresAuth: true
-      }
     },
     {
       path: '/technologies',
@@ -65,49 +51,9 @@ let router = new Router({
             requiresAuth: true
         }
     },
-    {
-        path: '/admin/technologies',
-        name: 'AdminTechnologies',
-        component: AdminTechnologies,
-        meta: {
-            requiresAuth: true
-        }
-    },
-    {
-        path: '/admin/ctf-events',
-        name: 'AdminCtfEvents',
-        component: AdminCtfEvents,
-        meta: {
-            requiresAuth: true
-        }
-    },
-    {
-        path: '/admin/purposes',
-        name: 'AdminPurposes',
-        component: AdminPurposes,
-        meta: {
-            requiresAuth: true
-        }
-    },
-    {
-        path: '/admin/categories',
-        name: 'AdminCategories',
-        component: AdminCategories,
-        meta: {
-            requiresAuth: true
-        }
-    },
-    {
-        path: '/admin/assign',
-        name: 'AdminAssign',
-        component: AdminAssign,
-        meta: {
-            requiresAuth: true
-        }
-    },
   ]
 })
 
-//router.beforeEach(Vue.prototype.$auth.authRedirectGuard())
+router.beforeEach(Vue.prototype.$auth.authRedirectGuard())
 
 export default router

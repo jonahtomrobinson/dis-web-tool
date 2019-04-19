@@ -18,23 +18,30 @@ app.use(cors())
 app.use(bodyParser.json())
 app.use(express.static(__dirname + '/assets/css'));
 
+var bla = true
+
 // verify JWT token middleware
 app.use((req, res, next) => {
-  // require every request to have an authorization header
-  if (!req.headers.authorization) {
-    return next(new Error('Authorization header is required'))
+  // require every request to have an authorization header. EXCEPT GET REQUESTS.
+  if (req.method == 'GET'){
+    next()
   }
-  let parts = req.headers.authorization.trim().split(' ')
-  let accessToken = parts.pop()
-  oktaJwtVerifier.verifyAccessToken(accessToken)
-    .then(jwt => {
-      req.user = {
-        uid: jwt.claims.uid,
-        email: jwt.claims.sub
-      }
-      next()
-    })
-    .catch(next) // jwt did not verify!
+  else{
+    if (!req.headers.authorization) {
+        return next(new Error('Authorization header is required'))
+    }
+    let parts = req.headers.authorization.trim().split(' ')
+    let accessToken = parts.pop()
+    oktaJwtVerifier.verifyAccessToken(accessToken)
+        .then(jwt => {
+        req.user = {
+            uid: jwt.claims.uid,
+            email: jwt.claims.sub
+        }
+        next()
+        })
+        .catch(next) // jwt did not verify!*/
+    }
 })
 
 app.post('/profile', upload.single('image'), function (req, res, next) {

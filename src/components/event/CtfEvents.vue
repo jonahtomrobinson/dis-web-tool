@@ -1,10 +1,9 @@
 <template>
   <div class="test">
     <div>
- 
         <b-button v-if="currentComponent" class="mr-1" @click="currentComponent = null">Close</b-button>
 
-        <div v-cloak v-bind:selectedTechnology="selectedTechnology"  v-bind:compareTech1="compareTech1" v-bind:compareTech2="compareTech2" :is="currentComponent"></div>
+        <div v-cloak v-bind:selectedEvent="selectedEvent"  v-bind:compareTech1="compareTech1" v-bind:compareTech2="compareTech2" :is="currentComponent"></div>
         
         <div v-if="!currentComponent" class="row card-row">
             <div class="col-md-4 mb-3 mt-3">
@@ -20,35 +19,24 @@
                         <div class="row ml-1">
                             <div class="col-xs-6 mr-2">
                                 <b-form-group label="Criteria">
-                                    <!--<b-form-select v-model="filter.criteria">
-                                        <option :value="'type'">Event Type</option>
+                                    <b-form-select v-model="filterCriteria">
+                                        <option :value="'style'">Event Style</option>
                                         <option :value="'purpose'">Purpose</option>
                                         <option :value="2">Other</option>
-                                    </b-form-select>-->
-                                    <b-form-select v-model="filterCriteria">
-                                        <option :value="'purpose'">Purpose</option>
-                                        <!--<option :value="'cost'">Cost less than</option>-->
                                     </b-form-select>
                                 </b-form-group>
                             </div>
 
                             <div class="col-xs-6">
                                 <b-form-group label="Value">
-                                    <!--<div v-if="filter.criteria == 'type'">
-                                        <b-form-select v-model="filter.type">
+                                    <div v-if="filterCriteria == 'style'">
+                                        <b-form-select v-model="filterValue">
                                             <option :value="'Jeopardy'">Jeopardy</option>
                                             <option :value="'Attack-Defence'">Attack-Defence</option>
                                             <option :value="'Mixed'">Mixed</option>
                                             <option :value="'Other'">Other</option>
                                         </b-form-select>
-                                    </div>-->
-
-                                    <div v-if="filterCriteria == 'purpose'">
-                                        <b-form-select v-model="filterValue">
-                                            <option v-for="purpose in purposes" :key="purpose.id" :value="purpose.id">{{purpose.text}}</option>
-                                        </b-form-select>
                                     </div>
-
                                     <!--<div v-if="filterCriteria == 'cost'">
                                         <b-form-select v-model="filterValue">
                                             <option v-for="purpose in purposes" :key="purpose.id" :value="purpose.id">{{purpose.text}}</option>
@@ -70,7 +58,7 @@
                             <div class="col-xs-6 mr-2">
                                 <b-form-group label="Technology 1">
                                     <b-form-select v-model="compareTech1" >
-                                        <option  v-for="tech in filteredTechs" :key="tech.id" :value="tech">{{tech.name}}</option>
+                                        <option  v-for="event in filteredEvents" :key="event.id" :value="event">{{event.name}}</option>
                                     </b-form-select>
                                 </b-form-group>
                             </div>
@@ -82,7 +70,7 @@
                             <div class="col-xs-6 ml-2">
                                 <b-form-group label="Technology 2">
                                     <b-form-select v-model="compareTech2" >
-                                        <option  v-for="tech in filteredTechs" :key="tech.id" :value="tech">{{tech.name}}</option>
+                                        <option  v-for="event in filteredEvents" :key="event.id" :value="event">{{event.name}}</option>
                                     </b-form-select>
                                 </b-form-group>
                             </div>
@@ -98,12 +86,12 @@
         <div v-if="currentComponent == null">
             <hr>
             <div class="row card-row">
-                <div class="col-md-2 mb-3 mt-3" v-for="tech in filteredTechs" :key="tech.id">
-                    <b-card v-on:click="viewDetails(tech)" class="card-item">
+                <div class="col-md-2 mb-3 mt-3" v-for="event in filteredEvents" :key="event.id">
+                    <b-card v-on:click="viewDetails(event)" class="card-item">
                         <img class="card-img" src="/static/img/icons/apple-touch-icon-180x180.png" alt="card image collar">
                         <div class="card-body">
-                            <p class="card-title">{{tech.name}}</p>
-                            <!--<p class="card-text"><span class="card-purpose"> {{tech.purpose}}</span></p>-->
+                            <p class="card-title">{{event.name}}</p>
+                            <!--<p class="card-text"><span class="card-purpose"> {{event.purpose}}</span></p>-->
                         </div>
                     </b-card>
                 </div>
@@ -116,17 +104,17 @@
 
 <script>
 import api from '@/api'
-import TechnologyDetails from '@/components/TechnologyDetails'
-import TechnologyCompare from '@/components/TechnologyCompare'
+import CtfEventDetails from '@/components/CtfEventDetails'
+import CtfEventCompare from '@/components/CtfEventCompare'
 export default {
   data () {
     return {
       loading: false,
-      techs: [],
+      events: [],
       purposes: [],
-      filteredTechs: [],
+      filteredEvents: [],
       currentComponent: null,
-      selectedTechnology: {},
+      selectedEvent: {},
       filterCriteria: null,
       filterValue : null,
       compareTech1: null,
@@ -135,61 +123,58 @@ export default {
   },
    watch: {
       filterValue : function() {
-        this.filterTechs()
+        this.filterEvents()
       },
       filterCriteria : function(){
           this.filterValue = null
       }
   },
   async created () {
-    this.refreshTechs()
+    this.refreshEvents()
   },
   methods: {
-    async filterTechs(){
-        this.filteredTechs = []
+    async filterEvents(){
+        this.filteredEvents = []
         this.compareTech1 = null
         this.compareTech2 = null
         /*else if (this.filter.criteria == "type"){
-            for (var tech in this.techs){
-                if (this.techs[tech].type == this.filter.type){
-                    this.filteredTechs.push(this.techs[tech])
+            for (var event in this.events){
+                if (this.events[event].type == this.filter.type){
+                    this.filteredEvents.push(this.events[event])
                 }
             }
         }*/
-        if (this.filterCriteria == "purpose"){
-            for (var tech in this.techs){
-                if (this.techs[tech].purpose_id == this.filterValue){
-                    this.filteredTechs.push(this.techs[tech])
+        if (this.filterCriteria == "style"){
+            for (var event in this.events){
+                if (this.events[event].style == this.filterValue){
+                    this.filteredEvents.push(this.events[event])
                 }
             }
         }
         else{
-            this.filteredTechs = this.techs
+            this.filteredEvents = this.events
         }
         
     },
-    async refreshTechs () {
+    async refreshEvents () {
         this.loading = true
-        this.filteredTechs = []
-        this.techs = await api.getManyREST("techs")
-        await this.filterTechs()
-        this.purposes = await api.getManyREST("purposes")
-        await this.addPurposes();
+        this.filteredEvents = []
+        this.events = await api.getManyREST("events")
+        await this.filterEvents()
+        //await this.addPurposes();
         this.loading = false
     },
     async addPurposes(){
-        for (var tech in this.techs){
-            this.techs[tech].purpose = (await api.getSingleREST("purposes", this.techs[tech].purpose_id)).text
+        for (var event in this.events){
+            this.events[event].purpose = (await api.getSingleREST("purposes", this.events[event].purpose_id)).text
         }
     },
-    async viewDetails(tech){
-        if (this.loading == false){
-        this.selectedTechnology = tech
-        this.currentComponent = TechnologyDetails
-        }
+    async viewDetails(event){
+        this.selectedEvent = event
+        this.currentComponent = CtfEventDetails
     },
     async compareTechs(){
-        this.currentComponent = TechnologyCompare
+        this.currentComponent = CtfEventCompare
     }
   }
 }
