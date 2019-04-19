@@ -41,6 +41,7 @@
         </b-card>
       </b-col>
     </b-row>
+    <v-dialog/>
 </div>
 </template>
 
@@ -58,6 +59,11 @@ export default {
     this.refreshCategory()
   },
   methods: {
+    async showModal(value){
+        this.$modal.show('dialog', {
+            text: value,
+        })
+    },
     async refreshCategory () {
       this.loading = true
       this.categories = await api.getManyREST("categories")
@@ -76,10 +82,10 @@ export default {
             // Check new category has been added to the database.
             this.categories = await api.getManyREST("categories")
             if (this.categories[this.categories.length-1].id == this.model.id){
-                alert("Category added: "+this.model.text);
+                this.showModal("Category added: "+this.model.text);
             }
             else{
-                alert("Failed to add: "+this.model.text);
+                this.showModal("Failed to add: "+this.model.text);
             }
         }
         this.model = {} // reset form

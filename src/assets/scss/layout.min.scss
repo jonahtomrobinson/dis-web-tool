@@ -24,12 +24,12 @@ body, .body {
   color:red;
 }
 
-.actb,.admb,.editb,.delb,.devb,.reqb,.rdob,.disb,.keyb,.plusb,.minusb,.historyb {
-  cursor: pointer;
-}
-
 .fadis{
   color:#aaa;
+}
+
+a{
+  color: #E43230 !important;
 }
 
 /*------------------------------------*\
@@ -41,7 +41,7 @@ body, .body {
 }
 
 .bg-dark{
-  background-color: #353535 !important;
+  background-color: #f5e7e7 !important;
 }
 
 .border-yellow{
@@ -78,32 +78,32 @@ body, .body {
 \*------------------------------------*/
 
 .dropbox {
-outline: 2px dashed grey; /* the dash box */
-outline-offset: -10px;
-background: lightcyan;
-color: dimgray;
-padding: 10px 10px;
-min-height: 120px; /* minimum height */
-position: relative;
-cursor: pointer;
+    outline: 2px dashed grey; /* the dash box */
+    outline-offset: -10px;
+    background: lightcyan;
+    color: dimgray;
+    padding: 10px 10px;
+    min-height: 120px; /* minimum height */
+    position: relative;
+    cursor: pointer;
 }
 
 .input-file {
-opacity: 0; /* invisible but it's there! */
-width: 100%;
-height: 120px;
-position: absolute;
-cursor: pointer;
+    opacity: 0; /* invisible but it's there! */
+    width: 100%;
+    height: 120px;
+    position: absolute;
+    cursor: pointer;
 }
 
 .dropbox:hover {
-background: lightblue; /* when mouse over to the drop zone, change color */
+    background: lightblue; /* when mouse over to the drop zone, change color */
 }
 
 .dropbox p {
-font-size: 1.2em;
-text-align: center;
-padding: 50px 0;
+    font-size: 1.2em;
+    text-align: center;
+    padding: 50px 0;
 }
 
 /*------------------------------------*\
@@ -111,12 +111,172 @@ padding: 50px 0;
 \*------------------------------------*/
 
 .new-categories{
-    background:black;
+    color: black;
     padding:3px;
-    background-color: #E43230 !important;
     border: 1px solid #353535 !important;
 }
 
 .displayedCategory{
     display:inline !important
+}
+
+/*------------------------------------*\
+  #ASSIGNMENT-PAGE
+\*------------------------------------*/
+
+.assign-row-outer{
+    width: 80%; 
+    margin: 0 auto;
+}
+
+.assign-row{
+   text-align: left;
+   justify-content: center;
+   margin-top:2%;
+}
+
+.assign-item{
+    cursor: pointer;
+}
+
+.assign-item:hover{
+    border: 1px solid #E43230 !important;
+}
+
+/*.assign-item-chosen{
+    border: 2px solid #E43230 !important;
+}*/
+
+/*------------------------------------*\
+  #CLIENT-SIDE-TILES
+\*------------------------------------*/
+
+.card-item {
+    cursor: pointer;
+    max-width: 275px;
+  }
+
+.card-title{
+    font-weight: bold;
+    font-size: 150%;
+    text-align: center;
+}
+
+.card-title-header{
+    font-weight: bold;
+    font-size: 150%;
+}
+
+.card-item:hover{
+    border: 1px solid #E43230 !important;
+}
+
+.card-img{
+    height: 150px;
+    object-fit: contain;
+}
+
+.card-row{
+    margin-right:1%;
+}
+
+.card-purpose{
+    font-weight: normal;
+    padding:5px;
+    font-size:75%;
+    border: 1px solid #353535 !important;
+    color: black !important;;
+}
+
+p.card-body{
+    overflow-wrap: break-word;
+}
+
+/*------------------------------------*\
+  #CLIENT-FILTER-TILE
+\*------------------------------------*/
+
+.card-item-filter{
+    min-width: 400px;
+}
+
+/*------------------------------------*\
+  #CLIENT-SIDE-SELECTED-TILE
+\*------------------------------------*/
+
+.card-item-selected{
+    border: 2px solid #E43230 !important;
+}
+
+.item-row{
+    margin-right:1%;
+}
+
+.card-text{
+    display:inline
+}
+
+.card-img-small{
+    height: 150px;
+    //object-fit: contain;
+}
+
+.card-item-small {
+    max-width: 500px;
+    min-width: 360px;
+    padding:0px;
+
+  }
+
+.card-item-small-col p{
+    display:inline !important;
+}
+
+.card-title-selected{
+    font-weight: bold;
+    font-size: 200%;
+}
+
+.card-purpose-selected{
+    font-weight: normal;
+    font-size: 50%;
+    padding:5px;
+    margin-left:10px;
+    border: 1px solid #353535 !important;
+    color: black !important;;
+}
+
+.card-categories-selected{
+    font-weight: bold;
+    padding:5px;
+    margin-left:10px;
+    border: 1px solid #353535 !important;
+    color: #353535 !important;;
+}
+
+.card-title-small{
+    font-weight: bold;
+}
+
+
+/*------------------------------------*\
+  #CLIENT-SIDE-COMPARE
+\*------------------------------------*/
+
+.card-item-compare{
+    max-width: 200px;
+    min-width: 100px;
+    padding:0px;
+    align-content: center;
+    text-align: center;
+}
+
+.card-img-compare{
+    height: 75px;
+    object-fit: contain;
+}
+
+.card-title-compare{
+    font-weight: bold;
+    object-fit: contain;
 }

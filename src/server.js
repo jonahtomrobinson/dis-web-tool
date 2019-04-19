@@ -4,6 +4,8 @@ const bodyParser = require('body-parser')
 const Sequelize = require('sequelize')
 const epilogue = require('epilogue')
 const OktaJwtVerifier = require('@okta/jwt-verifier')
+const multer = require('multer')
+const upload = multer({dest: 'uploads/' })
 
 // Okta JWTVerifier credientials
 const oktaJwtVerifier = new OktaJwtVerifier({
@@ -35,12 +37,16 @@ app.use((req, res, next) => {
     .catch(next) // jwt did not verify!
 })
 
+app.post('/profile', upload.single('image'), function (req, res, next) {
+    // req.file is the `avatar` file
+    // req.body will hold the text fields, if there were any
+    })
+
 // Setup database.
 let database = new Sequelize({
   dialect: 'sqlite',
   storage: './database.sqlite'
 })
-
 
 /*------------------------------------*\
   Defining models
@@ -63,6 +69,7 @@ let Tech = database.define('Technology', {
     logo: Sequelize.BLOB,
     name: Sequelize.STRING,
     cost: Sequelize.STRING,  
+    source: Sequelize.STRING,
     description: Sequelize.STRING
   })
 Purpose.hasOne(Tech, { foreignKey: 'purpose_id' , foreignKeyConstraint: true})
@@ -71,9 +78,11 @@ Purpose.hasOne(Tech, { foreignKey: 'purpose_id' , foreignKeyConstraint: true})
 let Event = database.define('Event', {
     logo: Sequelize.BLOB,
     name: Sequelize.STRING,
+    style: Sequelize.STRING,
     date: Sequelize.DATEONLY,
     num_of_users: Sequelize.INTEGER.UNSIGNED,
-    hardware_info: Sequelize.STRING,
+    source: Sequelize.STRING,
+    location: Sequelize.STRING,
     additional_info: Sequelize.STRING
   })
 
@@ -83,8 +92,17 @@ let Category = database.define('Category', {
   })
 
 let CategoryEvent = database.define('CategoryEvent')
-Event.hasMany(CategoryEvent, { foreignKey: 'event_id' , foreignKeyConstraint: true})
-Category.hasMany(CategoryEvent, { foreignKey: 'category_id' , foreignKeyConstraint: true})
+Event.hasMany(CategoryEvent, { foreignKey: 'event_id' , foreignKeyConstraint: true, onDelete: 'cascade'})
+Category.hasMany(CategoryEvent, { foreignKey: 'category_id' , foreignKeyConstraint: true, onDelete: 'cascade'})
+
+/*let EventTechnology = database.define('EventTechnology', {
+    event_id: Sequelize.INTEGER,
+    technology_id: Sequelize.INTEGER
+})*/
+
+let EventTechnology = database.define('EventTechnology')
+Event.hasMany(EventTechnology, { foreignKey: 'event_id' , foreignKeyConstraint: true, onDelete: 'cascade'})
+Tech.hasMany(EventTechnology, { foreignKey: 'technology_id' , foreignKeyConstraint: true, onDelete: 'cascade'})
 
   /*------------------------------------*\
   Initialising epilogue 
@@ -133,13 +151,19 @@ let categoryEventResource = epilogue.resource({
     endpoints: ['/categoryEvents', '/categoryEvents/:id']
   })
 
+// EventTechnology model
+let eventTechnologyResource = epilogue.resource({
+    model: EventTechnology,
+    endpoints: ['/eventTechnologies', '/eventTechnologies/:id']
+  })
+
   /*------------------------------------*\
   Tesing ORM requests
 \*------------------------------------*/
 
 // Resets the database and launches the express app on :8081
 database
-  .sync({ force: true })
+  //.sync({ force: true })
     app.listen(8081, () => {
     console.log('listening to port localhost:8081')
     

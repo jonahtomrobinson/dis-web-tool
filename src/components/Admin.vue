@@ -15,6 +15,7 @@
 <script>
 import AdminTechnologies from '@/components/AdminTechnologies'
 import AdminCtfEvents from '@/components/AdminCtfEvents'
+import AdminAssign from '@/components/AdminAssign'
 import AdminPurposes from '@/components/AdminPurposes'
 import AdminCategories from '@/components/AdminCategories'
 export default {
@@ -31,6 +32,7 @@ export default {
   components: {
         AdminTechnologies,
         AdminCtfEvents,
+        AdminAssign,
         AdminPurposes,
         AdminCategories
     },

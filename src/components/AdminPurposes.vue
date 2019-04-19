@@ -41,6 +41,7 @@
         </b-card>
       </b-col>
     </b-row>
+    <v-dialog/>
 </div>
 </template>
 
@@ -58,6 +59,11 @@ export default {
     this.refreshPurposes()
   },
   methods: {
+    async showModal(value){
+        this.$modal.show('dialog', {
+            text: value,
+        })
+    },
     async refreshPurposes () {
       this.loading = true
       this.purposes = await api.getManyREST("purposes")
@@ -76,10 +82,10 @@ export default {
             // Check new purpose has been added to the database.
             this.purposes = await api.getManyREST("purposes")
             if (this.purposes[this.purposes.length-1].id == this.model.id){
-                alert("Purpose added: "+this.model.text);
+                this.showModal("Purpose added: "+this.model.text);
             }
             else{
-                alert("Failed to add: "+this.model.text);
+                this.showModal("Failed to add: "+this.model.text);
             }
         }
         this.model = {} // reset form

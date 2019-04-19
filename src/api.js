@@ -38,6 +38,23 @@ export default {
     return this.execute('delete', '/'+item+`/${id}`)
   },
 
+  async saveImage(myFormData){
+    let accessToken = await Vue.prototype.$auth.getAccessToken()
+    return client({
+        method: 'post',
+        data: myFormData, 
+        config: {
+            headers: {
+            'Content-Type': 'multipart/form-data' ,
+            Authorization: `Bearer ${accessToken}`
+            }
+        }
+    })
+    .then(req => {
+        return req.data
+      })
+  }
+
   /*
   getPosts () {
     return this.execute('get', '/posts')

@@ -7,6 +7,7 @@ import CtfEvents from '@/components/CtfEvents'
 import InfrastructureCreator from '@/components/InfrastructureCreator'
 import AdminTechnologies from '@/components/AdminTechnologies'
 import AdminCtfEvents from '@/components/AdminCtfEvents'
+import AdminAssign from '@/components/AdminAssign'
 import AdminPurposes from '@/components/AdminPurposes'
 import AdminCategories from '@/components/AdminCategories'
 import Admin from '@/components/Admin'
@@ -96,9 +97,17 @@ let router = new Router({
             requiresAuth: true
         }
     },
+    {
+        path: '/admin/assign',
+        name: 'AdminAssign',
+        component: AdminAssign,
+        meta: {
+            requiresAuth: true
+        }
+    },
   ]
 })
 
-router.beforeEach(Vue.prototype.$auth.authRedirectGuard())
+//router.beforeEach(Vue.prototype.$auth.authRedirectGuard())
 
 export default router

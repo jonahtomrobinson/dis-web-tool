@@ -7,11 +7,11 @@
           <!-- Table head -->  
           <thead>
             <tr>
-              <th>ID</th>
               <th>Logo</th>
               <th>Name</th>
               <th>Cost</th>
               <th>Purpose</th>
+              <th>Source</th>
               <th>Description</th>
               <th>&nbsp;</th>
             </tr>
@@ -20,11 +20,11 @@
             <!-- Table body -->  
           <tbody>
             <tr v-for="tech in techs" :key="tech.id">
-              <td>{{ tech.id }}</td>
               <td>{{ tech.logo }}</td>
               <td>{{ tech.name }}</td>
               <td>{{ tech.cost }}</td>
               <td>{{ tech.purpose }}</td>
+              <td>{{ tech.source }}</td>
               <td>{{ tech.description }}</td>
               <td class="text-right">
                 <a href="#" @click.prevent="populateTechToEdit(tech)">Edit</a> -
@@ -39,8 +39,9 @@
       <b-col lg="3">
         <b-card :title="(model.id ? 'Edit Technology ' + model.name : 'Add new technology')">
           <form enctype="multipart/form-data" @submit.prevent="saveTech">
+
             <b-form-group label="Logo">
-              <!--<b-form-input type="blob" v-model="model.logo"></b-form-input>-->
+              <!--<b-form-input type="blob" v-model="model.logo"></b-form-input>
                 <div class="dropbox">
                 <input type="file" :name="uploadFieldName" :disabled="isSaving" @change="filesChange($event.target.name, $event.target.files); fileCount = $event.target.files.length"
                     accept="image/*" class="input-file">
@@ -50,19 +51,27 @@
                     <p v-if="isSaving">
                     Uploading {{ fileCount }} files...
                     </p>
-                </div>
+                </div>-->
             </b-form-group>
+
             <b-form-group label="Name">
               <b-form-input type="text" v-model="model.name"></b-form-input>
             </b-form-group>
+
             <b-form-group label="Cost">
               <b-form-input type="text" v-model="model.cost"></b-form-input>
             </b-form-group>
+
             <b-form-group label="Purpose">
                 <b-form-select type="integer" v-model="model.purpose_id">
                     <option v-for="purpose in purposes" :key="purpose.id" :value="purpose.id">{{ purpose.text }}</option>
                 </b-form-select>
             </b-form-group>
+
+            <b-form-group label="Source Website">
+                <b-form-input type="text" v-model="model.source"></b-form-input>
+            </b-form-group>
+
             <b-form-group label="Description">
               <b-form-textarea rows="3" v-model="model.description"></b-form-textarea>
             </b-form-group>
@@ -73,6 +82,7 @@
         </b-card>
       </b-col>
     </b-row>
+    <v-dialog/>
 </div>
 </template>
 
@@ -92,6 +102,11 @@ export default {
     this.refreshTechs()
   },
   methods: {
+    async showModal(value){
+        this.$modal.show('dialog', {
+            text: value,
+        })
+    },
     async refreshTechs () {
         this.loading = true
         this.techs = await api.getManyREST("techs")
@@ -126,10 +141,10 @@ export default {
             // Check new technology has been added to the database.
             this.techs = await api.getManyREST("techs")
             if (this.techs[this.techs.length-1].id == this.model.id){
-                alert("Technology added: "+this.model.name);
+                this.showModal("Technology added: "+this.model.name);
             }
             else{
-                alert("Failed to add: "+this.model.name);
+                this.showModal("Failed to add: "+this.model.name);
             }
         }
         this.model = {} // reset form

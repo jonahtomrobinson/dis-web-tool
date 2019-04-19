@@ -7,14 +7,14 @@
           <!-- Table head -->  
           <thead>
             <tr>
-              <th>ID</th>
               <th>Logo</th>
               <th>Name</th>
+              <th>Style</th>
               <th>Date</th>
+              <th>Location</th>
               <th>Number of users</th>
-              <th>Challenge Categories</th>
-              <th>Hardware info</th>
-              <th>Additional info</th>
+              <th>Categories</th>
+              <th>Source</th>
               <th>&nbsp;</th>
             </tr>
           </thead>
@@ -23,10 +23,11 @@
           <tbody>
             <!--<b-alert :show="loading" variant="info">Loading...</b-alert>-->
             <tr v-for="event in events" :key="event.id">
-              <td>{{ event.id }}</td>
               <td>{{ event.logo }}</td>
               <td>{{ event.name }}</td>
+              <td>{{ event.style }}</td>
               <td>{{ event.date }}</td>
+              <td>{{ event.location }}</td>
               <td>{{ event.num_of_users }}</td>
               <td>
               <div v-for="catEve in categoryEvents" :key="catEve">
@@ -35,8 +36,7 @@
                     </div>
                 </div>
               </td>
-              <td>{{ event.hardware_info }}</td>
-              <td>{{ event.additional_info }}</td>
+              <td>{{ event.source }}</td>
               <td class="text-right">
                 <a href="#" @click.prevent="populateEventToEdit(event)">Edit</a> -
                 <a href="#" @click.prevent="deleteEvent(event.id)">Delete</a>
@@ -65,25 +65,44 @@
             <b-form-group label="Name">
               <b-form-input type="text" v-model="model.name"></b-form-input>
             </b-form-group>
+            <b-form-group label="Style">
+                <b-form-select v-model="model.style">
+                    <option>Jeopardy</option>
+                    <option>Attack-Defence</option>
+                    <option>Mixed</option>
+                    <option>Other</option>
+                </b-form-select>
+            </b-form-group>
             <b-form-group label="Date">
               <b-form-input type="date" v-model="model.date"></b-form-input>
             </b-form-group>
+
+            <b-form-group label="Location">
+              <b-form-input v-model="model.location"></b-form-input>
+            </b-form-group>
+
             <b-form-group label="Number of users">
               <b-form-input v-model="model.num_of_users"></b-form-input>
             </b-form-group>
+
             <b-form-group label="Challenge categories">
                 <b-form-select v-model="selectedCategory">
                     <option v-for="category in categories" :key="category" :value="category">{{ category.text }}</option>
                 </b-form-select>
-                <b-button class="mr-1" @click="addCategory()">Add</b-button>
-                <span class= "new-categories" v-for="chosenCategory in chosenCategories" :key="chosenCategory">
-                    {{ chosenCategory.text }}
-                    <b-button class="mr-1" @click="removeCategory()">X</b-button>
-                </span>  
+                <b-button class="mr-1 mt-2 mb-2" @click="addCategory()">Add</b-button>
+                <tbody>
+                    <tr class= "new-categories" v-for="chosenCategory in chosenCategories" :key="chosenCategory">
+                        {{ chosenCategory.text }}
+                        <a href="#" @click="removeCategory()">Remove</a>
+                        <!--<b-button class="mr-1" @click="removeCategory()">X</b-button>-->
+                    </tr>
+                </tbody>  
             </b-form-group>
-            <b-form-group label="Hardware info">
-              <b-form-textarea rows="1" v-model="model.hardware_info"></b-form-textarea>
+            
+            <b-form-group label="Source website">
+              <b-form-input v-model="model.source"></b-form-input>
             </b-form-group>
+
             <b-form-group label="Additional info">
               <b-form-textarea rows="1" v-model="model.additional_info"></b-form-textarea>
             </b-form-group>
@@ -94,6 +113,7 @@
         </b-card>
       </b-col>
     </b-row>
+    <v-dialog/>
 </div>
 </template>
 
@@ -117,7 +137,28 @@ export default {
     this.refreshEvents()
   },
   methods: {
-    
+    async showModal(value){
+        this.$modal.show('dialog', {
+            text: value,
+        })
+    },
+    /*async showModalConfirm(value){
+        var result = false
+        this.$modal.show('dialog', {
+            text: value,
+             buttons: [
+                {
+                title: 'Confirm',
+                handler: () => {  $model.hide(dialog)},
+                },
+                {
+                title: 'Cancel',
+                //handler: () => { return false }
+                }
+             ]
+        })
+        return result
+    },*/
     async getCatsForEachEvent(id){
         this.chosenCategories = []
         var event = []
@@ -174,7 +215,7 @@ export default {
     async saveEvent () {
         if (this.model.id) {
             await api.updateREST("events", this.model.id,this.model)
-            this.deleteCategoryEvents(this.model.id)
+            await this.deleteCategoryEvents(this.model.id)
             this.saveCategoryEvents()
         }
         else{
@@ -184,10 +225,10 @@ export default {
             // Check new event has been added to the database.
             this.events = await api.getManyREST("events")
             if (this.events[this.events.length-1].id == this.model.id){
-                alert("Event added: "+this.model.name);
+                this.showModal("Event added: "+this.model.name)
             }
             else{
-                alert("Failed to add: "+this.model.name);
+                this.showModal("Failed to add: "+this.model.name);
             }
         }
         this.chosenCategories = []
@@ -201,7 +242,6 @@ export default {
         if (this.model.id === id) {
           this.model = {}
         }
-        this.deleteCategoryEvents(id)
         await api.deleteREST('events', id)
         await this.refreshEvents()
       }
