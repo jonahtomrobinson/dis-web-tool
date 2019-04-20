@@ -63,10 +63,10 @@
                 </div>
             </b-form-group>-->
             <b-form-group label="Name">
-              <b-form-input type="text" v-model="model.name"></b-form-input>
+              <b-form-input required type="text" v-model="model.name"></b-form-input>
             </b-form-group>
             <b-form-group label="Style">
-                <b-form-select v-model="model.style">
+                <b-form-select required v-model="model.style">
                     <option>Jeopardy</option>
                     <option>Attack-Defence</option>
                     <option>Mixed</option>
@@ -74,15 +74,15 @@
                 </b-form-select>
             </b-form-group>
             <b-form-group label="Date">
-              <b-form-input type="date" v-model="model.date"></b-form-input>
+              <b-form-input required type="date" v-model="model.date"></b-form-input>
             </b-form-group>
 
             <b-form-group label="Location">
-              <b-form-input v-model="model.location"></b-form-input>
+              <b-form-input required v-model="model.location"></b-form-input>
             </b-form-group>
 
             <b-form-group label="Number of users">
-              <b-form-input v-model="model.num_of_users"></b-form-input>
+              <b-form-input required v-model="model.num_of_users"></b-form-input>
             </b-form-group>
 
             <b-form-group label="Challenge categories">

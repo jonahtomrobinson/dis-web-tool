@@ -1,40 +1,61 @@
 <template>
 <div class="mt-4">
-    <form ref="myform" enctype="multipart/form-data" @submit.prevent="attemptSave">
-            <input type="file" name="avatar" />
-            <div>
-            <b-btn type="submit" variant="success">Save</b-btn>
-            </div>
-    </form>
-    <v-dialog/>
-    <b-button class="mr-1" @click="show()">Purposes</b-button>
+    <form @submit.prevent="onUpload" enctype="multipart/form-data">
+        
+        <input type="file" @change="onFileSelected">
+    <button class="button is-info">Upload</button>
     
+    <img :src="imageUrl">
+    </form>
 </div>
 </template>
 
 <script>
+import axios from 'axios'
 import api from '@/api'
 export default {
   data () {
     return {
-      loading: false,
-      techs: [],
-      purposes: [],
-      model: {},
+      selectedFile: null,
+      imageUrl: null,
+      blobImage : null
     }
   },
   async created () {
-    this.refreshTechs()
+    this.refresh()
   },
   methods: {
-      show () {
-        this.$modal.show('dialog', {
-            text: 'You are too awesome',
-        })
-    },
-    hide () {
-        this.$modal.hide('hello-world');
-    }
+      async refresh(){
+
+      },
+      onFileSelected(event){
+        this.selectedFile = event.target.files[0]
+      },
+      onUpload(){
+            let filename = this.selectedFile.name
+            const fileReader = new FileReader()
+            fileReader.addEventListener('load', () => {
+                this.imageUrl = fileReader.result
+            })
+            fileReader.readAsDataURL(this.selectedFile)
+
+            console.log(this.imageUrl)
+
+          /*axios.post('/profile', upload.single('test'), fd)
+          .then(res => {
+              console.log(res)
+          })*/
+      },
+      async sendFile(){
+          const formData = new FormData()
+          formData.append('file', this.selectedFile)
+          try{
+            await axios.post('/upload', formData)
+          } catch (err){
+              console.log(err)
+          }
+          
+      }
   }
 }
 </script>

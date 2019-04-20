@@ -32,7 +32,7 @@
         <b-card :title="(model.id ? 'Edit Category ' + model.text : 'Add new category')">
           <form enctype="multipart/form-data" @submit.prevent="saveCategory">
             <b-form-group label="Text">
-              <b-form-textarea rows="3" v-model="model.text"></b-form-textarea>
+              <b-form-textarea required rows="3" v-model="model.text"></b-form-textarea>
             </b-form-group>
             <div>
               <b-btn type="submit" variant="success">Save</b-btn>

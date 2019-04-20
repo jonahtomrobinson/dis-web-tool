@@ -24,7 +24,6 @@
                               <div class="col-xs-6 ml-5 pl-4">
                                   <p class="card-title-sub" >Additional information</p>
                                   <b-card class="card-item-small">
-
                                     <p class="card-text-selected">{{selectedEvent.additional_info}}</p>
                                   </b-card>
                               </div>
@@ -34,14 +33,14 @@
                     <p class="card-title-header">Categories {{chosenCategories.length}}</p>
                     <div class="row item-row ml-1">
 
-                            <div v-for="category in chosenCategories" :key="category.id">
-                                <p class="mt-2 card-text-selected"> <span class="card-categories-selected">{{category.text}}: {{category.frequency}}</span></p>
-                            </div>
+                        <div v-for="category in chosenCategories" :key="category.id">
+                            <p class="mt-2 card-text-selected"> <span class="card-categories-selected">{{category.text}}</span></p>
+                        </div>
                     </div>
 
                     <hr>
                     <p class="card-title-header">Technologies {{assignTechs.length}}</p>
-                    <div style="overflow-y: scroll; height:232px;" class="row item-row">
+                    <div v-if="modal == false" style="overflow-y: scroll; height:232px;" class="row item-row">
                             <div class="col-md-4 mb-3 mt-3" v-for="assignTech in assignTechs" :key="assignTech.id">
 
                                 <b-card class="card-item-small">
@@ -63,14 +62,13 @@
             </div>
         </div>
     </div>
-
     <modals-container/>
   </div>
 </template>
 
 <script>
 import api from '@/api'
-import TechnologyDetails from '@/components/TechnologyDetails'
+import TechnologyDetails from '@/components/technology/TechnologyDetails'
 export default {
   data () {
     return {
@@ -78,13 +76,15 @@ export default {
       events: [],
       assignments: [],
       techs: [],
+      categoryEvents: [],
+      categories: [],
       chosenCategories: [],
       assignTechs: [],
       bestScalibility: 0,
       assignedCategories: {},
     }
   },
-  props: ['selectedEvent'],
+  props: ['selectedEvent', 'modal'],
   watch: {
       selectedEvent : function() {
         this.refresh()
@@ -99,73 +99,51 @@ export default {
         this.events = await api.getManyREST("events")
         this.techs = await api.getManyREST("techs")
         this.assignments = await api.getManyREST("eventTechnologies")
-        this.chosenCategories = []
-        this.categories = {}
+        this.categoryEvents = await api.getManyREST('categoryEvents')
+        this.categories = await api.getManyREST('categories')
         await this.getTechs()
+        await this.getCategories(this.selectedEvent.id)
         this.loading = true
     },
     async getCategories(id){
-        var event = []
-        event = await api.getManyREST('categoryEvents')
-        for (var e in event){
-          if (event[e].event_id == id){
-
-              var catObject = await api.getSingleREST('categories', event[e].category_id)
-              var found = false
-              var foundIndex = 0
-              
-              for (var key in this.chosenCategories){
-                  if (this.chosenCategories[key].id == catObject.id){
-                      found = true
-                      foundIndex = key
-              }
-
-              }
-              if (!found){
-                  this.chosenCategories.push(catObject)
-                  catObject.frequency = 1
-                  
-              }
-              else{
-                  this.chosenCategories[foundIndex].frequency += 1
-              }
-          }
+        for (var e in this.categoryEvents){
+            if (this.categoryEvents[e].event_id == id){
+                for (var category in this.categories){
+                    if (this.categories[category].id == this.categoryEvents[e].category_id){
+                        this.chosenCategories.push(this.categories[category])
+                    }
+                }
+            }
         }
     },
     async getTechs (){
         this.assignTechs = []
-        console.log(this.selectedEvent.id);
         
         for (var as in this.assignments){
             if(this.assignments[as].event_id == this.selectedEvent.id){
                 for (var ev in this.techs){
                     if (this.techs[ev].id == this.assignments[as].technology_id){
                         this.assignTechs.push(this.techs[ev])
-
-                        //await this.getCategories()
                     }
                 }
             }
         }
     },
-    async viewDetails(id){
-        
-    },
     async showModal(id){
-        var x = await api.getSingleREST("techs",id)
+        alert("hello")
+        var x = await api.getSingleREST("techs", id)
         this.$modal.show(TechnologyDetails, {
             selectedTechnology: x,
             modal: true,
-            /*props: {
-                'selectedTechnology' : 1
-            },*/
         }, {
-            width: 1200,
-            height: 550,
-            draggable: true,
-            adaptive: true
+            width: 750,
+            height: 750,
         })
-    }   
+        this.$modal.hide
+        alert("bye")
+        //this.modal = false  
+    }
+     
   }
 }
 </script>

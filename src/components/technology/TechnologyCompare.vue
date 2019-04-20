@@ -214,7 +214,6 @@ export default {
                         await this.getCategories(this.events[ev].id, 'tech1')
                     }
                 }
-
                 if(this.assignments[as].technology_id == this.compareTech2.id){
                     if (this.events[ev].id == this.assignments[as].event_id){
 

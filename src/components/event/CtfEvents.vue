@@ -3,7 +3,7 @@
     <div>
         <b-button v-if="currentComponent" class="mr-1" @click="currentComponent = null">Close</b-button>
 
-        <div v-cloak v-bind:selectedEvent="selectedEvent"  v-bind:compareTech1="compareTech1" v-bind:compareTech2="compareTech2" :is="currentComponent"></div>
+        <div v-cloak v-bind:modal="false" v-bind:selectedEvent="selectedEvent"  v-bind:compareEvent1="compareEvent1" v-bind:compareEvent2="compareEvent2" :is="currentComponent"></div>
         
         <div v-if="!currentComponent" class="row card-row">
             <div class="col-md-4 mb-3 mt-3">
@@ -21,13 +21,13 @@
                                 <b-form-group label="Criteria">
                                     <b-form-select v-model="filterCriteria">
                                         <option :value="'style'">Event Style</option>
-                                        <option :value="'purpose'">Purpose</option>
-                                        <option :value="2">Other</option>
+                                        <option :value="'categories'">Categories</option>
+                                        <option :value="'attendees'">Attendees</option>
                                     </b-form-select>
                                 </b-form-group>
                             </div>
 
-                            <div class="col-xs-6">
+                            <div class="col-xs-6 mr-2">
                                 <b-form-group label="Value">
                                     <div v-if="filterCriteria == 'style'">
                                         <b-form-select v-model="filterValue">
@@ -37,14 +37,28 @@
                                             <option :value="'Other'">Other</option>
                                         </b-form-select>
                                     </div>
-                                    <!--<div v-if="filterCriteria == 'cost'">
-                                        <b-form-select v-model="filterValue">
-                                            <option v-for="purpose in purposes" :key="purpose.id" :value="purpose.id">{{purpose.text}}</option>
-                                        </b-form-select>
-                                        <b-form-input type="text" v-model="filterValue"></b-form-input>
-                                    </div>-->
 
+                                    <div v-if="filterCriteria == 'categories'">
+                                        <b-form-select v-model="filterValue">
+                                            <option  v-for="category in categories" :key="category.id" :value="category.id">{{category.text}}</option>
+                                        </b-form-select>
+                                    </div>
+
+                                    <div v-if="filterCriteria == 'attendees'">
+                                        <b-form-select v-model="filterStatus">
+                                            <option :value="'more'">more than</option>
+                                            <option :value="'less'">less than</option>
+                                        </b-form-select>
+                                    </div>
                                 </b-form-group>
+                            </div>
+
+                            <div class="col-xs-6">
+                                <div v-if="filterCriteria == 'attendees'">
+                                    <b-form-group label="*">
+                                        <b-form-input type="text" v-model="filterValue"></b-form-input>
+                                    </b-form-group>
+                                </div>
                             </div>
                         </div>
                 </b-card>
@@ -57,7 +71,7 @@
 
                             <div class="col-xs-6 mr-2">
                                 <b-form-group label="Technology 1">
-                                    <b-form-select v-model="compareTech1" >
+                                    <b-form-select v-model="compareEvent1" >
                                         <option  v-for="event in filteredEvents" :key="event.id" :value="event">{{event.name}}</option>
                                     </b-form-select>
                                 </b-form-group>
@@ -69,14 +83,14 @@
 
                             <div class="col-xs-6 ml-2">
                                 <b-form-group label="Technology 2">
-                                    <b-form-select v-model="compareTech2" >
+                                    <b-form-select v-model="compareEvent2" >
                                         <option  v-for="event in filteredEvents" :key="event.id" :value="event">{{event.name}}</option>
                                     </b-form-select>
                                 </b-form-group>
                             </div>
 
                             <div class="col-xs-6 mr-3 ml-3 pt-4">
-                                    <b-button v-if="compareTech1 && compareTech2" class="mt-1" v-on:click="compareTechs()">Submit</b-button>
+                                    <b-button v-if="compareEvent1 && compareEvent2" class="mt-1" v-on:click="compareTechs()">Submit</b-button>
                             </div>
                         </div>
                 </b-card>  
@@ -104,21 +118,23 @@
 
 <script>
 import api from '@/api'
-import CtfEventDetails from '@/components/CtfEventDetails'
-import CtfEventCompare from '@/components/CtfEventCompare'
+import CtfEventDetails from './CtfEventDetails'
+import CtfEventCompare from './CtfEventCompare'
 export default {
   data () {
     return {
       loading: false,
       events: [],
-      purposes: [],
+      categories: [],
+      categoryEvents: [],
       filteredEvents: [],
       currentComponent: null,
       selectedEvent: {},
       filterCriteria: null,
+      filterStatus : null,
       filterValue : null,
-      compareTech1: null,
-      compareTech2: null
+      compareEvent1: null,
+      compareEvent2: null
     }
   },
    watch: {
@@ -127,23 +143,27 @@ export default {
       },
       filterCriteria : function(){
           this.filterValue = null
+          this.filterStatus = null
       }
   },
   async created () {
-    this.refreshEvents()
+    this.refresh()
   },
   methods: {
+    async refresh () {
+        this.loading = true
+        this.filteredEvents = []
+        this.events = await api.getManyREST("events")
+        await this.filterEvents()
+        this.categories = await api.getManyREST("categories")
+        this.categoryEvents = await api.getManyREST('categoryEvents')
+        this.loading = false
+    },
     async filterEvents(){
         this.filteredEvents = []
-        this.compareTech1 = null
-        this.compareTech2 = null
-        /*else if (this.filter.criteria == "type"){
-            for (var event in this.events){
-                if (this.events[event].type == this.filter.type){
-                    this.filteredEvents.push(this.events[event])
-                }
-            }
-        }*/
+        this.compareEvent1 = null
+        this.compareEvent2 = null
+
         if (this.filterCriteria == "style"){
             for (var event in this.events){
                 if (this.events[event].style == this.filterValue){
@@ -151,23 +171,37 @@ export default {
                 }
             }
         }
+        else if (this.filterCriteria == 'categories'){
+            for (var e in this.categoryEvents){
+                if (this.categoryEvents[e].category_id == this.filterValue){
+                    for (var event in this.events){
+                        if (this.events[event].id == this.categoryEvents[e].event_id){
+                            this.filteredEvents.push(this.events[event])
+                        }
+                    }
+                }
+            }
+        }
+        else if (this.filterCriteria == "attendees"){
+            if (this.filterStatus == 'more'){
+                for (var event in this.events){
+                    if (this.events[event].num_of_users > this.filterValue){
+                        this.filteredEvents.push(this.events[event])
+                    }
+                }
+            }
+            else if (this.filterStatus == 'less'){
+                for (var event in this.events){
+                    if (this.events[event].num_of_users < this.filterValue){
+                        this.filteredEvents.push(this.events[event])
+                    }
+                }
+            }
+        }
         else{
             this.filteredEvents = this.events
         }
         
-    },
-    async refreshEvents () {
-        this.loading = true
-        this.filteredEvents = []
-        this.events = await api.getManyREST("events")
-        await this.filterEvents()
-        //await this.addPurposes();
-        this.loading = false
-    },
-    async addPurposes(){
-        for (var event in this.events){
-            this.events[event].purpose = (await api.getSingleREST("purposes", this.events[event].purpose_id)).text
-        }
     },
     async viewDetails(event){
         this.selectedEvent = event

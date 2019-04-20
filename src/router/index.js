@@ -21,9 +21,14 @@ let router = new Router({
   routes: [
     {
       path: '/',
-      name: '/',
+      name: '/technologies',
       component: Technologies
     },
+    {
+        path: '/hello',
+        name: '/hello',
+        component: Hello
+      },
     {
       path: '/implicit/callback',
       component: Auth.handleCallback()

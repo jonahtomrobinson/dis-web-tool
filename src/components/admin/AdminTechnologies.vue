@@ -20,7 +20,7 @@
             <!-- Table body -->  
           <tbody>
             <tr v-for="tech in techs" :key="tech.id">
-              <td>{{ tech.logo }}</td>
+              <td><img :src="image">{{ image }}</td>
               <td>{{ tech.name }}</td>
               <td>{{ tech.cost }}</td>
               <td>{{ tech.purpose }}</td>
@@ -52,28 +52,30 @@
                     Uploading {{ fileCount }} files...
                     </p>
                 </div>-->
+
+                <b-form-file @change="onFileSelected" accept="image/*"></b-form-file>
             </b-form-group>
 
             <b-form-group label="Name">
-              <b-form-input type="text" v-model="model.name"></b-form-input>
+              <b-form-input required type="text" v-model="model.name"></b-form-input>
             </b-form-group>
 
             <b-form-group label="Cost">
-              <b-form-input type="text" v-model="model.cost"></b-form-input>
+              <b-form-input required type="text" v-model="model.cost"></b-form-input>
             </b-form-group>
 
             <b-form-group label="Purpose">
-                <b-form-select type="integer" v-model="model.purpose_id">
+                <b-form-select required type="integer" v-model="model.purpose_id">
                     <option v-for="purpose in purposes" :key="purpose.id" :value="purpose.id">{{ purpose.text }}</option>
                 </b-form-select>
             </b-form-group>
 
             <b-form-group label="Source Website">
-                <b-form-input type="text" v-model="model.source"></b-form-input>
+                <b-form-input required type="text" v-model="model.source"></b-form-input>
             </b-form-group>
 
             <b-form-group label="Description">
-              <b-form-textarea rows="3" v-model="model.description"></b-form-textarea>
+              <b-form-textarea required rows="3" v-model="model.description"></b-form-textarea>
             </b-form-group>
             <div>
               <b-btn type="submit" variant="success">Save</b-btn>
@@ -94,7 +96,10 @@ export default {
       loading: false,
       techs: [],
       purposes: [],
-      model: {}
+      model: {},
+      addedImage: null,
+      image : null,
+      selectedFile: null
     }
   },
   async created () {
@@ -107,10 +112,41 @@ export default {
             text: value,
         })
     },
+    async convertBlobs(){
+        for (var tech in this.techs){
+            //this.image = 'data:image/jpeg;base64,' + btoa(new Uint8Array(this.techs[tech].logo).reduce((data, byte) => data + String.fromCharCode(byte), ''))
+            this.image = 'data:image/jpeg;base64,' + btoa(this.techs[tech].logo.data)
+        }
+    },
+    
+    async onFileSelected(event){
+        this.selectedFile = event.target.files[0]
+        const fileReader = new FileReader()
+            fileReader.addEventListener('load', () => {
+                this.selectedFile = fileReader.result
+            })
+        await fileReader.readAsDataURL(this.selectedFile)
+        console.log("before "+ (this.selectedFile))
+        this.model.logo = this.selectedFile
+      },
+    async ConvertToBlob(){
+        console.log("before "+ (this.model.logo instanceof Blob) + " "+ this.model.logo)
+    },
     async refreshTechs () {
         this.loading = true
         this.techs = await api.getManyREST("techs")
+        this.convertBlobs()
+        //var img = new Image()
+        //img.src = URL.createObjectURL(this.techs[4].logo)
 
+        /*console.log((await api.getSingleREST("techs",9)).logo)
+        const fileReader = new FileReader()
+        fileReader.addEventListener('load', () => {
+                this.image = fileReader.result
+            })
+        fileReader.readAsDataURL((await api.getSingleREST("techs",9)).logo)*/
+
+        //this.image = img
         // Update purposes values from id.
         for (var i = 0; i < this.techs.length; i++){
             for (var p = 0; p < this.purposes.length; p++){

@@ -18,8 +18,6 @@ app.use(cors())
 app.use(bodyParser.json())
 app.use(express.static(__dirname + '/assets/css'));
 
-var bla = true
-
 // verify JWT token middleware
 app.use((req, res, next) => {
   // require every request to have an authorization header. EXCEPT GET REQUESTS.
@@ -60,12 +58,6 @@ let database = new Sequelize({
   id, createdAt, and updatedAt are added by sequelize automatically
 \*------------------------------------*/
 
-// Define our Post model
-let Post = database.define('posts', {
-  title: Sequelize.STRING,
-  body: Sequelize.TEXT
-  })
-
 // Define our Purpose model
 let Purpose = database.define('Purpose', {
     text: Sequelize.STRING,
@@ -73,7 +65,7 @@ let Purpose = database.define('Purpose', {
 
 // Define our Technology model
 let Tech = database.define('Technology', {
-    logo: Sequelize.BLOB,
+    logo: Sequelize.STRING(100000),
     name: Sequelize.STRING,
     cost: Sequelize.STRING,  
     source: Sequelize.STRING,
@@ -122,12 +114,6 @@ epilogue.initialize({
   sequelize: database
   })
 
-// Post model
-let postResource = epilogue.resource({
-  model: Post,
-  endpoints: ['/posts', '/posts/:id']
-  })
-
 // Tech model
 let techResource = epilogue.resource({
     model: Tech,
@@ -170,10 +156,9 @@ let eventTechnologyResource = epilogue.resource({
 
 // Resets the database and launches the express app on :8081
 database
-  //.sync({ force: true })
+  .sync({ force: true })
     app.listen(8081, () => {
     console.log('listening to port localhost:8081')
-    
   })
 
 

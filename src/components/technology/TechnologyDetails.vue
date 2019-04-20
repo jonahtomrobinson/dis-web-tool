@@ -50,7 +50,7 @@
                                             <p class="card-title-small">{{assignEvent.name}}</p>
                                             <p class="card-text-small">{{assignEvent.style}} | {{assignEvent.date}}</p>
                                             <p class="card-text-small">{{assignEvent.location}} | {{assignEvent.num_of_users}} Attendees</p>
-                                            <b-button class="mr-1" @click="chosenCategories[0].frequency =+ 1">See Details</b-button>
+                                            <b-button class="mr-1" @click="showModal(assignEvent.id)">See Details</b-button>
                                         </div>
                                     </div>
 
@@ -68,6 +68,7 @@
 
 <script>
 import api from '@/api'
+import CtfEventDetails from '@/components/event/CtfEventDetails'
 export default {
   data () {
     return {
@@ -155,9 +156,19 @@ export default {
             }
         }
     },
-    async viewDetails(id){
-        
-    }
+    async showModal(id){
+        var x = await api.getSingleREST("events",id)
+        this.$modal.show(CtfEventDetails, {
+            selectedEvent: x,
+            modal: true,
+        }, {
+            width: 750,
+            height: 750,
+            draggable: true,
+            adaptive: true
+        })
+        //this.modal = false  
+    } 
   }
 }
 </script>

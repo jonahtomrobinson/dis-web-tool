@@ -15,9 +15,14 @@ export default {
       method,
       url: resource,
       data,
-      headers: {
+      headers:{
         Authorization: `Bearer ${accessToken}`
-      }
+      },
+      config: {
+        headers: {
+            'Content-Type': 'multipart/form-data' ,
+        }
+    }
     }).then(req => {
       return req.data
     })
