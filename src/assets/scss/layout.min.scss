@@ -2,338 +2,253 @@
   #GENERAL-LAYOUT
 \*------------------------------------*/
 
-@import url('https://fonts.googleapis.com/css?family=Roboto');
-@import url('https://fonts.googleapis.com/css?family=Lato');
-@import url('https://fonts.googleapis.com/css?family=Open+Sans');
+@import url("https://fonts.googleapis.com/css?family=Open+Sans");
 
-#app{
-    margin-left: 1%;
-    margin-right: 1%;
+#app {
+  margin-left: 1%;
+  margin-right: 1%;
 }
 
-body, .body {
-  font-family: 'Open Sans', sans-serif;
+body,
+.body {
+  font-family: "Open Sans", sans-serif;
   background-color: #fff;
 }
 
-.cntr {
-  text-align: center;
+a {
+  color: #e43230 !important;
 }
 
-.delb, .noconfirm {
-  color:red;
-}
-
-.fadis{
-  color:#aaa;
-}
-
-a{
-  color: #E43230 !important;
-}
-
-.loading{
-    position: absolute;
-    width: 100px;
-    height: 50px;
-    top: 50%;
-    left: 50%;
-    margin-left: -50px; /* margin is -0.5 * dimension */
-    margin-top: -25px; 
-}
-
-/*.spinner {
-    width: 40px;
-    height: 40px;
-    background-color: #333;
-  
-    margin: 100px auto;
-    -webkit-animation: sk-rotateplane 1.2s infinite ease-in-out;
-    animation: sk-rotateplane 1.2s infinite ease-in-out;
-  }
-  
-  @-webkit-keyframes sk-rotateplane {
-    0% { -webkit-transform: perspective(120px) }
-    50% { -webkit-transform: perspective(120px) rotateY(180deg) }
-    100% { -webkit-transform: perspective(120px) rotateY(180deg)  rotateX(180deg) }
-  }
-  
-  @keyframes sk-rotateplane {
-    0% { 
-      transform: perspective(120px) rotateX(0deg) rotateY(0deg);
-      -webkit-transform: perspective(120px) rotateX(0deg) rotateY(0deg) 
-    } 50% { 
-      transform: perspective(120px) rotateX(-180.1deg) rotateY(0deg);
-      -webkit-transform: perspective(120px) rotateX(-180.1deg) rotateY(0deg) 
-    } 100% { 
-      transform: perspective(120px) rotateX(-180deg) rotateY(-179.9deg);
-      -webkit-transform: perspective(120px) rotateX(-180deg) rotateY(-179.9deg);
-    }
-  }*/
-
-/*------------------------------------*\
-  #CUSTOM-BOOTSTRAP
-\*------------------------------------*/
-
-.bg-yellow{
-  background-color: #E43230 !important;
-}
-
-.bg-dark{
-  background-color: #f5e7e7 !important;
-}
-
-.border-yellow{
-  border: 1px solid !important;
-  border-color: #E43230 !important;
-}
-
-.border-dark{
-  border: 1px solid !important;
-  border-color: #353535 !important;
+.loading {
+  position: absolute;
+  width: 100px;
+  height: 50px;
+  top: 50%;
+  left: 50%;
+  margin-left: -50px; /* margin is -0.5 * dimension */
+  margin-top: -25px;
 }
 
 /*------------------------------------*\
   #BUTTONS
 \*------------------------------------*/
 
-.btn{
+.btn {
   background-color: white !important;
-  border: 1px solid #E43230 !important;
-  color: #E43230 !important;
-  font-family: 'Open Sans', sans-serif !important;
+  border: 1px solid #e43230 !important;
+  color: #e43230 !important;
+  font-family: "Open Sans", sans-serif !important;
   font-weight: bold !important;
 }
 
-.btn:hover{
-  background-color: #E43230 !important;
+.btn:hover {
+  background-color: #e43230 !important;
   border: 1px solid #353535 !important;
   color: white !important;
 }
-
 
 /*------------------------------------*\
   #IMAGE-UPLOAD-DROP-BOX
 \*------------------------------------*/
 
 .dropbox {
-    outline: 2px dashed grey; /* the dash box */
-    outline-offset: -10px;
-    background: lightcyan;
-    color: dimgray;
-    padding: 10px 10px;
-    min-height: 120px; /* minimum height */
-    position: relative;
-    cursor: pointer;
+  outline: 2px dashed grey; /* the dash box */
+  outline-offset: -10px;
+  background: lightcyan;
+  color: dimgray;
+  padding: 10px 10px;
+  min-height: 120px; /* minimum height */
+  position: relative;
+  cursor: pointer;
 }
 
 .input-file {
-    opacity: 0; /* invisible but it's there! */
-    width: 100%;
-    height: 120px;
-    position: absolute;
-    cursor: pointer;
+  opacity: 0; /* invisible but it's there! */
+  width: 100%;
+  height: 120px;
+  position: absolute;
+  cursor: pointer;
 }
 
 .dropbox:hover {
-    background: lightblue; /* when mouse over to the drop zone, change color */
+  background: lightblue; /* when mouse over to the drop zone, change color */
 }
 
 .dropbox p {
-    font-size: 1.2em;
-    text-align: center;
-    padding: 50px 0;
+  font-size: 1.2em;
+  text-align: center;
+  padding: 50px 0;
 }
 
 /*------------------------------------*\
   #FORM
 \*------------------------------------*/
 
-.new-categories{
-    color: black;
-    padding:3px;
-    border: 1px solid #353535 !important;
+.new-categories {
+  color: black;
+  padding: 3px;
+  border: 1px solid #353535 !important;
 }
 
-.displayedCategory{
-    display:inline !important
+.displayedCategory {
+  display: inline !important;
 }
 
 /*------------------------------------*\
   #ASSIGNMENT-PAGE
 \*------------------------------------*/
 
-.assign-row-outer{
-    width: 80%; 
-    margin: 0 auto;
+.assign-row-outer {
+  width: 80%;
+  margin: 0 auto;
 }
 
-.assign-row{
-   text-align: left;
-   justify-content: center;
-   margin-top:2%;
+.assign-row {
+  text-align: left;
+  justify-content: center;
+  margin-top: 2%;
 }
 
-.assign-item{
-    cursor: pointer;
+.assign-item {
+  cursor: pointer;
 }
 
-.assign-item:hover{
-    border: 1px solid #E43230 !important;
+.assign-item:hover {
+  border: 1px solid #e43230 !important;
 }
-
-/*.assign-item-chosen{
-    border: 2px solid #E43230 !important;
-}*/
 
 /*------------------------------------*\
   #CLIENT-SIDE-TILES
 \*------------------------------------*/
 
 .card-item {
-    cursor: pointer;
-    max-width: 275px;
-  }
-
-.card-title{
-    font-weight: bold;
-    font-size: 150%;
-    text-align: center;
+  cursor: pointer;
+  max-width: 275px;
 }
 
-.card-title-sub{
-    font-weight: bold;
-    font-size: 125%;
+.card-title {
+  font-weight: bold;
+  font-size: 150%;
+  text-align: center;
 }
 
-.card-title-header{
-    font-weight: bold;
-    font-size: 150%;
+.card-title-sub {
+  font-weight: bold;
+  font-size: 125%;
 }
 
-.card-item:hover{
-    border: 1px solid #E43230 !important;
+.card-title-header {
+  font-weight: bold;
+  font-size: 150%;
 }
 
-.card-img{
-    height: 150px;
-    object-fit: contain;
+.card-item:hover {
+  border: 1px solid #e43230 !important;
 }
 
-.card-row{
-    margin-right:1%;
+.card-img {
+  height: 150px;
+  object-fit: contain;
 }
 
-.card-purpose{
-    font-weight: normal;
-    padding:5px;
-    font-size:75%;
-    border: 1px solid #353535 !important;
-    color: black !important;;
+.card-row {
+  margin-right: 1%;
 }
 
-p.card-body{
-    overflow-wrap: break-word;
+.card-purpose {
+  font-weight: normal;
+  padding: 5px;
+  font-size: 75%;
+  border: 1px solid #353535 !important;
+  color: black !important;
 }
 
-.unselectable {
-    -moz-user-select: -moz-none;
-    -khtml-user-select: none;
-    -webkit-user-select: none;
- 
-    /*
-      Introduced in IE 10.
-      See http://ie.microsoft.com/testdrive/HTML5/msUserSelect/
-    */
-    -ms-user-select: none;
-    user-select: none;
- }
+p.card-body {
+  overflow-wrap: break-word;
+}
 
 /*------------------------------------*\
   #CLIENT-FILTER-TILE
 \*------------------------------------*/
 
-.card-item-filter{
-    min-width: 400px;
+.card-item-filter {
+  min-width: 400px;
 }
 
 /*------------------------------------*\
   #CLIENT-SIDE-SELECTED-TILE
 \*------------------------------------*/
 
-.card-item-selected{
-    border: 2px solid #E43230 !important;
+.card-item-selected {
+  border: 2px solid #e43230 !important;
 }
 
-.item-row{
-    margin-right:1%;
+.item-row {
+  margin-right: 1%;
 }
 
-.card-text{
-    display:inline
+.card-text {
+  display: inline;
 }
 
-.card-img-small{
-    height: 150px;
-    //object-fit: contain;
+.card-img-small {
+  height: 150px;
 }
 
 .card-item-small {
-    max-width: 500px;
-    min-width: 360px;
-    padding:0px;
-
-  }
-
-.card-item-small-col p{
-    display:inline !important;
+  max-width: 500px;
+  min-width: 360px;
+  padding: 0px;
 }
 
-.card-title-selected{
-    font-weight: bold;
-    font-size: 200%;
+.card-item-small-col p {
+  display: inline !important;
 }
 
-.card-purpose-selected{
-    font-weight: normal;
-    font-size: 50%;
-    padding:5px;
-    margin-left:10px;
-    border: 1px solid #353535 !important;
-    color: black !important;;
+.card-title-selected {
+  font-weight: bold;
+  font-size: 200%;
 }
 
-.card-categories-selected{
-    font-weight: bold;
-    padding:5px;
-    margin-left:10px;
-    border: 1px solid #353535 !important;
-    color: #353535 !important;;
+.card-purpose-selected {
+  font-weight: normal;
+  font-size: 50%;
+  padding: 5px;
+  margin-left: 10px;
+  border: 1px solid #353535 !important;
+  color: black !important;
 }
 
-.card-title-small{
-    font-weight: bold;
+.card-categories-selected {
+  font-weight: bold;
+  padding: 5px;
+  margin-left: 10px;
+  border: 1px solid #353535 !important;
+  color: #353535 !important;
 }
 
+.card-title-small {
+  font-weight: bold;
+}
 
 /*------------------------------------*\
   #CLIENT-SIDE-COMPARE
 \*------------------------------------*/
 
-.card-item-compare{
-    max-width: 200px;
-    min-width: 100px;
-    padding:0px;
-    align-content: center;
-    text-align: center;
+.card-item-compare {
+  max-width: 200px;
+  min-width: 100px;
+  padding: 0px;
+  align-content: center;
+  text-align: center;
 }
 
-.card-img-compare{
-    height: 75px;
-    object-fit: contain;
+.card-img-compare {
+  height: 75px;
+  object-fit: contain;
 }
 
-.card-title-compare{
-    font-weight: bold;
-    object-fit: contain;
+.card-title-compare {
+  font-weight: bold;
+  object-fit: contain;
 }

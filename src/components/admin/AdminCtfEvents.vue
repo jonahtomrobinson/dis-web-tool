@@ -20,7 +20,6 @@
 
           <!-- Table body -->
           <tbody>
-            <!--<b-alert :show="loading" variant="info">Loading...</b-alert>-->
             <tr v-for="event in events" :key="event.id">
               <td>
                 <img :height="150" :src="event.logo">
@@ -70,6 +69,7 @@
                 <option>Other</option>
               </b-form-select>
             </b-form-group>
+
             <b-form-group label="Date">
               <b-form-input required type="date" v-model="model.date"></b-form-input>
             </b-form-group>
@@ -90,6 +90,7 @@
                   :value="category"
                 >{{ category.text }}</option>
               </b-form-select>
+
               <b-button class="mr-1 mt-2 mb-2" @click="addCategory()">Add</b-button>
               <tbody>
                 <tr
@@ -110,6 +111,7 @@
             <b-form-group label="Additional info">
               <b-form-textarea rows="1" v-model="model.additional_info"></b-form-textarea>
             </b-form-group>
+
             <div>
               <b-btn type="submit" variant="success">Save</b-btn>
             </div>
@@ -140,11 +142,27 @@ export default {
     this.refresh();
   },
   methods: {
+    // Show pop-up modal.
     async showModal(value) {
       this.$modal.show("dialog", {
         text: value
       });
     },
+
+    // Refresh data from the database.
+    async refresh() {
+      this.loading = true;
+      this.events = await api.getManyREST("events");
+      this.convertBlobs();
+
+      // Event category assignment table.
+      this.categoryEvents = await api.getManyREST("categoryEvents");
+      // Input categories.
+      this.categories = await api.getManyREST("categories");
+      this.loading = false;
+    },
+
+    // Convert blobs/images objects from the database to a binary string for displaying.
     async convertBlobs() {
       for (var event in this.events) {
         var binary = "";
@@ -156,6 +174,8 @@ export default {
         this.events[event].logo = binary;
       }
     },
+
+    // Convert uploaded image to blob data.
     async onFileSelected(event) {
       var test = "";
       this.selectedFile = event.target.files[0];
@@ -166,6 +186,8 @@ export default {
       });
       await fileReader.readAsDataURL(this.selectedFile);
     },
+
+    // For each event grab data on their challenge categories.
     async getCatsForEachEvent(id) {
       this.chosenCategories = [];
       var event = [];
@@ -178,6 +200,8 @@ export default {
         }
       }
     },
+
+    // Add category on button click.
     async addCategory() {
       if (
         !this.chosenCategories.includes(this.selectedCategory) &&
@@ -186,23 +210,13 @@ export default {
         this.chosenCategories.push(this.selectedCategory);
       }
     },
+
+    // Remove a category on button click.
     async removeCategory() {
       this.chosenCategories.pop(this.selectedCategory);
     },
 
-    async refresh() {
-      this.loading = true;
-      this.events = await api.getManyREST("events");
-      this.convertBlobs();
-      
-      // Event category assignment table.
-      this.categoryEvents = await api.getManyREST("categoryEvents");
-      // Input categories.
-      this.categories = await api.getManyREST("categories");
-      this.loading = false;
-    },
-
-    // Edit event.
+    // Populate form with edit information.
     async populateEventToEdit(event) {
       this.model = Object.assign({}, event);
       if (this.chosenCategories != []) {
@@ -210,6 +224,8 @@ export default {
       }
       this.getCatsForEachEvent(this.model.id);
     },
+
+    // Save form data (categories) to database using API.
     async saveCategoryEvents() {
       var eventId = this.model.id;
       var model = {};
@@ -221,6 +237,8 @@ export default {
         model = {};
       }
     },
+
+    // Save form data to database using API.
     async saveEvent() {
       if (this.model.id) {
         await api.updateREST("events", this.model.id, this.model);
@@ -242,6 +260,8 @@ export default {
       this.model = {}; // reset form
       this.refresh();
     },
+
+    // Delete selected item from the database using API.
     async deleteEvent(id) {
       if (confirm("Are you sure you want to delete this event?")) {
         // if we are editing a event we deleted, remove it from the form
@@ -253,8 +273,9 @@ export default {
       }
     },
 
-    // TODO fix the edit categories to show correctly.
+    // Delete selected categories from the selected item, from the database using the API.
     async deleteCategoryEvents(eventId) {
+        // TODO fix the edit categories to show correctly.
       this.categoryEvents = await api.getManyREST("categoryEvents");
       for (var ce in this.categoryEvents) {
         if (this.categoryEvents[ce].event_id == eventId) {

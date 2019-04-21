@@ -2,32 +2,30 @@
   #NAVBAR
 \*------------------------------------*/
 
-@import url('https://fonts.googleapis.com/css?family=Varela+Round');
+@import url("https://fonts.googleapis.com/css?family=Varela+Round");
 
-.navbar{
-  /*font-weight: bold !important;*/
-  font-family: 'Varela Round', sans-serif;
+.navbar {
+  font-family: "Varela Round", sans-serif;
 }
 
-.navbar-nav{
-    align-content: center !important;
-    float:left !important;
+.navbar-nav {
+  align-content: center !important;
+  float: left !important;
 }
 
 .navbar-nav .nav-link {
   color: black !important;
 }
 
-.navbar a:hover{
-  color: #E43230 !important;
+.navbar a:hover {
+  color: #e43230 !important;
   border-bottom: 1px solid !important;
-  border-color: #E43230 !important;
+  border-color: #e43230 !important;
 }
 
-.navbar a, span
-{
+.navbar a,
+span {
   color: white !important;
   border-bottom: 1px solid !important;
   border-color: white !important;
 }
-

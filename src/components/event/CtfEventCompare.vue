@@ -13,7 +13,8 @@
                   <a :href="compareEvent1.source">
                     <img
                       class="card-img-selected"
-                      :height="250" :src="compareEvent1.logo"
+                      :height="250"
+                      :src="compareEvent1.logo"
                       alt="card image collar"
                     >
                   </a>
@@ -81,7 +82,8 @@
                   <a :href="compareEvent2.source">
                     <img
                       class="card-img-selected"
-                      :height="250" :src="compareEvent2.logo"
+                      :height="250"
+                      :src="compareEvent2.logo"
                       alt="card image collar"
                     >
                   </a>
@@ -130,7 +132,8 @@
                   <b-card class="card-item-compare">
                     <img
                       class="card-img-compare"
-                      :height="150" :src="assignTech.logo"
+                      :height="150"
+                      :src="assignTech.logo"
                       alt="card image collar"
                     >
                     <p class="card-title-compare">{{assignTech.name}}</p>

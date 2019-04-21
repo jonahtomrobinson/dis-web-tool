@@ -13,7 +13,8 @@
                   <a :href="compareTech1.source">
                     <img
                       class="card-img-selected"
-                      :height="250" :src="compareTech1.logo"
+                      :height="250"
+                      :src="compareTech1.logo"
                       alt="card image collar"
                     >
                   </a>
@@ -21,7 +22,9 @@
                 <div class="col-xs-6 ml-4">
                   <p class="card-title-selected" href="compareTech1.source">
                     {{compareTech1.name}}
-                    <span class="card-purpose-selected">{{compareTech1.purpose}}</span>
+                    <span
+                      class="card-purpose-selected"
+                    >{{compareTech1.purpose}}</span>
                   </p>
                   <p class="card-text-selected">{{compareTech1.description}}</p>
                   <p class="card-text-selected">Cost: {{compareTech1.cost}}</p>
@@ -59,7 +62,8 @@
                   <b-card class="card-item-compare">
                     <img
                       class="card-img-compare"
-                      :height="250" :src="tech1assignEvents.logo"
+                      :height="250"
+                      :src="tech1assignEvents.logo"
                       alt="card image collar"
                     >
                     <p class="card-title-compare">{{assignEvent.name}}</p>
@@ -74,12 +78,12 @@
           <b-card class="card-item-selected">
             <div class="card-body">
               <div class="row">
-
                 <div class="col-xs-6 mr-2">
                   <a :href="compareTech2.source">
                     <img
                       class="card-img-selected"
-                      :height="250" :src="compareTech2.logo"
+                      :height="250"
+                      :src="compareTech2.logo"
                       alt="card image collar"
                     >
                   </a>
@@ -88,7 +92,9 @@
                 <div class="col-xs-6 ml-4">
                   <p class="card-title-selected" href="compareTech2.source">
                     {{compareTech2.name}}
-                    <span class="card-purpose-selected">{{compareTech2.purpose}}</span>
+                    <span
+                      class="card-purpose-selected"
+                    >{{compareTech2.purpose}}</span>
                   </p>
                   <p class="card-text-selected">{{compareTech2.description}}</p>
                   <p class="card-text-selected">Cost: {{compareTech2.cost}}</p>
@@ -103,7 +109,6 @@
                     class="card-text-selected"
                   >No available website link</p>
                 </div>
-                
               </div>
 
               <hr>
@@ -127,7 +132,8 @@
                   <b-card class="card-item-compare">
                     <img
                       class="card-img-compare"
-                      :height="150" :src="assignEvent.logo"
+                      :height="150"
+                      :src="assignEvent.logo"
                       alt="card image collar"
                     >
                     <p class="card-title-compare">{{assignEvent.name}}</p>

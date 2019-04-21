@@ -99,53 +99,19 @@ export default {
     this.refreshTechs();
   },
   methods: {
+    // Show pop-up modal.
     async showModal(value) {
       this.$modal.show("dialog", {
         text: value
       });
     },
-    async convertBlobs() {
-      for (var tech in this.techs) {
-        var binary = '';
-        var bytes = new Uint8Array( this.techs[tech].logo.data );
-        var len = bytes.byteLength;
-        for (var i = 0; i < len; i++) {
-            binary += String.fromCharCode( bytes[ i ] );
-        }
-        this.techs[tech].logo = binary
-      }
-    },
-    async onFileSelected(event) {
-        var test = ""
-      this.selectedFile = event.target.files[0]
-      const fileReader = new FileReader()
-      fileReader.addEventListener("load", () => {
-        test = fileReader.result
-        this.model.logo = test
-      });
-      await fileReader.readAsDataURL(this.selectedFile)
-    },
-    async ConvertToBlob() {
-      console.log(
-        "before " + (this.model.logo instanceof Blob) + " " + this.model.logo.toString
-      );
-    },
+
+    // Refresh data from the database.
     async refreshTechs() {
       this.loading = true;
       this.techs = await api.getManyREST("techs");
       this.convertBlobs();
-      //var img = new Image()
-      //img.src = URL.createObjectURL(this.techs[4].logo)
 
-      /*console.log((await api.getSingleREST("techs",9)).logo)
-        const fileReader = new FileReader()
-        fileReader.addEventListener('load', () => {
-                this.image = fileReader.result
-            })
-        fileReader.readAsDataURL((await api.getSingleREST("techs",9)).logo)*/
-
-      //this.image = img
-      // Update purposes values from id.
       for (var i = 0; i < this.techs.length; i++) {
         for (var p = 0; p < this.purposes.length; p++) {
           if (this.techs[i].purpose_id == this.purposes[p].id) {
@@ -159,12 +125,43 @@ export default {
 
       this.loading = false;
     },
+
+    // Convert blobs/images objects from the database to a binary string for displaying.
+    async convertBlobs() {
+      for (var tech in this.techs) {
+        var binary = "";
+        var bytes = new Uint8Array(this.techs[tech].logo.data);
+        var len = bytes.byteLength;
+        for (var i = 0; i < len; i++) {
+          binary += String.fromCharCode(bytes[i]);
+        }
+        this.techs[tech].logo = binary;
+      }
+    },
+
+    // Convert uploaded image to blob data.
+    async onFileSelected(event) {
+      var test = "";
+      this.selectedFile = event.target.files[0];
+      const fileReader = new FileReader();
+      fileReader.addEventListener("load", () => {
+        test = fileReader.result;
+        this.model.logo = test;
+      });
+      await fileReader.readAsDataURL(this.selectedFile);
+    },
+
+    // Refresh purposes.
     async refreshPurposes() {
       this.purposes = await api.getManyREST("purposes");
     },
+
+    // Populate form with edit information.
     async populateTechToEdit(tech) {
       this.model = Object.assign({}, tech);
     },
+
+    // Save form data to database using API.
     async saveTech() {
       if (this.model.id) {
         await api.updateREST("techs", this.model.id, this.model);
@@ -182,6 +179,8 @@ export default {
       this.model = {}; // reset form
       this.refreshTechs();
     },
+
+    // Delete selected item from the database using API.
     async deleteTech(id) {
       if (confirm("Are you sure you want to delete this technology?")) {
         // if we are editing a tech we deleted, remove it from the form

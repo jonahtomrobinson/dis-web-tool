@@ -1,6 +1,5 @@
 import Vue from 'vue'
 import Router from 'vue-router'
-import Hello from '@/components/Hello'
 import Technologies from '@/components/technology/Technologies'
 import CtfEvents from '@/components/event/CtfEvents'
 import InfrastructureCreator from '@/components/InfrastructureCreator'
@@ -23,11 +22,6 @@ let router = new Router({
             path: '/',
             name: '/technologies',
             component: Technologies
-        },
-        {
-            path: '/hello',
-            name: '/hello',
-            component: Hello
         },
         {
             path: '/implicit/callback',
