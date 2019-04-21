@@ -3,7 +3,7 @@ import axios from 'axios'
 
 
 const client = axios.create({
-  baseURL: 'http://localhost:32700/',
+  baseURL: 'http://localhost:8081/',
   json: true
 })
 
@@ -42,39 +42,5 @@ export default {
   deleteREST (item, id) {
     return this.execute('delete', '/'+item+`/${id}`)
   },
-
-  async saveImage(myFormData){
-    let accessToken = await Vue.prototype.$auth.getAccessToken()
-    return client({
-        method: 'post',
-        data: myFormData, 
-        config: {
-            headers: {
-            'Content-Type': 'multipart/form-data' ,
-            Authorization: `Bearer ${accessToken}`
-            }
-        }
-    })
-    .then(req => {
-        return req.data
-      })
-  }
-
-  /*
-  getPosts () {
-    return this.execute('get', '/posts')
-  },
-  getPost (id) {
-    return this.execute('get', `/posts/${id}`)
-  },
-  createPost (data) {
-    return this.execute('post', '/posts', data)
-  },
-  updatePost (id, data) {
-    return this.execute('put', `/posts/${id}`, data)
-  },
-  deletePost (id) {
-    return this.execute('delete', `/posts/${id}`)
-  },*/
 
 }

@@ -10,7 +10,7 @@ import Auth from '@okta/okta-vue'
 Vue.use(Auth, {
     issuer: 'https://dev-715478.okta.com/oauth2/default',
     client_id: '0oagr3dglwp1CJEYp356',
-    redirect_uri: 'https://dis-web-tool.herokuapp.com/implicit/callback',
+    redirect_uri: 'http://localhost:8080/implicit/callback',
     scope: 'openid profile email'
 })
 
@@ -52,13 +52,13 @@ let router = new Router({
             path: '/admin',
             name: 'Admin',
             component: Admin,
-            /*meta: {
+            meta: {
                 requiresAuth: true
-            }*/
+            }
         },
     ]
 })
 
-//router.beforeEach(Vue.prototype.$auth.authRedirectGuard())
+router.beforeEach(Vue.prototype.$auth.authRedirectGuard())
 
 export default router
