@@ -52,13 +52,13 @@ let router = new Router({
             path: '/admin',
             name: 'Admin',
             component: Admin,
-            meta: {
+            /*meta: {
                 requiresAuth: true
-            }
+            }*/
         },
     ]
 })
 
-router.beforeEach(Vue.prototype.$auth.authRedirectGuard())
+//router.beforeEach(Vue.prototype.$auth.authRedirectGuard())
 
 export default router
