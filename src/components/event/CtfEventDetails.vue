@@ -1,6 +1,9 @@
 <template>
   <div class="test">
-    <div >
+    <div v-if="!loading">
+      <p class="loading">Loading...</p>
+    </div>
+    <div v-else>
          <div class="row item-row">
             <div class="col-md mb-3 mt-3">
 
@@ -10,7 +13,7 @@
                         <div class="row">
                              <div class="col-xs-6 mr-2">
                                 <a :href="selectedEvent.source">
-                                    <img class="card-img-selected" src="/static/img/icons/apple-touch-icon-180x180.png" alt="card image collar">
+                                    <img class="card-img-selected" :height="250" :src="selectedEvent.logo" alt="card image collar">
                                 </a>
                              </div>
                               <div class="col-xs-6 ml-4">
@@ -46,7 +49,7 @@
                                 <b-card class="card-item-small">
                                     <div class="row">
                                         <div class="col-xs-6">
-                                            <img class="card-img-small" src="/static/img/icons/apple-touch-icon-180x180.png" alt="card image collar">
+                                            <img class="card-img-small" :height="150" :src="assignTech.logo" alt="card image collar">
                                         </div>
                                         <div class="col-xs-6 ml-2">
                                             <p class="card-title-small">{{assignTech.name}}</p>

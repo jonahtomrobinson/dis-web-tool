@@ -99,7 +99,7 @@
             <div class="row card-row">
                 <div class="col-md-2 mb-3 mt-3" v-for="tech in filteredTechs" :key="tech.id">
                     <b-card v-on:click="viewDetails(tech)" class="card-item">
-                        <img class="card-img" src="/static/img/icons/apple-touch-icon-180x180.png" alt="card image collar">
+                        <img class="card-img" :height="150" :src="tech.logo" alt="card image collar">
                         <div class="card-body">
                             <p class="card-title">{{tech.name}}</p>
                             <!--<p class="card-text"><span class="card-purpose"> {{tech.purpose}}</span></p>-->
@@ -144,6 +144,27 @@ export default {
     this.refreshTechs()
   },
   methods: {
+    async refreshTechs () {
+        this.loading = true
+        this.filteredTechs = []
+        this.techs = await api.getManyREST("techs")
+        await this.filterTechs()
+        await this.convertBlobs()
+        this.purposes = await api.getManyREST("purposes")
+        await this.addPurposes();
+        this.loading = false
+    },
+    async convertBlobs() {
+      for (var tech in this.filteredTechs) {
+        var binary = '';
+        var bytes = new Uint8Array( this.filteredTechs[tech].logo.data );
+        var len = bytes.byteLength;
+        for (var i = 0; i < len; i++) {
+            binary += String.fromCharCode( bytes[ i ] );
+        }
+        this.filteredTechs[tech].logo = binary
+      }
+    },
     async filterTechs(){
         this.filteredTechs = []
         this.compareTech1 = null
@@ -166,15 +187,6 @@ export default {
             this.filteredTechs = this.techs
         }
         
-    },
-    async refreshTechs () {
-        this.loading = true
-        this.filteredTechs = []
-        this.techs = await api.getManyREST("techs")
-        await this.filterTechs()
-        this.purposes = await api.getManyREST("purposes")
-        await this.addPurposes();
-        this.loading = false
     },
     async addPurposes(){
         for (var tech in this.techs){

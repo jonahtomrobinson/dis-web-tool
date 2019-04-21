@@ -8,55 +8,55 @@ import Admin from '@/components/admin/Admin'
 import Auth from '@okta/okta-vue'
 
 Vue.use(Auth, {
-  issuer: 'https://dev-715478.okta.com/oauth2/default',
-  client_id: '0oagr3dglwp1CJEYp356',
-  redirect_uri: 'http://localhost:8080/implicit/callback',
-  scope: 'openid profile email'
+    issuer: 'https://dev-715478.okta.com/oauth2/default',
+    client_id: '0oagr3dglwp1CJEYp356',
+    redirect_uri: 'http://localhost:8080/implicit/callback',
+    scope: 'openid profile email'
 })
 
 Vue.use(Router)
 
 let router = new Router({
-  mode: 'history',
-  routes: [
-    {
-      path: '/',
-      name: '/technologies',
-      component: Technologies
-    },
-    {
-        path: '/hello',
-        name: '/hello',
-        component: Hello
-      },
-    {
-      path: '/implicit/callback',
-      component: Auth.handleCallback()
-    },
-    {
-      path: '/technologies',
-        name: 'Technologies',
-        component: Technologies 
-    },
-    {
-        path: '/ctf-events',
-        name: 'CtfEvents',
-        component: CtfEvents
-    },
-    {
-        path: '/infrastructure-creator',
-        name: 'InfrastructureCreator',
-        component: InfrastructureCreator
-    },
-    {
-        path: '/admin',
-        name: 'Admin',
-        component: Admin,
-        meta: {
-            requiresAuth: true
-        }
-    },
-  ]
+    mode: 'history',
+    routes: [
+        {
+            path: '/',
+            name: '/technologies',
+            component: Technologies
+        },
+        {
+            path: '/hello',
+            name: '/hello',
+            component: Hello
+        },
+        {
+            path: '/implicit/callback',
+            component: Auth.handleCallback()
+        },
+        {
+            path: '/technologies',
+            name: 'Technologies',
+            component: Technologies
+        },
+        {
+            path: '/ctf-events',
+            name: 'CtfEvents',
+            component: CtfEvents
+        },
+        {
+            path: '/infrastructure-creator',
+            name: 'InfrastructureCreator',
+            component: InfrastructureCreator
+        },
+        {
+            path: '/admin',
+            name: 'Admin',
+            component: Admin,
+            meta: {
+                requiresAuth: true
+            }
+        },
+    ]
 })
 
 router.beforeEach(Vue.prototype.$auth.authRedirectGuard())

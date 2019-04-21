@@ -13,7 +13,7 @@
                         <div class="row">
                              <div class="col-xs-6 mr-2">
                                 <a :href="selectedTechnology.source">
-                                    <img class="card-img-selected" src="/static/img/icons/apple-touch-icon-180x180.png" alt="card image collar">
+                                    <img class="card-img-selected" :height="250" :src="selectedTechnology.logo" alt="card image collar">
                                 </a>
                              </div>
                               <div class="col-xs-6 ml-4">

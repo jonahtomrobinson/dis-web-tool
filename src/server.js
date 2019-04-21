@@ -65,7 +65,7 @@ let Purpose = database.define('Purpose', {
 
 // Define our Technology model
 let Tech = database.define('Technology', {
-    logo: Sequelize.STRING(100000),
+    logo: Sequelize.BLOB('long'),
     name: Sequelize.STRING,
     cost: Sequelize.STRING,  
     source: Sequelize.STRING,
@@ -75,7 +75,7 @@ Purpose.hasOne(Tech, { foreignKey: 'purpose_id' , foreignKeyConstraint: true})
 
 // Define our Event model
 let Event = database.define('Event', {
-    logo: Sequelize.BLOB,
+    logo: Sequelize.BLOB('long'),
     name: Sequelize.STRING,
     style: Sequelize.STRING,
     date: Sequelize.DATEONLY,
@@ -90,15 +90,12 @@ let Category = database.define('Category', {
     text: Sequelize.STRING,
   })
 
+// Define our CategoryEvent model
 let CategoryEvent = database.define('CategoryEvent')
 Event.hasMany(CategoryEvent, { foreignKey: 'event_id' , foreignKeyConstraint: true, onDelete: 'cascade'})
 Category.hasMany(CategoryEvent, { foreignKey: 'category_id' , foreignKeyConstraint: true, onDelete: 'cascade'})
 
-/*let EventTechnology = database.define('EventTechnology', {
-    event_id: Sequelize.INTEGER,
-    technology_id: Sequelize.INTEGER
-})*/
-
+// Define our EventTechnology model
 let EventTechnology = database.define('EventTechnology')
 Event.hasMany(EventTechnology, { foreignKey: 'event_id' , foreignKeyConstraint: true, onDelete: 'cascade'})
 Tech.hasMany(EventTechnology, { foreignKey: 'technology_id' , foreignKeyConstraint: true, onDelete: 'cascade'})
@@ -160,8 +157,6 @@ database
     app.listen(8081, () => {
     console.log('listening to port localhost:8081')
   })
-
-
 
   /*
   database

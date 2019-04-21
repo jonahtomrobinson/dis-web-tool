@@ -102,7 +102,7 @@
             <div class="row card-row">
                 <div class="col-md-2 mb-3 mt-3" v-for="event in filteredEvents" :key="event.id">
                     <b-card v-on:click="viewDetails(event)" class="card-item">
-                        <img class="card-img" src="/static/img/icons/apple-touch-icon-180x180.png" alt="card image collar">
+                        <img class="card-img" :height="150" :src="event.logo" alt="card image collar">
                         <div class="card-body">
                             <p class="card-title">{{event.name}}</p>
                             <!--<p class="card-text"><span class="card-purpose"> {{event.purpose}}</span></p>-->
@@ -155,9 +155,21 @@ export default {
         this.filteredEvents = []
         this.events = await api.getManyREST("events")
         await this.filterEvents()
+        await this.convertBlobs()
         this.categories = await api.getManyREST("categories")
         this.categoryEvents = await api.getManyREST('categoryEvents')
         this.loading = false
+    },
+    async convertBlobs() {
+      for (var event in this.filteredEvents) {
+        var binary = '';
+        var bytes = new Uint8Array( this.filteredEvents[event].logo.data );
+        var len = bytes.byteLength;
+        for (var i = 0; i < len; i++) {
+            binary += String.fromCharCode( bytes[ i ] );
+        }
+        this.filteredEvents[event].logo = binary
+      }
     },
     async filterEvents(){
         this.filteredEvents = []
