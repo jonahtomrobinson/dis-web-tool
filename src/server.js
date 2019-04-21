@@ -154,8 +154,8 @@ let eventTechnologyResource = epilogue.resource({
 // Resets the database and launches the express app on :8081
 database
   //.sync({ force: true })
-    app.listen(443, () => {
-    console.log('listening to port localhost:443')
+    app.listen(32700, () => {
+    console.log('listening to port localhost:32700')
   })
 
   /*
