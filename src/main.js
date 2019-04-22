@@ -4,6 +4,7 @@ import Vue from 'vue'
 import App from './App'
 import router from './router'
 import BootstrapVue from 'bootstrap-vue'
+import VModal from 'vue-js-modal'
 import 'bootstrap/dist/css/bootstrap.css'
 import 'bootstrap-vue/dist/bootstrap-vue.css'
 
@@ -11,13 +12,15 @@ import 'bootstrap-vue/dist/bootstrap-vue.css'
 import './assets/scss/layout.min.scss'
 import './assets/scss/nav-bar.scss'
 
+Vue.use(VModal, { dialog: true, dynamic: true })
 Vue.use(BootstrapVue)
 Vue.config.productionTip = false
 
-/* eslint-disable no-new */
+// Setup for app.
 new Vue({
-  el: '#app',
-  router,
-  template: '<App/>',
-  components: { App }
+    el: '#app',
+    router,
+    template: '<App/>',
+    components: { App }
 })
+
