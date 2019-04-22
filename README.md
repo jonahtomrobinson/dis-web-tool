@@ -2,10 +2,11 @@
 
 > Dissertation project. An instuctional tool for CTF infrastructure setup. By Jonah Robinson
 
-## Instructions
+## Required software
 
-Required software
-- Node.js, can be downloaded at: https://nodejs.org/en/
+Node.js, can be downloaded at: https://nodejs.org/en/
+
+## Instructions
 
 1. git clone https://github.com/jonahtomrobinson/dis-web-tool.git
 2. cd dis-web-tool
