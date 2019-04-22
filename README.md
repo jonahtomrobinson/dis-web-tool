@@ -16,6 +16,7 @@ Node.js, can be downloaded at: https://nodejs.org/en/
 Admin access details (case sensitive):
 
 username: demo
+
 password: Password123
 
 ## Extra information
