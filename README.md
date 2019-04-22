@@ -14,6 +14,7 @@ Node.js, can be downloaded at: https://nodejs.org/en/
 4. Navigate to http://localhost:8080/
 
 Admin access details (case sensitive):
+
 username: demo
 password: Password123
 
