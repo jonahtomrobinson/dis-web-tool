@@ -229,3 +229,44 @@ p.card-body {
   font-weight: bold;
   object-fit: contain;
 }
+
+/*------------------------------------*\
+  #INFRASTRUCTURES-PAGE
+\*------------------------------------*/
+
+.card.card-infrastructures-event {
+  width: 600px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.card-infrastructures-requirements {
+  width: 600px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.card-infrastructures-instructions {
+  width: 670px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.infrastruture-image {
+  //display: block;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.card-infrastructures-clear{
+    border-color: white;
+    margin-left: auto;
+    margin-right: auto;
+    object-fit: contain;
+    align-content: center;
+  text-align: center;
+}
+
+.clear{
+    border-color:white;
+}

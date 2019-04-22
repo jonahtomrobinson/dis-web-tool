@@ -2,7 +2,7 @@ import Vue from 'vue'
 import Router from 'vue-router'
 import Technologies from '@/components/technology/Technologies'
 import CtfEvents from '@/components/event/CtfEvents'
-import Infrastructures from '@/components/Infrastructures'
+import Infrastructures from '@/components/infrastructure/Infrastructures'
 import Admin from '@/components/admin/Admin'
 import Auth from '@okta/okta-vue'
 
