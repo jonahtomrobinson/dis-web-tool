@@ -61,8 +61,8 @@
                   <b-card class="card-item-compare">
                     <img
                       class="card-img-compare smaller-image"
-                      :src="tech1assignEvents.logo"
-                      alt="card image collar"
+                      :src="assignEvent.logo"
+                      alt=""
                     >
                     <p class="card-title-compare">{{assignEvent.name}}</p>
                   </b-card>
@@ -130,7 +130,7 @@
                     <img
                       class="card-img-compare smaller-image"
                       :src="assignEvent.logo"
-                      alt="card image collar"
+                      alt=""
                     >
                     <p class="card-title-compare">{{assignEvent.name}}</p>
                   </b-card>
@@ -178,10 +178,24 @@ export default {
       this.techs = await api.getManyREST("techs");
       this.events = await api.getManyREST("events");
       this.assignments = await api.getManyREST("eventTechnologies");
+      await this.convertBlobs()
       this.chosenCategories = [];
       this.categories = {};
       await this.getEvents();
       this.loading = true;
+    },
+    async convertBlobs() {
+      for (var event in this.events) {
+        if (this.events[event].logo != null) {
+          var binary = "";
+          var bytes = new Uint8Array(this.events[event].logo.data);
+          var len = bytes.byteLength;
+          for (var i = 0; i < len; i++) {
+            binary += String.fromCharCode(bytes[i]);
+          }
+          this.events[event].logo = binary;
+        }
+      }
     },
     async getCategories(id, tech) {
       var event = [];

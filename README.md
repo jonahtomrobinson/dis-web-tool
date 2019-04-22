@@ -4,20 +4,25 @@
 
 ## Required software
 
-Node.js, can be downloaded at: https://nodejs.org/en/
+>Node.js, can be downloaded at: https://nodejs.org/en/
+
+>(Optional) Git, can be downloaded at: https://git-scm.com/downloads
 
 ## Instructions
 
-1. git clone https://github.com/jonahtomrobinson/dis-web-tool.git
+IN COMMAND LINE/ SHELL:
+1. git clone https://github.com/jonahtomrobinson/dis-web-tool.git 
+(Alternatively download and unzip https://github.com/jonahtomrobinson/dis-web-tool/archive/master.zip)
 2. cd dis-web-tool
-3. npm run dev
-4. Navigate to http://localhost:8080/
+3. npm install
+4. npm run dev
+5. Navigate to http://localhost:8080/
 
-Admin access details (case sensitive):
+### Admin access details (case sensitive):
 
-username: demo
+>username: demo
 
-password: Password123
+>password: Password123
 
 ## Extra information
 
