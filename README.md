@@ -8,10 +8,12 @@ Node.js, can be downloaded at: https://nodejs.org/en/
 
 ## Instructions
 
+IN COMMAND LINE/ SHELL:
 1. git clone https://github.com/jonahtomrobinson/dis-web-tool.git
 2. cd dis-web-tool
-3. npm run dev
-4. Navigate to http://localhost:8080/
+3. npm install
+4. npm run dev
+5. Navigate to http://localhost:8080/
 
 Admin access details (case sensitive):
 
