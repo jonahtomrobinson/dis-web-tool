@@ -4,7 +4,8 @@
 
 ## Required software
 
-Node.js, can be downloaded at: https://nodejs.org/en/
+>Node.js, can be downloaded at: https://nodejs.org/en/
+>(Optional) Git, can be downloaded at: https://git-scm.com/downloads
 
 ## Instructions
 
