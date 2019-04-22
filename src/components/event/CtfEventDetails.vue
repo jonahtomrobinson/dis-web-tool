@@ -12,14 +12,13 @@
                 <div class="col-xs-6 mr-2">
                   <a :href="selectedEvent.source">
                     <img
-                      class="card-img-selected"
-                      :height="250"
+                      class="card-img-selected smaller-image"
                       :src="selectedEvent.logo"
                       alt="card image collar"
                     >
                   </a>
                 </div>
-                <div class="col-xs-6 ml-4">
+                <div class="col-xs-6 ml-4 mr-5 pr-4">
                   <p class="card-title-selected" href="selectedEvent.source">{{selectedEvent.name}}</p>
                   <p class="card-text-selected">{{selectedEvent.style}}</p>
                   <p class="card-text-selected">{{selectedEvent.date}} | {{selectedEvent.location}}</p>
@@ -34,7 +33,7 @@
                     class="card-text-selected"
                   >No available website link</p>
                 </div>
-                <div class="col-xs-6 ml-5 pl-4">
+                <div class="col-xs-6">
                   <p class="card-title-sub">Additional information</p>
                   <b-card class="card-item-small">
                     <p class="card-text-selected">{{selectedEvent.additional_info}}</p>
@@ -68,13 +67,12 @@
                     <div class="row">
                       <div class="col-xs-6">
                         <img
-                          class="card-img-small"
-                          :height="150"
+                          class="card-img-small smaller-image"
                           :src="assignTech.logo"
-                          alt="card image collar"
+                          alt="No logo"
                         >
                       </div>
-                      <div class="col-xs-6 ml-2">
+                      <div class="col-xs-6 ml-3 mt-3">
                         <p class="card-title-small">{{assignTech.name}}</p>
                         <b-button class="mr-1" @click="showModal(assignTech.id)">See Details</b-button>
                       </div>
@@ -127,8 +125,23 @@ export default {
       this.categoryEvents = await api.getManyREST("categoryEvents");
       this.categories = await api.getManyREST("categories");
       await this.getTechs();
+      await this.convertBlobs();
       await this.getCategories(this.selectedEvent.id);
       this.loading = false;
+    },
+    // Convert blobs/images objects from the database to a binary string for displaying.
+    async convertBlobs() {
+      for (var tech in this.assignTechs) {
+        if (this.assignTechs[tech].logo != null) {
+          var binary = "";
+          var bytes = new Uint8Array(this.assignTechs[tech].logo.data);
+          var len = bytes.byteLength;
+          for (var i = 0; i < len; i++) {
+            binary += String.fromCharCode(bytes[i]);
+          }
+          this.assignTechs[tech].logo = binary;
+        }
+      }
     },
     async getCategories(id) {
       for (var e in this.categoryEvents) {
@@ -157,7 +170,6 @@ export default {
       }
     },
     async showModal(id) {
-      alert("hello");
       var x = await api.getSingleREST("techs", id);
       this.$modal.show(
         TechnologyDetails,
@@ -167,11 +179,10 @@ export default {
         },
         {
           width: 750,
-          height: 750
+          height: 640
         }
       );
-      this.$modal.hide;
-      alert("bye");
+      //this.$modal.hide;
       //this.modal = false
     }
   }

@@ -12,10 +12,9 @@
                 <div class="col-xs-6 mr-2">
                   <a :href="compareTech1.source">
                     <img
-                      class="card-img-selected"
-                      :height="250"
+                      class="card-img-selected smaller-image"
                       :src="compareTech1.logo"
-                      alt="card image collar"
+                      alt=""
                     >
                   </a>
                 </div>
@@ -61,8 +60,7 @@
                 >
                   <b-card class="card-item-compare">
                     <img
-                      class="card-img-compare"
-                      :height="250"
+                      class="card-img-compare smaller-image"
                       :src="tech1assignEvents.logo"
                       alt="card image collar"
                     >
@@ -81,10 +79,9 @@
                 <div class="col-xs-6 mr-2">
                   <a :href="compareTech2.source">
                     <img
-                      class="card-img-selected"
-                      :height="250"
+                      class="card-img-selected smaller-image"
                       :src="compareTech2.logo"
-                      alt="card image collar"
+                      alt=""
                     >
                   </a>
                 </div>
@@ -131,8 +128,7 @@
                 >
                   <b-card class="card-item-compare">
                     <img
-                      class="card-img-compare"
-                      :height="150"
+                      class="card-img-compare smaller-image"
                       :src="assignEvent.logo"
                       alt="card image collar"
                     >

@@ -6,6 +6,7 @@ import InfrastructureCreator from '@/components/InfrastructureCreator'
 import Admin from '@/components/admin/Admin'
 import Auth from '@okta/okta-vue'
 
+// Authenticaion details.
 Vue.use(Auth, {
     issuer: 'https://dev-715478.okta.com/oauth2/default',
     client_id: '0oagr3dglwp1CJEYp356',
@@ -13,8 +14,8 @@ Vue.use(Auth, {
     scope: 'openid profile email'
 })
 
+// Router for webpages.
 Vue.use(Router)
-
 let router = new Router({
     mode: 'history',
     routes: [

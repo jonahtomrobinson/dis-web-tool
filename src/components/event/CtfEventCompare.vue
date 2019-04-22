@@ -81,14 +81,13 @@
                 <div class="col-xs-6 mr-2">
                   <a :href="compareEvent2.source">
                     <img
-                      class="card-img-selected"
-                      :height="250"
+                      class="card-img-selected smaller-image"
                       :src="compareEvent2.logo"
                       alt="card image collar"
                     >
                   </a>
                 </div>
-                <div class="col-xs-6 ml-4">
+                <div class="col-xs-6 ml-4 mr-5 pr-4">
                   <p class="card-title-selected" href="compareEvent2.source">{{compareEvent2.name}}</p>
                   <p class="card-text-selected">{{compareEvent2.style}}</p>
                   <p class="card-text-selected">{{compareEvent2.date}} | {{compareEvent2.location}}</p>
@@ -103,7 +102,7 @@
                     class="card-text-selected"
                   >No available website link</p>
                 </div>
-                <div class="col-xs-6 ml-5 pl-4">
+                <div class="col-xs-6">
                   <p class="card-title-sub">Additional information</p>
                   <b-card class="card-item-small">
                     <p class="card-text-selected">{{compareEvent2.additional_info}}</p>
@@ -131,8 +130,7 @@
                 >
                   <b-card class="card-item-compare">
                     <img
-                      class="card-img-compare"
-                      :height="150"
+                      class="card-img-compare smaller-image"
                       :src="assignTech.logo"
                       alt="card image collar"
                     >

@@ -61,7 +61,20 @@
         <!-- Compare section. -->
         <div class="col-md-4 mb-3 mt-3">
           <b-card class="card-item-filter">
+              <div class="row ml-1">
+                  <div class="col-xs-6 mr-2">
             <p class="card-title-header">Compare</p>
+                  </div>
+            <div class="col-xs-6 mr-2">
+                <!-- Submit button. -->
+                <b-button
+                  v-if="compareTech1 && compareTech2"
+                  class="mt-1"
+                  v-on:click="compareTechs()"
+                >Submit</b-button>
+              </div>
+              </div>
+
             <div class="row ml-1">
               <!-- Technology option 1 dropdown. -->
               <div class="col-xs-6 mr-2">
@@ -85,14 +98,6 @@
                 </b-form-group>
               </div>
 
-              <!-- Submit button -->
-              <div class="col-xs-6 mr-3 ml-3 pt-4">
-                <b-button
-                  v-if="compareTech1 && compareTech2"
-                  class="mt-1"
-                  v-on:click="compareTechs()"
-                >Submit</b-button>
-              </div>
             </div>
           </b-card>
         </div>
@@ -108,7 +113,7 @@
           <div class="row card-row">
             <div class="col-md-2 mb-3 mt-3" v-for="tech in filteredTechs" :key="tech.id">
               <b-card v-on:click="viewDetails(tech)" class="card-item">
-                <img class="card-img" :height="150" :src="tech.logo" alt="card image collar">
+                <img class="card-img smaller-image" :src="tech.logo" alt="No Logo">
                 <div class="card-body">
                   <p class="card-title">{{tech.name}}</p>
                   <!--<p class="card-text"><span class="card-purpose"> {{tech.purpose}}</span></p>-->
@@ -169,13 +174,15 @@ export default {
     // Convert blobs/images objects from the database to a binary string for displaying.
     async convertBlobs() {
       for (var tech in this.filteredTechs) {
-        var binary = "";
-        var bytes = new Uint8Array(this.filteredTechs[tech].logo.data);
-        var len = bytes.byteLength;
-        for (var i = 0; i < len; i++) {
-          binary += String.fromCharCode(bytes[i]);
-        }
-        this.filteredTechs[tech].logo = binary;
+          if (this.filteredTechs[tech].logo != null){
+            var binary = "";
+            var bytes = new Uint8Array(this.filteredTechs[tech].logo.data);
+            var len = bytes.byteLength;
+            for (var i = 0; i < len; i++) {
+            binary += String.fromCharCode(bytes[i]);
+            }
+            this.filteredTechs[tech].logo = binary;
+            }
       }
     },
     // Filter the techs by the filter input.

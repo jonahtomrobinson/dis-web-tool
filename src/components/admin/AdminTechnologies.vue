@@ -20,7 +20,7 @@
           <tbody>
             <tr v-for="tech in techs" :key="tech.id">
               <td>
-                <img :height="150" :src="tech.logo">
+                <img v-if="tech.logo != null" class="smaller-image" :src="tech.logo">
               </td>
               <td>{{ tech.name }}</td>
               <td>{{ tech.cost }}</td>
@@ -40,8 +40,8 @@
       <b-col lg="3">
         <b-card :title="(model.id ? 'Edit Technology ' + model.name : 'Add new technology')">
           <form enctype="multipart/form-data" @submit.prevent="saveTech">
-            <b-form-group label="Logo">
-              <b-form-file @change="onFileSelected" accept="image/*"></b-form-file>
+            <b-form-group label="Logo (50kb limit)">
+              <b-form-file @change="onFileSelected" v-model="initialFile" accept="image/*"></b-form-file>
             </b-form-group>
 
             <b-form-group label="Name">
@@ -89,8 +89,9 @@ export default {
       techs: [],
       purposes: [],
       model: {},
-      addedImage: null,
-      image: null,
+      //addedImage: null,
+      //image: null,
+      initialFile: null,
       selectedFile: null
     };
   },
@@ -129,13 +130,15 @@ export default {
     // Convert blobs/images objects from the database to a binary string for displaying.
     async convertBlobs() {
       for (var tech in this.techs) {
-        var binary = "";
-        var bytes = new Uint8Array(this.techs[tech].logo.data);
-        var len = bytes.byteLength;
-        for (var i = 0; i < len; i++) {
-          binary += String.fromCharCode(bytes[i]);
+        if (this.techs[tech].logo != null) {
+          var binary = "";
+          var bytes = new Uint8Array(this.techs[tech].logo.data);
+          var len = bytes.byteLength;
+          for (var i = 0; i < len; i++) {
+            binary += String.fromCharCode(bytes[i]);
+          }
+          this.techs[tech].logo = binary;
         }
-        this.techs[tech].logo = binary;
       }
     },
 
@@ -144,6 +147,13 @@ export default {
       var test = "";
       this.selectedFile = event.target.files[0];
       const fileReader = new FileReader();
+
+      if (this.selectedFile.size > 61440) {
+        alert("File too large");
+        this.initialFile = null;
+        return;
+      }
+
       fileReader.addEventListener("load", () => {
         test = fileReader.result;
         this.model.logo = test;
@@ -177,6 +187,7 @@ export default {
         }
       }
       this.model = {}; // reset form
+      this.initialFile = null;
       this.refreshTechs();
     },
 

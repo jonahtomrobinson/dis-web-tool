@@ -87,11 +87,23 @@
         <!-- Compare section. -->
         <div class="col-md-4 mb-3 mt-3">
           <b-card class="card-item-filter">
+              <div class="row ml-1">
+                  <div class="col-xs-6 mr-2">
             <p class="card-title-header">Compare</p>
+                  </div>
+            <!-- Submit button -->
+              <div class="col-xs-6 mr-2">
+                <b-button
+                  v-if="compareEvent1 && compareEvent2"
+                  class="mt-1"
+                  v-on:click="compareTechs()"
+                >Submit</b-button>
+              </div>
+              </div>
             <div class="row ml-1">
               <!-- Event option 1 dropdown. -->
               <div class="col-xs-6 mr-2">
-                <b-form-group label="Technology 1">
+                <b-form-group label="Event 1">
                   <b-form-select v-model="compareEvent1">
                     <option
                       v-for="event in filteredEvents"
@@ -108,7 +120,7 @@
 
               <!-- Event option 2 dropdown. -->
               <div class="col-xs-6 ml-2">
-                <b-form-group label="Technology 2">
+                <b-form-group label="Event 2">
                   <b-form-select v-model="compareEvent2">
                     <option
                       v-for="event in filteredEvents"
@@ -119,14 +131,6 @@
                 </b-form-group>
               </div>
 
-              <!-- Submit button -->
-              <div class="col-xs-6 mr-3 ml-3 pt-4">
-                <b-button
-                  v-if="compareEvent1 && compareEvent2"
-                  class="mt-1"
-                  v-on:click="compareTechs()"
-                >Submit</b-button>
-              </div>
             </div>
           </b-card>
         </div>
@@ -205,13 +209,15 @@ export default {
     // Convert blobs/images objects from the database to a binary string for displaying.
     async convertBlobs() {
       for (var event in this.filteredEvents) {
-        var binary = "";
-        var bytes = new Uint8Array(this.filteredEvents[event].logo.data);
-        var len = bytes.byteLength;
-        for (var i = 0; i < len; i++) {
-          binary += String.fromCharCode(bytes[i]);
+        if (this.filteredEvents[event].logo != null) {
+          var binary = "";
+          var bytes = new Uint8Array(this.filteredEvents[event].logo.data);
+          var len = bytes.byteLength;
+          for (var i = 0; i < len; i++) {
+            binary += String.fromCharCode(bytes[i]);
+          }
+          this.filteredEvents[event].logo = binary;
         }
-        this.filteredEvents[event].logo = binary;
       }
     },
     // Filter the events by the filter input.

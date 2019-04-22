@@ -22,7 +22,7 @@
           <tbody>
             <tr v-for="event in events" :key="event.id">
               <td>
-                <img :height="150" :src="event.logo">
+                <img v-if="event.logo != null" class="smaller-image" :src="event.logo">
               </td>
               <td>{{ event.name }}</td>
               <td>{{ event.style }}</td>
@@ -53,7 +53,7 @@
       <b-col lg="3">
         <b-card :title="(model.id ? 'Edit Post ID#' + model.id : 'Add new CTF event')">
           <form enctype="multipart/form-data" @submit.prevent="saveEvent">
-            <b-form-group label="Logo">
+            <b-form-group label="Logo (50kb limit)">
               <b-form-file @change="onFileSelected" accept="image/*"></b-form-file>
             </b-form-group>
 
@@ -165,13 +165,15 @@ export default {
     // Convert blobs/images objects from the database to a binary string for displaying.
     async convertBlobs() {
       for (var event in this.events) {
-        var binary = "";
-        var bytes = new Uint8Array(this.events[event].logo.data);
-        var len = bytes.byteLength;
-        for (var i = 0; i < len; i++) {
-          binary += String.fromCharCode(bytes[i]);
+        if (this.events[event].logo != null) {
+          var binary = "";
+          var bytes = new Uint8Array(this.events[event].logo.data);
+          var len = bytes.byteLength;
+          for (var i = 0; i < len; i++) {
+            binary += String.fromCharCode(bytes[i]);
+          }
+          this.events[event].logo = binary;
         }
-        this.events[event].logo = binary;
       }
     },
 
@@ -180,6 +182,13 @@ export default {
       var test = "";
       this.selectedFile = event.target.files[0];
       const fileReader = new FileReader();
+
+      if (this.selectedFile.size > 61440) {
+        alert("File too large");
+        this.initialFile = null;
+        return;
+      }
+
       fileReader.addEventListener("load", () => {
         test = fileReader.result;
         this.model.logo = test;
@@ -275,7 +284,7 @@ export default {
 
     // Delete selected categories from the selected item, from the database using the API.
     async deleteCategoryEvents(eventId) {
-        // TODO fix the edit categories to show correctly.
+      // TODO fix the edit categories to show correctly.
       this.categoryEvents = await api.getManyREST("categoryEvents");
       for (var ce in this.categoryEvents) {
         if (this.categoryEvents[ce].event_id == eventId) {

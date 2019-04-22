@@ -10,12 +10,11 @@
             <div class="card-body">
               <div class="row">
                 <div class="col-xs-6 mr-2">
-                  <a :href="selectedTechnology.source">
+                  <a v-if="modal == false" :href="selectedTechnology.source">
                     <img
-                      class="card-img-selected"
-                      :height="250"
+                      class="card-img-selected smaller-image"
                       :src="selectedTechnology.logo"
-                      alt="card image collar"
+                      alt=""
                     >
                   </a>
                 </div>
@@ -65,18 +64,17 @@
                     <div class="row">
                       <div class="col-xs-6">
                         <img
-                          class="card-img-small"
-                          src="/static/img/icons/apple-touch-icon-180x180.png"
-                          alt="card image collar"
+                          class="smaller-image"
+                            :src="assignEvent.logo"
+                          alt="no logo"
                         >
                       </div>
-                      <div class="col-xs-6 ml-2">
+                      <div class="col-xs-6 ml-3 mt-3">
                         <p class="card-title-small">{{assignEvent.name}}</p>
                         <p class="card-text-small">{{assignEvent.style}} | {{assignEvent.date}}</p>
                         <p
                           class="card-text-small"
                         >{{assignEvent.location}} | {{assignEvent.num_of_users}} Attendees</p>
-                        <b-button class="mr-1" @click="showModal(assignEvent.id)">See Details</b-button>
                       </div>
                     </div>
                   </b-card>
@@ -129,7 +127,19 @@ export default {
       this.chosenCategories = [];
       this.categories = {};
       await this.getEvents();
+      await this.convertBlobs()
       this.loading = true;
+    },
+    async convertBlobs() {
+      for (var event in this.assignEvents) {
+        var binary = "";
+        var bytes = new Uint8Array(this.assignEvents[event].logo.data);
+        var len = bytes.byteLength;
+        for (var i = 0; i < len; i++) {
+          binary += String.fromCharCode(bytes[i]);
+        }
+        this.assignEvents[event].logo = binary;
+      }
     },
     async getCategories(id) {
       var event = [];

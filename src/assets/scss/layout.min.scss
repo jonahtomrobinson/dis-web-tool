@@ -147,7 +147,6 @@ a {
 }
 
 .card-img {
-  height: 150px;
   object-fit: contain;
 }
 
@@ -163,8 +162,19 @@ a {
   color: black !important;
 }
 
+
 p.card-body {
   overflow-wrap: break-word;
+}
+
+.smaller-image{
+    display: block;
+    max-height: 150px;
+    max-width: 250px;
+    width: auto;
+    height: auto;
+    margin-left: auto;
+    margin-right: auto;
 }
 
 /*------------------------------------*\
