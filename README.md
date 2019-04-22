@@ -20,9 +20,9 @@ IN COMMAND LINE/ SHELL:
 
 Admin access details (case sensitive):
 
-username: demo
+>username: demo
 
-password: Password123
+>password: Password123
 
 ## Extra information
 
