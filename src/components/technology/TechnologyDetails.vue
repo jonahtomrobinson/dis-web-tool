@@ -11,11 +11,7 @@
               <div class="row">
                 <div class="col-xs-6 mr-2">
                   <a v-if="modal == false" :href="selectedTechnology.source">
-                    <img
-                      class="card-img-selected smaller-image"
-                      :src="selectedTechnology.logo"
-                      alt=""
-                    >
+                    <img class="card-img-selected smaller-image" :src="selectedTechnology.logo" alt>
                   </a>
                 </div>
                 <div class="col-xs-6 ml-4">
@@ -63,11 +59,7 @@
                   <b-card class="card-item-small">
                     <div class="row">
                       <div class="col-xs-6">
-                        <img
-                          class="smaller-image"
-                            :src="assignEvent.logo"
-                          alt="no logo"
-                        >
+                        <img class="smaller-image" :src="assignEvent.logo" alt="no logo">
                       </div>
                       <div class="col-xs-6 ml-3 mt-3">
                         <p class="card-title-small">{{assignEvent.name}}</p>
@@ -127,18 +119,20 @@ export default {
       this.chosenCategories = [];
       this.categories = {};
       await this.getEvents();
-      await this.convertBlobs()
+      await this.convertBlobs();
       this.loading = true;
     },
     async convertBlobs() {
       for (var event in this.assignEvents) {
-        var binary = "";
-        var bytes = new Uint8Array(this.assignEvents[event].logo.data);
-        var len = bytes.byteLength;
-        for (var i = 0; i < len; i++) {
-          binary += String.fromCharCode(bytes[i]);
+        if (this.assignEvents[event].logo != null) {
+          var binary = "";
+          var bytes = new Uint8Array(this.assignEvents[event].logo.data);
+          var len = bytes.byteLength;
+          for (var i = 0; i < len; i++) {
+            binary += String.fromCharCode(bytes[i]);
+          }
+          this.assignEvents[event].logo = binary;
         }
-        this.assignEvents[event].logo = binary;
       }
     },
     async getCategories(id) {

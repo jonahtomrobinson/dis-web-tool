@@ -16,7 +16,7 @@
 
       <div v-if="!currentComponent" class="row card-row">
         <!-- Filter section. -->
-        <div class="col-md-4 mb-3 mt-3">
+        <div class="col-md-6 mb-3 mt-3">
           <b-card class="card-item-filter">
             <div class="row ml-1">
               <div class="col-xs-6 mr-2">
@@ -59,7 +59,7 @@
         </div>
 
         <!-- Compare section. -->
-        <div class="col-md-4 mb-3 mt-3">
+        <div class="col-md-6 mb-3 mt-3">
           <b-card class="card-item-filter">
               <div class="row ml-1">
                   <div class="col-xs-6 mr-2">
