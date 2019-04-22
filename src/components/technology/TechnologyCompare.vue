@@ -5,17 +5,15 @@
     </div>
     <div v-else>
       <div class="row item-row">
+        <!-- Technology 1 column. -->
         <div class="col-md-6 mb-3 mt-3">
           <b-card class="card-item-selected">
             <div class="card-body">
+              <!-- Technology 1 details. -->
               <div class="row">
                 <div class="col-xs-6 mr-2">
                   <a :href="compareTech1.source">
-                    <img
-                      class="card-img-selected smaller-image"
-                      :src="compareTech1.logo"
-                      alt=""
-                    >
+                    <img class="card-img-selected smaller-image" :src="compareTech1.logo" alt>
                   </a>
                 </div>
                 <div class="col-xs-6 ml-4">
@@ -40,6 +38,7 @@
                 </div>
               </div>
 
+              <!-- Categories assigned to technology 1. -->
               <hr>
               <p class="card-title-header">Categories {{tech1chosenCategories.length}}</p>
               <div class="row item-row ml-1">
@@ -50,6 +49,7 @@
                 </div>
               </div>
 
+              <!-- Events assigned to technology 1. -->
               <hr>
               <p class="card-title-header">CTF Events {{tech1assignEvents.length}}</p>
               <div style="overflow-y: scroll; height:232px;" class="row item-row">
@@ -59,11 +59,7 @@
                   :key="assignEvent.id"
                 >
                   <b-card class="card-item-compare">
-                    <img
-                      class="card-img-compare smaller-image"
-                      :src="assignEvent.logo"
-                      alt=""
-                    >
+                    <img class="card-img-compare smaller-image" :src="assignEvent.logo" alt>
                     <p class="card-title-compare">{{assignEvent.name}}</p>
                   </b-card>
                 </div>
@@ -72,20 +68,18 @@
           </b-card>
         </div>
 
+        <!-- Technology 2 column. -->
         <div class="col-md-6 mb-3 mt-3">
           <b-card class="card-item-selected">
             <div class="card-body">
               <div class="row">
                 <div class="col-xs-6 mr-2">
                   <a :href="compareTech2.source">
-                    <img
-                      class="card-img-selected smaller-image"
-                      :src="compareTech2.logo"
-                      alt=""
-                    >
+                    <img class="card-img-selected smaller-image" :src="compareTech2.logo" alt>
                   </a>
                 </div>
 
+                <!-- Technology 2 details. -->
                 <div class="col-xs-6 ml-4">
                   <p class="card-title-selected" href="compareTech2.source">
                     {{compareTech2.name}}
@@ -108,6 +102,7 @@
                 </div>
               </div>
 
+              <!-- Categories assigned to technology 2. -->
               <hr>
               <p class="card-title-header">Categories {{tech2chosenCategories.length}}</p>
               <div class="row item-row ml-1">
@@ -118,6 +113,7 @@
                 </div>
               </div>
 
+              <!-- Events assigned to technology 2. -->
               <hr>
               <p class="card-title-header">CTF Events {{tech2assignEvents.length}}</p>
               <div style="overflow-y: scroll; height:232px;" class="row item-row">
@@ -127,11 +123,7 @@
                   :key="assignEvent.id"
                 >
                   <b-card class="card-item-compare">
-                    <img
-                      class="card-img-compare smaller-image"
-                      :src="assignEvent.logo"
-                      alt=""
-                    >
+                    <img class="card-img-compare smaller-image" :src="assignEvent.logo" alt>
                     <p class="card-title-compare">{{assignEvent.name}}</p>
                   </b-card>
                 </div>
@@ -145,23 +137,22 @@
 </template>
 
 <script>
+// Import API for server access.
 import api from "@/api";
 export default {
   data() {
     return {
       loading: false,
-      techs: [],
-      assignments: [],
-      events: [],
-      tech1chosenCategories: [],
-      tech1assignEvents: [],
-      tech2chosenCategories: [],
-      tech2assignEvents: [],
-      assignEvents: [],
-      bestScalibility: 0,
-      assignedCategories: {}
+      techs: [], // Stores technologies.
+      assignments: [], // Stores eventTechnology assignments.
+      events: [], // Stores events.
+      tech1chosenCategories: [], // Stores the assigned categories for technology 1.
+      tech1assignEvents: [], // Stores the assigned events for technology 1.
+      tech2chosenCategories: [], // Stores the assigned categories for technology 2.
+      tech2assignEvents: [] // Stores the assigned events for technology 2.
     };
   },
+  // Props containing the passed technology objects to compare.
   props: ["compareTech1", "compareTech2"],
   watch: {
     compareTech1: function() {
@@ -172,18 +163,20 @@ export default {
     this.refresh();
   },
   methods: {
+    // Refresh data from the database.
     async refresh() {
       this.loading = false;
       this.getPurpose();
       this.techs = await api.getManyREST("techs");
       this.events = await api.getManyREST("events");
       this.assignments = await api.getManyREST("eventTechnologies");
-      await this.convertBlobs()
+      await this.convertBlobs();
       this.chosenCategories = [];
       this.categories = {};
       await this.getEvents();
       this.loading = true;
     },
+    // Convert blobs/images objects from the database to a binary string for displaying.
     async convertBlobs() {
       for (var event in this.events) {
         if (this.events[event].logo != null) {
@@ -197,6 +190,7 @@ export default {
         }
       }
     },
+    // GET assigned categories from the database server using the API.
     async getCategories(id, tech) {
       var event = [];
       event = await api.getManyREST("categoryEvents");
@@ -247,6 +241,7 @@ export default {
         }
       }
     },
+    // Assign purposes to each technology.
     async getPurpose() {
       this.compareTech1.purpose = (await api.getSingleREST(
         "purposes",
@@ -257,6 +252,7 @@ export default {
         this.compareTech2.purpose_id
       )).text;
     },
+    // GET assigned events from the database server using the API.
     async getEvents() {
       this.tech1assignEvents = [];
       this.compareTech1.bestScalibility = 0;
@@ -298,8 +294,7 @@ export default {
           }
         }
       }
-    },
-    async viewDetails(id) {}
+    }
   }
 };
 </script>

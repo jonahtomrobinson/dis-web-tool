@@ -8,6 +8,7 @@
         <div class="col-md mb-3 mt-3">
           <b-card class="card-item-selected">
             <div class="card-body">
+              <!-- Technology details. -->
               <div class="row">
                 <div class="col-xs-6 mr-2">
                   <a v-if="modal == false" :href="selectedTechnology.source">
@@ -34,6 +35,7 @@
                 </div>
               </div>
 
+              <!-- Categories assigned to the technology. -->
               <hr>
               <p class="card-title-header">Categories {{chosenCategories.length}}</p>
               <div class="row item-row ml-1">
@@ -44,6 +46,7 @@
                 </div>
               </div>
 
+              <!-- Events assigned to the technology. -->
               <hr>
               <p class="card-title-header">CTF Events {{assignEvents.length}}</p>
               <div
@@ -81,20 +84,21 @@
 </template>
 
 <script>
+// Import API for server access.
 import api from "@/api";
+// Import components.
 import CtfEventDetails from "@/components/event/CtfEventDetails";
 export default {
   data() {
     return {
       loading: false,
-      techs: [],
-      assignments: [],
-      events: [],
-      chosenCategories: [],
-      assignEvents: [],
-      bestScalibility: 0,
-      purpose: {},
-      assignedCategories: {}
+      techs: [], // Stores technologies.
+      assignments: [], // Stores eventTechnology assignments.
+      events: [], // Stores events.
+      chosenCategories: [], // Stores the assigned categories for this technology.
+      assignEvents: [], // Stores assigned events for this technology.
+      bestScalibility: 0, // Stores the largest user count for respective events.
+      purpose: {} // Stores the purpose of the technology.
     };
   },
   props: ["selectedTechnology", "modal"],
@@ -110,6 +114,7 @@ export default {
     await this.refresh();
   },
   methods: {
+    // Refresh data from the database.
     async refresh() {
       this.loading = false;
       this.getPurpose();
@@ -117,11 +122,11 @@ export default {
       this.events = await api.getManyREST("events");
       this.assignments = await api.getManyREST("eventTechnologies");
       this.chosenCategories = [];
-      this.categories = {};
       await this.getEvents();
       await this.convertBlobs();
       this.loading = true;
     },
+    // Convert blobs/images objects from the database to a binary string for displaying.
     async convertBlobs() {
       for (var event in this.assignEvents) {
         if (this.assignEvents[event].logo != null) {
@@ -135,6 +140,7 @@ export default {
         }
       }
     },
+    // GET assigned categories from the database server using the API.
     async getCategories(id) {
       var event = [];
       event = await api.getManyREST("categoryEvents");
@@ -162,12 +168,14 @@ export default {
         }
       }
     },
+    // Assign purposes to each technology.
     async getPurpose() {
       this.purpose = await api.getSingleREST(
         "purposes",
         this.selectedTechnology.purpose_id
       );
     },
+    // GET assigned events from the database server using the API.
     async getEvents() {
       this.assignEvents = [];
       for (var as in this.assignments) {
@@ -185,23 +193,6 @@ export default {
           }
         }
       }
-    },
-    async showModal(id) {
-      var x = await api.getSingleREST("events", id);
-      this.$modal.show(
-        CtfEventDetails,
-        {
-          selectedEvent: x,
-          modal: true
-        },
-        {
-          width: 750,
-          height: 750,
-          draggable: true,
-          adaptive: true
-        }
-      );
-      //this.modal = false
     }
   }
 };

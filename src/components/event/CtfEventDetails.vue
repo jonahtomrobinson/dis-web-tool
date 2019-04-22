@@ -8,6 +8,7 @@
         <div class="col-md mb-3 mt-3">
           <b-card class="card-item-selected">
             <div class="card-body">
+              <!-- Event details. -->
               <div class="row">
                 <div class="col-xs-6 mr-2">
                   <a :href="selectedEvent.source">
@@ -41,6 +42,7 @@
                 </div>
               </div>
 
+              <!-- Categories assigned to the event. -->
               <hr>
               <p class="card-title-header">Categories {{chosenCategories.length}}</p>
               <div class="row item-row ml-1">
@@ -51,6 +53,7 @@
                 </div>
               </div>
 
+              <!-- Technologies assigned to the event. -->
               <hr>
               <p class="card-title-header">Technologies {{assignTechs.length}}</p>
               <div
@@ -90,21 +93,21 @@
 </template>
 
 <script>
+// Import API for server access.
 import api from "@/api";
+// Import components.
 import TechnologyDetails from "@/components/technology/TechnologyDetails";
 export default {
   data() {
     return {
       loading: false,
-      events: [],
-      assignments: [],
-      techs: [],
-      categoryEvents: [],
-      categories: [],
-      chosenCategories: [],
-      assignTechs: [],
-      bestScalibility: 0,
-      assignedCategories: {}
+      events: [], // Stores events.
+      assignments: [], // Stores eventTechnology assignments.
+      techs: [], // Stores technologies.
+      categoryEvents: [], // Stores assigned categories.
+      categories: [], // Stores categories.
+      chosenCategories: [], // Stores the assigned categories for this event.
+      assignTechs: [], // Stores the assigned technologies for this event.
     };
   },
   props: ["selectedEvent", "modal"],
@@ -117,6 +120,7 @@ export default {
     this.refresh();
   },
   methods: {
+      // Refresh data from the database.
     async refresh() {
       this.loading = true;
       this.events = await api.getManyREST("events");
@@ -143,6 +147,7 @@ export default {
         }
       }
     },
+    // GET assigned categories from the database server using the API.
     async getCategories(id) {
       for (var e in this.categoryEvents) {
         if (this.categoryEvents[e].event_id == id) {
@@ -156,9 +161,9 @@ export default {
         }
       }
     },
+    // GET assigned events from the database server using the API.
     async getTechs() {
       this.assignTechs = [];
-
       for (var as in this.assignments) {
         if (this.assignments[as].event_id == this.selectedEvent.id) {
           for (var ev in this.techs) {
@@ -179,7 +184,7 @@ export default {
         },
         {
           width: 750,
-          height: 640
+          height: 750
         }
       );
       //this.$modal.hide;

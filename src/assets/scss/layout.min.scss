@@ -48,39 +48,6 @@ a {
 }
 
 /*------------------------------------*\
-  #IMAGE-UPLOAD-DROP-BOX
-\*------------------------------------*/
-
-.dropbox {
-  outline: 2px dashed grey; /* the dash box */
-  outline-offset: -10px;
-  background: lightcyan;
-  color: dimgray;
-  padding: 10px 10px;
-  min-height: 120px; /* minimum height */
-  position: relative;
-  cursor: pointer;
-}
-
-.input-file {
-  opacity: 0; /* invisible but it's there! */
-  width: 100%;
-  height: 120px;
-  position: absolute;
-  cursor: pointer;
-}
-
-.dropbox:hover {
-  background: lightblue; /* when mouse over to the drop zone, change color */
-}
-
-.dropbox p {
-  font-size: 1.2em;
-  text-align: center;
-  padding: 50px 0;
-}
-
-/*------------------------------------*\
   #FORM
 \*------------------------------------*/
 
@@ -162,20 +129,19 @@ a {
   color: black !important;
 }
 
-
 p.card-body {
   overflow-wrap: break-word;
 }
 
-.smaller-image{
-    display: block;
-    max-height: 150px;
-    max-width: 250px;
-    width: auto;
-    height: auto;
-    margin-left: auto;
-    margin-right: auto;
-    text-align: center;
+.smaller-image {
+  display: block;
+  max-height: 150px;
+  max-width: 250px;
+  width: auto;
+  height: auto;
+  margin-left: auto;
+  margin-right: auto;
+  text-align: center;
 }
 
 /*------------------------------------*\

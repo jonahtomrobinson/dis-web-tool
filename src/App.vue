@@ -7,7 +7,7 @@
         <b-navbar-nav class="mt-3">
           <b-nav-item to="/technologies">Technologies</b-nav-item>
           <b-nav-item to="/ctf-events">CTF Events</b-nav-item>
-          <b-nav-item to="/infrastructure-creator">Infrastructure Creator</b-nav-item>
+          <b-nav-item to="/infrastructures">Infrastructures</b-nav-item>
           <b-nav-item class="auth-nav" href="#" @click.prevent="login" v-if="!activeUser">Login</b-nav-item>
           <b-nav-item class="auth-nav" href="#" @click.prevent="logout" v-else>Logout</b-nav-item>
           <b-nav-item v-if="activeUser" to="/admin">Admin</b-nav-item>
@@ -34,7 +34,7 @@ export default {
     await this.refreshActiveUser()
   },
   watch: {
-    // everytime a route is changed refresh the activeUser
+    // Wverytime a route is changed refresh the activeUser.
     '$route': 'refreshActiveUser'
   },
   methods: {
