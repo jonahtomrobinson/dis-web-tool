@@ -18,7 +18,7 @@ IN COMMAND LINE/ SHELL:
 4. npm run dev
 5. Navigate to http://localhost:8080/
 
-###Admin access details (case sensitive):
+### Admin access details (case sensitive):
 
 >username: demo
 
