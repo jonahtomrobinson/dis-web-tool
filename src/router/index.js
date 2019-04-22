@@ -2,7 +2,7 @@ import Vue from 'vue'
 import Router from 'vue-router'
 import Technologies from '@/components/technology/Technologies'
 import CtfEvents from '@/components/event/CtfEvents'
-import InfrastructureCreator from '@/components/InfrastructureCreator'
+import Infrastructures from '@/components/Infrastructures'
 import Admin from '@/components/admin/Admin'
 import Auth from '@okta/okta-vue'
 
@@ -39,9 +39,9 @@ let router = new Router({
             component: CtfEvents
         },
         {
-            path: '/infrastructure-creator',
-            name: 'InfrastructureCreator',
-            component: InfrastructureCreator
+            path: '/infrastructures',
+            name: 'Infrastructures',
+            component: Infrastructures
         },
         {
             path: '/admin',
@@ -54,6 +54,7 @@ let router = new Router({
     ]
 })
 
+// Before for each webpage transition, check whether authentication is needed and redirect as necessary.
 router.beforeEach(Vue.prototype.$auth.authRedirectGuard())
 
 export default router

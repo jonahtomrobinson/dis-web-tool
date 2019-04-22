@@ -61,11 +61,11 @@
         <!-- Compare section. -->
         <div class="col-md-6 mb-3 mt-3">
           <b-card class="card-item-filter">
-              <div class="row ml-1">
-                  <div class="col-xs-6 mr-2">
-            <p class="card-title-header">Compare</p>
-                  </div>
-            <div class="col-xs-6 mr-2">
+            <div class="row ml-1">
+              <div class="col-xs-6 mr-2">
+                <p class="card-title-header">Compare</p>
+              </div>
+              <div class="col-xs-6 mr-2">
                 <!-- Submit button. -->
                 <b-button
                   v-if="compareTech1 && compareTech2"
@@ -73,7 +73,7 @@
                   v-on:click="compareTechs()"
                 >Submit</b-button>
               </div>
-              </div>
+            </div>
 
             <div class="row ml-1">
               <!-- Technology option 1 dropdown. -->
@@ -97,7 +97,6 @@
                   </b-form-select>
                 </b-form-group>
               </div>
-
             </div>
           </b-card>
         </div>
@@ -160,7 +159,7 @@ export default {
     this.refreshTechs();
   },
   methods: {
-      // Refresh data from the database.
+    // Refresh data from the database.
     async refreshTechs() {
       this.loading = true;
       this.filteredTechs = [];
@@ -174,15 +173,15 @@ export default {
     // Convert blobs/images objects from the database to a binary string for displaying.
     async convertBlobs() {
       for (var tech in this.filteredTechs) {
-          if (this.filteredTechs[tech].logo != null){
-            var binary = "";
-            var bytes = new Uint8Array(this.filteredTechs[tech].logo.data);
-            var len = bytes.byteLength;
-            for (var i = 0; i < len; i++) {
+        if (this.filteredTechs[tech].logo != null) {
+          var binary = "";
+          var bytes = new Uint8Array(this.filteredTechs[tech].logo.data);
+          var len = bytes.byteLength;
+          for (var i = 0; i < len; i++) {
             binary += String.fromCharCode(bytes[i]);
-            }
-            this.filteredTechs[tech].logo = binary;
-            }
+          }
+          this.filteredTechs[tech].logo = binary;
+        }
       }
     },
     // Filter the techs by the filter input.

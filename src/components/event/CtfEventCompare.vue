@@ -5,21 +5,23 @@
     </div>
     <div v-else>
       <div class="row item-row">
+        <!-- Event 1 column. -->
         <div class="col-md-6 mb-3 mt-3">
           <b-card class="card-item-selected">
             <div class="card-body">
+              <!-- Event 1 details. -->
               <div class="row">
                 <div class="col-xs-6 mr-2">
                   <a :href="compareEvent1.source">
                     <img
-                      class="card-img-selected"
+                      class="card-img-selected smaller-image"
                       :height="250"
                       :src="compareEvent1.logo"
-                      alt="card image collar"
+                      alt
                     >
                   </a>
                 </div>
-                <div class="col-xs-6 ml-4">
+                <div class="col-xs-6 ml-4 mr-5 pr-4">
                   <p class="card-title-selected" href="compareEvent1.source">{{compareEvent1.name}}</p>
                   <p class="card-text-selected">{{compareEvent1.style}}</p>
                   <p class="card-text-selected">{{compareEvent1.date}} | {{compareEvent1.location}}</p>
@@ -34,7 +36,7 @@
                     class="card-text-selected"
                   >No available website link</p>
                 </div>
-                <div class="col-xs-6 ml-5 pl-4">
+                <div class="col-xs-6">
                   <p class="card-title-sub">Additional information</p>
                   <b-card class="card-item-small">
                     <p class="card-text-selected">{{compareEvent1.additional_info}}</p>
@@ -42,16 +44,18 @@
                 </div>
               </div>
 
+              <!-- Categories assigned to event 1. -->
               <hr>
               <p class="card-title-header">Categories {{event1chosenCategories.length}}</p>
               <div class="row item-row ml-1">
                 <div v-for="category in event1chosenCategories" :key="category.id">
                   <p class="mt-2 card-text-selected">
-                    <span class="card-categories-selected">{{category.text}}: {{category.frequency}}</span>
+                    <span class="card-categories-selected">{{category.text}}</span>
                   </p>
                 </div>
               </div>
 
+              <!-- Technologies assigned to event 1. -->
               <hr>
               <p class="card-title-header">Technologies {{event1assignTechs.length}}</p>
               <div style="overflow-y: scroll; height:232px;" class="row item-row">
@@ -61,11 +65,7 @@
                   :key="assignTech.id"
                 >
                   <b-card class="card-item-compare">
-                    <img
-                      class="card-img-compare"
-                      src="/static/img/icons/apple-touch-icon-180x180.png"
-                      alt="card image collar"
-                    >
+                    <img class="card-img-compare smaller-image" :src="assignTech.logo" alt>
                     <p class="card-title-compare">{{assignTech.name}}</p>
                   </b-card>
                 </div>
@@ -74,19 +74,18 @@
           </b-card>
         </div>
 
+        <!-- Event 2 column. -->
         <div class="col-md-6 mb-3 mt-3">
           <b-card class="card-item-selected">
             <div class="card-body">
               <div class="row">
                 <div class="col-xs-6 mr-2">
                   <a :href="compareEvent2.source">
-                    <img
-                      class="card-img-selected smaller-image"
-                      :src="compareEvent2.logo"
-                      alt="card image collar"
-                    >
+                    <img class="card-img-selected smaller-image" :src="compareEvent2.logo" alt>
                   </a>
                 </div>
+
+                <!-- Event 2 details. -->
                 <div class="col-xs-6 ml-4 mr-5 pr-4">
                   <p class="card-title-selected" href="compareEvent2.source">{{compareEvent2.name}}</p>
                   <p class="card-text-selected">{{compareEvent2.style}}</p>
@@ -110,6 +109,7 @@
                 </div>
               </div>
 
+              <!-- Categories assigned to event 2. -->
               <hr>
               <p class="card-title-header">Categories {{event2chosenCategories.length}}</p>
               <div class="row item-row ml-1">
@@ -120,6 +120,7 @@
                 </div>
               </div>
 
+              <!-- Technologies assigned to event 2. -->
               <hr>
               <p class="card-title-header">Technologies {{event2assignTechs.length}}</p>
               <div style="overflow-y: scroll; height:232px;" class="row item-row">
@@ -129,11 +130,7 @@
                   :key="assignTech.id"
                 >
                   <b-card class="card-item-compare">
-                    <img
-                      class="card-img-compare smaller-image"
-                      :src="assignTech.logo"
-                      alt="card image collar"
-                    >
+                    <img class="card-img-compare smaller-image" :src="assignTech.logo" alt>
                     <p class="card-title-compare">{{assignTech.name}}</p>
                   </b-card>
                 </div>
@@ -147,25 +144,24 @@
 </template>
 
 <script>
+// Import API for server access.
 import api from "@/api";
 export default {
   data() {
     return {
       loading: false,
-      techs: [],
-      assignments: [],
-      events: [],
-      categories: [],
-      categoryEvents: [],
-      event1chosenCategories: [],
-      event1assignTechs: [],
-      event2chosenCategories: [],
-      event2assignTechs: [],
-      assignEvents: [],
-      bestScalibility: 0,
-      assignedCategories: {}
+      techs: [], // Stores technologies.
+      assignments: [], // Stores eventTechnology assignments.
+      events: [], // Stores events.
+      categories: [], // Stores categories.
+      categoryEvents: [], // Stores categoryEvent assignments.
+      event1chosenCategories: [], // Stores the assigned categories for event 1.
+      event1assignTechs: [], // Stores the assigned technologies for event 1.
+      event2chosenCategories: [], // Stores the assigned categories for event 2.
+      event2assignTechs: [] // Stores the assigned technologies for event 2.
     };
   },
+  // Props containing the passed event objects to compare.
   props: ["compareEvent1", "compareEvent2"],
   watch: {
     compareEvent1: function() {
@@ -176,6 +172,7 @@ export default {
     this.refresh();
   },
   methods: {
+    // Refresh data from the database.
     async refresh() {
       this.loading = false;
       this.techs = await api.getManyREST("techs");
@@ -183,11 +180,27 @@ export default {
       this.assignments = await api.getManyREST("eventTechnologies");
       this.categoryEvents = await api.getManyREST("categoryEvents");
       this.categories = await api.getManyREST("categories");
+      this.convertBlobs();
       this.chosenCategories = [];
       await this.getCategories();
       await this.getTechs();
       this.loading = true;
     },
+    // Convert blobs/images objects from the database to a binary string for displaying.
+    async convertBlobs() {
+      for (var tech in this.techs) {
+        if (this.techs[tech].logo != null) {
+          var binary = "";
+          var bytes = new Uint8Array(this.techs[tech].logo.data);
+          var len = bytes.byteLength;
+          for (var i = 0; i < len; i++) {
+            binary += String.fromCharCode(bytes[i]);
+          }
+          this.techs[tech].logo = binary;
+        }
+      }
+    },
+    // GET assigned categories from the database server using the API.
     async getCategories(id, event) {
       for (var e in this.categoryEvents) {
         if (this.categoryEvents[e].event_id == this.compareEvent1.id) {
@@ -211,6 +224,7 @@ export default {
         }
       }
     },
+    // GET assigned technologies from the database server using the API.
     async getTechs() {
       this.event1assignTechs = [];
       this.event2assignTechs = [];
