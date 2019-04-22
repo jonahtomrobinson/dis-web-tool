@@ -12,7 +12,7 @@
 
 IN COMMAND LINE/ SHELL:
 1. git clone https://github.com/jonahtomrobinson/dis-web-tool.git 
-(Alternatively download and unzip https://github.com/jonahtomrobinson/dis-web-tool/archive/master.zip)
+>(Alternatively download and unzip https://github.com/jonahtomrobinson/dis-web-tool/archive/master.zip)
 2. cd dis-web-tool
 3. npm install
 4. npm run dev
