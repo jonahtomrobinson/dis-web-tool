@@ -30,8 +30,8 @@
               <td>{{ event.location }}</td>
               <td>{{ event.num_of_users }}</td>
               <td>
-                <div v-for="catEve in categoryEvents" :key="catEve">
-                  <div v-for="cat in categories" :key="cat">
+                <div v-for="catEve in categoryEvents" :key="catEve.id">
+                  <div v-for="cat in categories" :key="cat.id">
                     <p
                       class="displayedCategory"
                       v-if="catEve.category_id == cat.id && catEve.event_id == event.id"
@@ -58,7 +58,7 @@
             </b-form-group>
 
             <b-form-group label="Name">
-              <b-form-input required type="text" v-model="model.name"></b-form-input>
+              <b-form-input required type="text" ></b-form-input>
             </b-form-group>
 
             <b-form-group label="Style">
@@ -71,22 +71,22 @@
             </b-form-group>
 
             <b-form-group label="Date">
-              <b-form-input required type="date" v-model="model.date"></b-form-input>
+              <b-form-input required type="date" v-model.lazy="model.date"></b-form-input>
             </b-form-group>
 
             <b-form-group label="Location">
-              <b-form-input required v-model="model.location"></b-form-input>
+              <b-form-input required v-model.lazy="model.location"></b-form-input>
             </b-form-group>
 
             <b-form-group label="Number of users">
-              <b-form-input required v-model="model.num_of_users"></b-form-input>
+              <b-form-input required v-model.lazy="model.num_of_users"></b-form-input>
             </b-form-group>
 
             <b-form-group label="Challenge categories">
               <b-form-select v-model="selectedCategory">
                 <option
                   v-for="category in categories"
-                  :key="category"
+                  :key="category.id"
                   :value="category"
                 >{{ category.text }}</option>
               </b-form-select>
@@ -96,7 +96,7 @@
                 <tr
                   class="new-categories"
                   v-for="chosenCategory in chosenCategories"
-                  :key="chosenCategory"
+                  :key="chosenCategory.id"
                 >
                   {{ chosenCategory.text }}
                   <a href="#" @click="removeCategory()">Remove</a>
@@ -105,11 +105,11 @@
             </b-form-group>
 
             <b-form-group label="Source website">
-              <b-form-input v-model="model.source"></b-form-input>
+              <b-form-input v-model.lazy="model.source"></b-form-input>
             </b-form-group>
 
             <b-form-group label="Additional info">
-              <b-form-textarea rows="1" v-model="model.additional_info"></b-form-textarea>
+              <b-form-textarea rows="1" v-model.lazy="model.additional_info"></b-form-textarea>
             </b-form-group>
 
             <div>
@@ -203,9 +203,10 @@ export default {
       event = await api.getManyREST("categoryEvents");
       for (var e in event) {
         if (event[e].event_id == id) {
-          this.chosenCategories.push(
-            await api.getSingleREST("categories", event[e].category_id)
-          );
+            var x = await api.getSingleREST("categories", event[e].category_id)
+            if (!this.chosenCategories.includes(x)){
+                this.chosenCategories.push(x);
+            }
         }
       }
     },
