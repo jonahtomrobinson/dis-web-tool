@@ -2,7 +2,7 @@
 
 > Dissertation project. An instructional tool for CTF infrastructure setup. By Jonah Robinson.
 
-My tool is intended to allow Capture the Flag organisers to explore different infrastructure technology options. Currently this is a difficult task as information on different software and frameworks are scattered across the web, and technical specifications are not in the context of CTF events. My tool brings this technology information together in one place and links each technology with respective past CTF events, thus giving contextual information such as: scalability in a CTF environment, challenge categories previously handled, and popularity among CTF organisers.
+My tool is intended to allow Capture the Flag organisers to explore different infrastructure technology options. Currently comparing and evaluating different technologies is not a simple task. Information repositories on different software and frameworks are scattered across the web and technical specifications often do not consider the context of CTF events. My tool brings this technology information together in one place and links each technology with respective past CTF events, thus giving contextual information such as: scalability in a CTF environment, challenge categories previously handled, and popularity among CTF organisers.
 
 Survey: https://forms.ncl.ac.uk/view.php?id=4686779
 
