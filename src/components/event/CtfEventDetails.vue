@@ -107,7 +107,7 @@ export default {
       categoryEvents: [], // Stores assigned categories.
       categories: [], // Stores categories.
       chosenCategories: [], // Stores the assigned categories for this event.
-      assignTechs: [], // Stores the assigned technologies for this event.
+      assignTechs: [] // Stores the assigned technologies for this event.
     };
   },
   props: ["selectedEvent", "modal"],
@@ -120,7 +120,7 @@ export default {
     this.refresh();
   },
   methods: {
-      // Refresh data from the database.
+    // Refresh data from the database.
     async refresh() {
       this.loading = true;
       this.events = await api.getManyREST("events");
@@ -161,7 +161,7 @@ export default {
         }
       }
     },
-    // GET assigned events from the database server using the API.
+    // GET assigned technologies from the database server using the API.
     async getTechs() {
       this.assignTechs = [];
       for (var as in this.assignments) {
@@ -174,6 +174,7 @@ export default {
         }
       }
     },
+    // Manage popup modal settings, and calling.
     async showModal(id) {
       var x = await api.getSingleREST("techs", id);
       this.$modal.show(
@@ -187,8 +188,6 @@ export default {
           height: 750
         }
       );
-      //this.$modal.hide;
-      //this.modal = false
     }
   }
 };

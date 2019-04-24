@@ -134,8 +134,8 @@ export default {
 
     // Refresh data from the database.
     async refresh() {
-      this.techs = await api.getManyREST("techs");
-      this.events = await api.getManyREST("events");
+      this.techs = await api.getManyREST("techs?sort=name");
+      this.events = await api.getManyREST("events?sort=name");
       this.assignments = await api.getManyREST("eventTechnologies");
     },
 
@@ -192,6 +192,7 @@ export default {
         );
         if (test[0] == undefined) {
           await this.save();
+          this.showModal("Technology added" + this.selectedToAdd.name);
         } else {
           this.showModal("This technology is already assigned.");
         }
@@ -212,6 +213,7 @@ export default {
         );
         if (test[0] == undefined) {
           await this.save();
+          this.showModal("Event added" + this.selectedToAdd.name);
         } else {
           this.showModal("This event is already assigned.");
         }

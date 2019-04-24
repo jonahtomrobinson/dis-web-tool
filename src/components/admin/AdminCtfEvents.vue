@@ -12,7 +12,6 @@
               <th>Date</th>
               <th>Location</th>
               <th>Number of users</th>
-              <th>Categories</th>
               <th>Source</th>
               <th>&nbsp;</th>
             </tr>
@@ -29,16 +28,6 @@
               <td>{{ event.date }}</td>
               <td>{{ event.location }}</td>
               <td>{{ event.num_of_users }}</td>
-              <td>
-                <div v-for="catEve in categoryEvents" :key="catEve.id">
-                  <div v-for="cat in categories" :key="cat.id">
-                    <p
-                      class="displayedCategory"
-                      v-if="catEve.category_id == cat.id && catEve.event_id == event.id"
-                    >{{ cat.text }}</p>
-                  </div>
-                </div>
-              </td>
               <td>{{ event.source }}</td>
               <td class="text-right">
                 <a href="#" @click.prevent="populateEventToEdit(event)">Edit</a> -
@@ -58,7 +47,7 @@
             </b-form-group>
 
             <b-form-group label="Name">
-              <b-form-input required type="text" ></b-form-input>
+              <b-form-input required v-model.lazy="model.name" type="text"></b-form-input>
             </b-form-group>
 
             <b-form-group label="Style">
@@ -83,7 +72,7 @@
             </b-form-group>
 
             <b-form-group label="Challenge categories">
-              <b-form-select v-model="selectedCategory">
+              <b-form-select v-model="selectedCategory" @change="addCategory()">
                 <option
                   v-for="category in categories"
                   :key="category.id"
@@ -91,7 +80,6 @@
                 >{{ category.text }}</option>
               </b-form-select>
 
-              <b-button class="mr-1 mt-2 mb-2" @click="addCategory()">Add</b-button>
               <tbody>
                 <tr
                   class="new-categories"
@@ -152,13 +140,13 @@ export default {
     // Refresh data from the database.
     async refresh() {
       this.loading = true;
-      this.events = await api.getManyREST("events");
+      this.events = await api.getManyREST("events?sort=name");
       this.convertBlobs();
 
       // Event category assignment table.
       this.categoryEvents = await api.getManyREST("categoryEvents");
       // Input categories.
-      this.categories = await api.getManyREST("categories");
+      this.categories = await api.getManyREST("categories?sort=text");
       this.loading = false;
     },
 
@@ -203,10 +191,10 @@ export default {
       event = await api.getManyREST("categoryEvents");
       for (var e in event) {
         if (event[e].event_id == id) {
-            var x = await api.getSingleREST("categories", event[e].category_id)
-            if (!this.chosenCategories.includes(x)){
-                this.chosenCategories.push(x);
-            }
+          var x = await api.getSingleREST("categories", event[e].category_id);
+          if (!this.chosenCategories.includes(x)) {
+            this.chosenCategories.push(x);
+          }
         }
       }
     },
@@ -219,6 +207,7 @@ export default {
       ) {
         this.chosenCategories.push(this.selectedCategory);
       }
+      this.selectedCategory = undefined;
     },
 
     // Remove a category on button click.
@@ -252,11 +241,19 @@ export default {
     async saveEvent() {
       if (this.model.id) {
         await api.updateREST("events", this.model.id, this.model);
-        await this.deleteCategoryEvents(this.model.id);
-        this.saveCategoryEvents();
+        //await this.deleteCategoryEvents(this.model.id);
+        this.categoryEvents = await api.getManyREST("categoryEvents");
+        for (var ce in this.categoryEvents) {
+          if (this.categoryEvents[ce].event_id == this.model.id) {
+            await api.deleteREST("categoryEvents", this.categoryEvents[ce].id);
+          }
+        }
+
+        await this.saveCategoryEvents();
+        this.showModal("Event edit completed: " + this.model.name);
       } else {
         this.model = await api.createREST("events", this.model);
-        this.saveCategoryEvents();
+        await this.saveCategoryEvents();
 
         // Check new event has been added to the database.
         this.events = await api.getManyREST("events");

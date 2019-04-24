@@ -18,7 +18,8 @@
                   </div>
                 </b-card>
               </div>
-              <hr class="clear">
+
+              <!-- Infrastructure requirements. -->
               <b-card class="card-infrastructures-requirements">
                 <h1>Requirements</h1>
                 <ul>
@@ -37,6 +38,7 @@
                 </ul>
               </b-card>
 
+              <!-- INfrastructure instructions. -->
               <hr class="clear">
               <b-card class="card-infrastructures-instructions">
                 <h1>Instructions</h1>
@@ -44,13 +46,15 @@
                   <li>BASH : git clone -c core.autocrlf=false https://github.com/picoCTF/picoCTF.git</li>
                   <li>BASH : cd picoCTF</li>
                   <li>BASH : vagrant up</li>
-                  <li>Navigate to : <a
-                    href="http://192.168.2.2/"
-                  >http://192.168.2.2/</a></li>
+                  <li>
+                    Navigate to :
+                    <a href="http://192.168.2.2/">http://192.168.2.2/</a>
+                  </li>
                   <li>Register an account (this user will be the site administrator)</li>
                 </ol>
               </b-card>
 
+              <!-- Infrastructure additional information. -->
               <hr class="clear">
               <b-card class="card-infrastructures-requirements">
                 <h1>Additional Information</h1>
@@ -166,6 +170,7 @@ export default {
         }
       }
     },
+    // GET assigned events from the database server using the API.
     async getTechs() {
       this.assignTechs = [];
       for (var as in this.assignments) {
@@ -178,6 +183,7 @@ export default {
         }
       }
     },
+    // Manage popup modal settings, and calling.
     async showModal(id) {
       var x = await api.getSingleREST("techs", id);
       this.$modal.show(
@@ -191,8 +197,6 @@ export default {
           height: 750
         }
       );
-      //this.$modal.hide;
-      //this.modal = false
     }
   }
 };

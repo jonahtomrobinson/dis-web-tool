@@ -163,10 +163,10 @@ export default {
     async refreshTechs() {
       this.loading = true;
       this.filteredTechs = [];
-      this.techs = await api.getManyREST("techs");
+      this.techs = await api.getManyREST("techs?sort=name");
       await this.filterTechs();
       await this.convertBlobs();
-      this.purposes = await api.getManyREST("purposes");
+      this.purposes = await api.getManyREST("purposes?sort=text");
       await this.addPurposes();
       this.loading = false;
     },
@@ -203,10 +203,11 @@ export default {
     // Assign purposes to each technology.
     async addPurposes() {
       for (var tech in this.techs) {
-        this.techs[tech].purpose = (await api.getSingleREST(
-          "purposes",
-          this.techs[tech].purpose_id
-        )).text;
+        for (var purpose in this.purposes) {
+          if (this.techs[tech].purpose == this.purposes[purpose].purpose_id) {
+            this.techs[tech].purpose = this.purposes[purpose].text;
+          }
+        }
       }
     },
     // Change component to TechnologyDetails.
