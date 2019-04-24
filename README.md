@@ -28,7 +28,7 @@ IN COMMAND LINE/ SHELL:
 
 >password: Password123
 
-## Optional tasks to explore web-tool
+## Optional tasks to explore web-tool functionality 
 
 Admin side
 1)	Add a new CTF event.
