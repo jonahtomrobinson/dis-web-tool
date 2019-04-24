@@ -1,6 +1,7 @@
 <template>
   <div id="app">
     <b-navbar toggleable="md">
+      <!-- Navbar -->
       <b-navbar-toggle target="nav_collapse"></b-navbar-toggle>
       <b-collapse is-nav id="nav_collapse">
         <b-navbar-nav class="mt-3">
@@ -14,41 +15,44 @@
       </b-collapse>
     </b-navbar>
     <div class="container-fluid m-3">
-
-    <!-- routes will be rendered here -->
-    <router-view />
+      <!-- routes will be rendered here -->
+      <router-view/>
     </div>
   </div>
 </template>
 
 <script>
 export default {
-  name: 'app',
-  data () {
+  name: "app",
+  data() {
     return {
-        loggedin:false,
-        activeUser: null
-    }
+      loggedin: false,
+      activeUser: null
+    };
   },
-  async created () {
-    await this.refreshActiveUser()
+  async created() {
+    await this.refreshActiveUser();
   },
   watch: {
     // Everytime a route is changed refresh the activeUser.
-    '$route': 'refreshActiveUser'
+    $route: "refreshActiveUser"
   },
   methods: {
-    login () {
-      this.$auth.loginRedirect()
+    // Redirect login call.
+    login() {
+      this.$auth.loginRedirect();
     },
-    async refreshActiveUser () {
-      this.activeUser = await this.$auth.getUser()
+    // Reauthenticate user.
+    async refreshActiveUser() {
+      this.activeUser = await this.$auth.getUser();
     },
-    async logout () {
-      await this.$auth.logout()
-      await this.refreshActiveUser()
-      this.$router.push('/')
+
+    // Redirect logout call.
+    async logout() {
+      await this.$auth.logout();
+      await this.refreshActiveUser();
+      this.$router.push("/");
     }
   }
-}
+};
 </script>

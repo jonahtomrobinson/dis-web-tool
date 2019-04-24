@@ -37,7 +37,7 @@
                 <b-form-group label="Criteria">
                   <b-form-select v-model="filterCriteria">
                     <option :value="'style'">Event Style</option>
-                    <option :value="'categories'">Categories</option>
+                    <option :value="'categories'">Challenge Categories</option>
                     <option :value="'attendees'">Attendees</option>
                   </b-form-select>
                 </b-form-group>
@@ -87,11 +87,11 @@
         <!-- Compare section. -->
         <div class="col-md-6 mb-3 mt-3">
           <b-card class="card-item-filter">
-              <div class="row ml-1">
-                  <div class="col-xs-6 mr-2">
-            <p class="card-title-header">Compare</p>
-                  </div>
-            <!-- Submit button -->
+            <div class="row ml-1">
+              <div class="col-xs-6 mr-2">
+                <p class="card-title-header">Compare</p>
+              </div>
+              <!-- Submit button -->
               <div class="col-xs-6 mr-2">
                 <b-button
                   v-if="compareEvent1 && compareEvent2"
@@ -99,7 +99,7 @@
                   v-on:click="compareTechs()"
                 >Submit</b-button>
               </div>
-              </div>
+            </div>
             <div class="row ml-1">
               <!-- Event option 1 dropdown. -->
               <div class="col-xs-6 mr-2">
@@ -130,7 +130,6 @@
                   </b-form-select>
                 </b-form-group>
               </div>
-
             </div>
           </b-card>
         </div>
@@ -199,10 +198,10 @@ export default {
     async refresh() {
       this.loading = true;
       this.filteredEvents = [];
-      this.events = await api.getManyREST("events");
+      this.events = await api.getManyREST("events?sort=name");
       await this.filterEvents();
       await this.convertBlobs();
-      this.categories = await api.getManyREST("categories");
+      this.categories = await api.getManyREST("categories?sort=text");
       this.categoryEvents = await api.getManyREST("categoryEvents");
       this.loading = false;
     },

@@ -69,7 +69,7 @@ export default {
     // Refresh data from the database.
     async refreshCategory() {
       this.loading = true;
-      this.categories = await api.getManyREST("categories");
+      this.categories = await api.getManyREST("categories?sort=text");
       this.loading = false;
     },
 
@@ -82,6 +82,7 @@ export default {
     async saveCategory() {
       if (this.model.id) {
         await api.updateREST("categories", this.model.id, this.model);
+        this.showModal("Category edit completed: " + this.model.text);
       } else {
         this.model = await api.createREST("categories", this.model);
 

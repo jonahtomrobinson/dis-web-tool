@@ -110,7 +110,7 @@ export default {
     // Refresh data from the database.
     async refreshTechs() {
       this.loading = true;
-      this.techs = await api.getManyREST("techs");
+      this.techs = await api.getManyREST("techs?sort=name");
       this.convertBlobs();
 
       for (var i = 0; i < this.techs.length; i++) {
@@ -163,7 +163,7 @@ export default {
 
     // Refresh purposes.
     async refreshPurposes() {
-      this.purposes = await api.getManyREST("purposes");
+      this.purposes = await api.getManyREST("purposes?sort=text");
     },
 
     // Populate form with edit information.
@@ -175,6 +175,7 @@ export default {
     async saveTech() {
       if (this.model.id) {
         await api.updateREST("techs", this.model.id, this.model);
+        this.showModal("Technology edit completed: " + this.model.name);
       } else {
         this.model = await api.createREST("techs", this.model);
 

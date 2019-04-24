@@ -68,7 +68,7 @@ export default {
     // Refresh data from the database.
     async refreshPurposes() {
       this.loading = true;
-      this.purposes = await api.getManyREST("purposes");
+      this.purposes = await api.getManyREST("purposes?sort=text");
       this.loading = false;
     },
 
@@ -81,6 +81,7 @@ export default {
     async savePurpose() {
       if (this.model.id) {
         await api.updateREST("purposes", this.model.id, this.model);
+        this.showModal("Purpose edit completed: " + this.model.text);
       } else {
         this.model = await api.createREST("purposes", this.model);
 
