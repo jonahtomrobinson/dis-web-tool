@@ -29,8 +29,8 @@ IN COMMAND LINE/ SHELL:
 ## Optional tasks to explore web-tool
 
 Admin side
-1)	Adding a new CTF event.
-2)	Adding a new technology.
+1)	Add a new CTF event.
+2)	Add a new technology.
 3)	Assign your technology to your new event.
 4)	Delete a technology/event/category/purpose.
 5)	Edit a technology/event/category/purpose.
