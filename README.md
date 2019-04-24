@@ -26,10 +26,21 @@ IN COMMAND LINE/ SHELL:
 
 >password: Password123
 
-## Extra information
+## Optional tasks to explore web-tool
 
-Client side:
-Access information on technologies and CTF events to assist with CTF competition infrastructure setup.
+Admin side
+1)	Adding a new CTF event.
+2)	Adding a new technology.
+3)	Assign your technology to your new event.
+4)	Delete a technology/event/category/purpose.
+5)	Edit a technology/event/category/purpose.
+6)	Unassign your technology from your event.
 
-Admin side:
-Enter data through forms and assign technologies to CTF events and vice versa.
+Client side
+1)	Find the description of technology: CTFd.
+2)	Find the largest user count for technology: Docker.
+3)	Find the cost of technology: VMware vSphere.
+4)	Find a CTF event which ran a buffer overflow challenge.
+5)	Filter CTF events to find an event which had less than 100 attendees.
+6)	Find the technologies with the purpose “Virtual Machines & Containers” and compare two of them to see which is more popular.
+
