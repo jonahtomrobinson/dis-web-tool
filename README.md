@@ -4,8 +4,6 @@
 
 My tool is intended to allow Capture the Flag organisers to explore different infrastructure technology options. Currently comparing and evaluating different technologies is not a simple task. Information repositories on different software and frameworks are scattered across the web and technical specifications often do not consider the context of CTF events. My tool brings this technology information together in one place and links each technology with respective past CTF events, thus giving contextual information such as: scalability in a CTF environment, challenge categories previously handled, and popularity among CTF organisers. Technologies and CTF events can be easily compared against each other based on these attributes, allowing organisers to feel confident on the  decisions they make for their next CTF competition infrastructure setup.
 
-Survey: https://forms.ncl.ac.uk/view.php?id=4686779
-
 ## Required software
 
 >Node.js, can be downloaded at: https://nodejs.org/en/
@@ -45,4 +43,8 @@ Client side
 4)	Find a CTF event which ran a buffer overflow challenge.
 5)	Filter CTF events to find an event which had less than 100 attendees.
 6)	Find the technologies with the purpose “Virtual Machines & Containers” and compare two of them to see which is more popular.
+
+## Survey
+
+Link: https://forms.ncl.ac.uk/view.php?id=4686779
 
