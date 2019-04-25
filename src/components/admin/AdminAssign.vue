@@ -38,9 +38,9 @@
 
                 <!-- List all assigned events. -->
                 <b-form-group class="mt-2" label="Assigned Technologies:">
-                  <div v-for="assignment in assignments" :key="assignment.id" :value="assignment">
-                    <tbody v-if="assignment.event_id == selected.id">
-                      <tr v-for="tech in techs" :key="tech.id">
+                  <div v-for="tech in techs" :key="tech.id" >
+                    <tbody v-for="assignment in assignments" :key="assignment.id" :value="assignment" >
+                      <tr v-if="assignment.event_id == selected.id">
                         <td v-if="assignment.technology_id == tech.id">
                           {{tech.name}}
                           <!-- Delete link/button. -->

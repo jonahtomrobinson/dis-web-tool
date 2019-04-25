@@ -45,11 +45,11 @@
             </b-form-group>
 
             <b-form-group label="Name">
-              <b-form-input required type="text" v-model="model.name"></b-form-input>
+              <b-form-input required debounce="500" type="text" v-model="model.name"></b-form-input>
             </b-form-group>
 
             <b-form-group label="Cost">
-              <b-form-input required type="text" v-model="model.cost"></b-form-input>
+              <b-form-input required debounce="500" type="text" v-model="model.cost"></b-form-input>
             </b-form-group>
 
             <b-form-group label="Purpose">
@@ -63,11 +63,11 @@
             </b-form-group>
 
             <b-form-group label="Source Website">
-              <b-form-input required type="text" v-model="model.source"></b-form-input>
+              <b-form-input required debounce="500" type="url" v-model="model.source"></b-form-input>
             </b-form-group>
 
             <b-form-group label="Description">
-              <b-form-textarea required rows="3" v-model="model.description"></b-form-textarea>
+              <b-form-textarea debounce="500" required rows="3" v-model="model.description"></b-form-textarea>
             </b-form-group>
             <div>
               <b-btn type="submit" variant="success">Save</b-btn>
