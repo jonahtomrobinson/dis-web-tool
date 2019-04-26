@@ -11,21 +11,26 @@
             <div class="card-body">
               <!-- Event 1 details. -->
               <div class="row">
-                <div class="col-xs-6 mr-2">
-                  <a :href="compareEvent1.source">
-                    <img
-                      class="card-img-selected smaller-image"
-                      :height="250"
-                      :src="compareEvent1.logo"
-                      alt
-                    >
-                  </a>
-                </div>
-                <div class="col-xs-6 ml-4 mr-5 pr-4">
+                <b-card class="card-compare-clear">
+                  <div class="col-xs-6 mr-2">
+                    <a :href="compareEvent1.source">
+                      <img
+                        class="card-img-compare"
+                        :src="compareEvent1.logo"
+                        alt="card image collar"
+                      >
+                    </a>
+                  </div>
+                </b-card>
+              </div>
+              <hr>
+
+              <div class="row">
+                <div class="col-xs-6 ml-4 mr-5 pr-1" style="max-width: 250px">
                   <p class="card-title-selected" href="compareEvent1.source">{{compareEvent1.name}}</p>
                   <p class="card-text-selected">{{compareEvent1.style}}</p>
                   <p class="card-text-selected">{{compareEvent1.date}} | {{compareEvent1.location}}</p>
-                  <p class="card-text-selected">{{compareEvent1.num_of_users}} users</p>
+                  <p class="card-text-selected">{{compareEvent1.num_of_users}} attendees</p>
                   <a
                     v-if="compareEvent1.source != null"
                     class="card-text-selected"
@@ -78,19 +83,29 @@
         <div class="col-md-6 mb-3 mt-3">
           <b-card class="card-item-selected">
             <div class="card-body">
+              <!-- Event 2 details. -->
               <div class="row">
-                <div class="col-xs-6 mr-2">
-                  <a :href="compareEvent2.source">
-                    <img class="card-img-selected smaller-image" :src="compareEvent2.logo" alt>
-                  </a>
-                </div>
+                <b-card class="card-compare-clear">
+                  <div class="col-xs-6 mr-2">
+                    <a :href="compareEvent2.source">
+                      <img
+                        class="card-img-compare"
+                        :src="compareEvent2.logo"
+                        alt="card image collar"
+                      >
+                    </a>
+                  </div>
+                </b-card>
+              </div>
+              <hr>
 
+              <div class="row">
                 <!-- Event 2 details. -->
-                <div class="col-xs-6 ml-4 mr-5 pr-4">
+                <div class="col-xs-6 ml-4 mr-5 pr-1" style="max-width: 250px">
                   <p class="card-title-selected" href="compareEvent2.source">{{compareEvent2.name}}</p>
                   <p class="card-text-selected">{{compareEvent2.style}}</p>
                   <p class="card-text-selected">{{compareEvent2.date}} | {{compareEvent2.location}}</p>
-                  <p class="card-text-selected">{{compareEvent2.num_of_users}} users</p>
+                  <p class="card-text-selected">{{compareEvent2.num_of_users}} attendees</p>
                   <a
                     v-if="compareEvent2.source != null"
                     class="card-text-selected"

@@ -23,7 +23,7 @@
                   <p class="card-title-selected" href="selectedEvent.source">{{selectedEvent.name}}</p>
                   <p class="card-text-selected">{{selectedEvent.style}}</p>
                   <p class="card-text-selected">{{selectedEvent.date}} | {{selectedEvent.location}}</p>
-                  <p class="card-text-selected">{{selectedEvent.num_of_users}} users</p>
+                  <p class="card-text-selected">{{selectedEvent.num_of_users}} attendees</p>
                   <a
                     v-if="selectedEvent.source != null"
                     class="card-text-selected"

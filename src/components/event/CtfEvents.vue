@@ -39,6 +39,7 @@
                     <option :value="'style'">Event Style</option>
                     <option :value="'categories'">Challenge Categories</option>
                     <option :value="'attendees'">Attendees</option>
+                    <option :value="'years'">Year Ran</option>
                   </b-form-select>
                 </b-form-group>
               </div>
@@ -68,6 +69,16 @@
                     <b-form-select v-model="filterStatus">
                       <option :value="'more'">more than</option>
                       <option :value="'less'">less than</option>
+                    </b-form-select>
+                  </div>
+
+                  <div v-if="filterCriteria == 'years'">
+                    <b-form-select v-model="filterValue">
+                      <option
+                        v-for="year in years"
+                        :key="year.id"
+                        :value="year"
+                      >{{year}}</option>
                     </b-form-select>
                   </div>
                 </b-form-group>
@@ -178,7 +189,8 @@ export default {
       filterStatus: null, // Filter status.
       filterValue: null, // Filter value.
       compareEvent1: null, // First event to compare.
-      compareEvent2: null // Second event to compare.
+      compareEvent2: null, // Second event to compare.
+      years: []
     };
   },
   watch: {
@@ -203,6 +215,7 @@ export default {
       await this.convertBlobs();
       this.categories = await api.getManyREST("categories?sort=text");
       this.categoryEvents = await api.getManyREST("categoryEvents");
+      await this.getYears()
       this.loading = false;
     },
     // Convert blobs/images objects from the database to a binary string for displaying.
@@ -219,6 +232,15 @@ export default {
         }
       }
     },
+    async getYears(){
+        for (var event in this.events){
+            var x = new Date(this.events[event].date)
+            if (!this.years.includes(x.getFullYear())){
+                this.years.push(x.getFullYear())
+            }
+        }
+        this.years.sort()
+    },
     // Filter the events by the filter input.
     async filterEvents() {
       this.filteredEvents = [];
@@ -231,7 +253,8 @@ export default {
             this.filteredEvents.push(this.events[event]);
           }
         }
-      } else if (this.filterCriteria == "categories") {
+      } 
+      else if (this.filterCriteria == "categories") {
         for (var e in this.categoryEvents) {
           if (this.categoryEvents[e].category_id == this.filterValue) {
             for (var event in this.events) {
@@ -241,21 +264,32 @@ export default {
             }
           }
         }
-      } else if (this.filterCriteria == "attendees") {
+      } 
+      else if (this.filterCriteria == "attendees") {
         if (this.filterStatus == "more") {
           for (var event in this.events) {
             if (this.events[event].num_of_users > this.filterValue) {
               this.filteredEvents.push(this.events[event]);
             }
           }
-        } else if (this.filterStatus == "less") {
+        } 
+        else if (this.filterStatus == "less") {
           for (var event in this.events) {
             if (this.events[event].num_of_users < this.filterValue) {
               this.filteredEvents.push(this.events[event]);
             }
           }
         }
-      } else {
+      } 
+      else if (this.filterCriteria == "years") {
+        for (var event in this.events) {
+        var x = new Date(this.events[event].date)
+          if (x.getFullYear() == this.filterValue) {
+            this.filteredEvents.push(this.events[event]);
+          }
+        }
+      }
+      else {
         this.filteredEvents = this.events;
       }
     },

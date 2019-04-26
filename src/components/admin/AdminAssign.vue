@@ -192,7 +192,7 @@ export default {
         );
         if (test[0] == undefined) {
           await this.save();
-          this.showModal("Technology added" + this.selectedToAdd.name);
+          this.showModal("Technology assigned :" + this.selectedToAdd.name);
         } else {
           this.showModal("This technology is already assigned.");
         }
@@ -213,7 +213,7 @@ export default {
         );
         if (test[0] == undefined) {
           await this.save();
-          this.showModal("Event added" + this.selectedToAdd.name);
+          this.showModal("Event assigned: " + this.selectedToAdd.name);
         } else {
           this.showModal("This event is already assigned.");
         }
