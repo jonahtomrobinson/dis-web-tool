@@ -47,7 +47,7 @@
             </b-form-group>
 
             <b-form-group label="Name">
-              <b-form-input required v-model.lazy="model.name" type="text"></b-form-input>
+              <b-form-input required debounce="500" v-model.lazy="model.name" type="text"></b-form-input>
             </b-form-group>
 
             <b-form-group label="Style">
@@ -60,15 +60,15 @@
             </b-form-group>
 
             <b-form-group label="Date">
-              <b-form-input required type="date" v-model.lazy="model.date"></b-form-input>
+              <b-form-input required debounce="500" type="date" v-model.lazy="model.date"></b-form-input>
             </b-form-group>
 
             <b-form-group label="Location">
-              <b-form-input required v-model.lazy="model.location"></b-form-input>
+              <b-form-input required debounce="500" v-model.lazy="model.location"></b-form-input>
             </b-form-group>
 
             <b-form-group label="Number of users">
-              <b-form-input required v-model.lazy="model.num_of_users"></b-form-input>
+              <b-form-input required debounce="500" type="number" v-model.lazy="model.num_of_users"></b-form-input>
             </b-form-group>
 
             <b-form-group label="Challenge categories">
@@ -93,11 +93,11 @@
             </b-form-group>
 
             <b-form-group label="Source website">
-              <b-form-input v-model.lazy="model.source"></b-form-input>
+              <b-form-input debounce="500" type="url" v-model.lazy="model.source"></b-form-input>
             </b-form-group>
 
             <b-form-group label="Additional info">
-              <b-form-textarea rows="1" v-model.lazy="model.additional_info"></b-form-textarea>
+              <b-form-textarea debounce="500" rows="1" v-model.lazy="model.additional_info"></b-form-textarea>
             </b-form-group>
 
             <div>

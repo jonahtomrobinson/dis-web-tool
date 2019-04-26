@@ -38,9 +38,9 @@
 
                 <!-- List all assigned events. -->
                 <b-form-group class="mt-2" label="Assigned Technologies:">
-                  <div v-for="assignment in assignments" :key="assignment.id" :value="assignment">
-                    <tbody v-if="assignment.event_id == selected.id">
-                      <tr v-for="tech in techs" :key="tech.id">
+                  <div v-for="tech in techs" :key="tech.id" >
+                    <tbody v-for="assignment in assignments" :key="assignment.id" :value="assignment" >
+                      <tr v-if="assignment.event_id == selected.id">
                         <td v-if="assignment.technology_id == tech.id">
                           {{tech.name}}
                           <!-- Delete link/button. -->
@@ -192,7 +192,7 @@ export default {
         );
         if (test[0] == undefined) {
           await this.save();
-          this.showModal("Technology added" + this.selectedToAdd.name);
+          this.showModal("Technology assigned :" + this.selectedToAdd.name);
         } else {
           this.showModal("This technology is already assigned.");
         }
@@ -213,7 +213,7 @@ export default {
         );
         if (test[0] == undefined) {
           await this.save();
-          this.showModal("Event added" + this.selectedToAdd.name);
+          this.showModal("Event assigned: " + this.selectedToAdd.name);
         } else {
           this.showModal("This event is already assigned.");
         }

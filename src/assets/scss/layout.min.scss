@@ -221,13 +221,24 @@ p.card-body {
 }
 
 .card-img-compare {
-  height: 75px;
-  object-fit: contain;
+  min-height: 150px;
+  max-width: 200px;
+  margin-left: auto;
+  margin-right: auto;
 }
 
 .card-title-compare {
   font-weight: bold;
   object-fit: contain;
+}
+
+.card-compare-clear {
+  border-color: white;
+  margin-left: auto;
+  margin-right: auto;
+  object-fit: contain;
+  align-content: center;
+  text-align: center;
 }
 
 /*------------------------------------*\
@@ -258,15 +269,15 @@ p.card-body {
   margin-right: auto;
 }
 
-.card-infrastructures-clear{
-    border-color: white;
-    margin-left: auto;
-    margin-right: auto;
-    object-fit: contain;
-    align-content: center;
+.card-infrastructures-clear {
+  border-color: white;
+  margin-left: auto;
+  margin-right: auto;
+  object-fit: contain;
+  align-content: center;
   text-align: center;
 }
 
-.clear{
-    border-color:white;
+.clear {
+  border-color: white;
 }

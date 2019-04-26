@@ -11,11 +11,20 @@
             <div class="card-body">
               <!-- Technology 1 details. -->
               <div class="row">
-                <div class="col-xs-6 mr-2">
-                  <a :href="compareTech1.source">
-                    <img class="card-img-selected smaller-image" :src="compareTech1.logo" alt>
-                  </a>
-                </div>
+                <b-card class="card-compare-clear">
+                  <div class="col-xs-6 mr-2">
+                    <a :href="compareTech1.source">
+                      <img
+                        class="card-img-compare"
+                        :src="compareTech1.logo"
+                        alt="card image collar"
+                      >
+                    </a>
+                  </div>
+                </b-card>
+              </div>
+              <hr>
+              <div class="row">
                 <div class="col-xs-6 ml-4">
                   <p class="card-title-selected" href="compareTech1.source">
                     {{compareTech1.name}}
@@ -73,12 +82,21 @@
           <b-card class="card-item-selected">
             <div class="card-body">
               <div class="row">
-                <div class="col-xs-6 mr-2">
-                  <a :href="compareTech2.source">
-                    <img class="card-img-selected smaller-image" :src="compareTech2.logo" alt>
-                  </a>
-                </div>
+                <b-card class="card-compare-clear">
+                  <div class="col-xs-6 mr-2">
+                    <a :href="compareTech2.source">
+                      <img
+                        class="card-img-compare"
+                        :src="compareTech2.logo"
+                        alt="card image collar"
+                      >
+                    </a>
+                  </div>
+                </b-card>
+              </div>
+              <hr>
 
+              <div class="row">
                 <!-- Technology 2 details. -->
                 <div class="col-xs-6 ml-4">
                   <p class="card-title-selected" href="compareTech2.source">
