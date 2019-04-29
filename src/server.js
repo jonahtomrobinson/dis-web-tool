@@ -4,8 +4,6 @@ const bodyParser = require('body-parser')
 const Sequelize = require('sequelize')
 const epilogue = require('epilogue')
 const OktaJwtVerifier = require('@okta/jwt-verifier')
-const multer = require('multer')
-const upload = multer({ dest: 'uploads/' })
 
 // Okta JWTVerifier credientials.
 const oktaJwtVerifier = new OktaJwtVerifier({
