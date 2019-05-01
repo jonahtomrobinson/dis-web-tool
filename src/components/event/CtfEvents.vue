@@ -39,7 +39,7 @@
                     <option :value="'style'">Event Style</option>
                     <option :value="'categories'">Challenge Categories</option>
                     <option :value="'attendees'">Attendees</option>
-                    <option :value="'years'">Year Ran</option>
+                    <option :value="'years'">Year</option>
                   </b-form-select>
                 </b-form-group>
               </div>
