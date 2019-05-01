@@ -51,7 +51,7 @@
 
               <!-- Categories assigned to event 1. -->
               <hr>
-              <p class="card-title-header">Categories {{event1chosenCategories.length}}</p>
+              <p class="card-title-header">Challenge Categories {{event1chosenCategories.length}}</p>
               <div class="row item-row ml-1">
                 <div v-for="category in event1chosenCategories" :key="category.id">
                   <p class="mt-2 card-text-selected">
@@ -126,7 +126,7 @@
 
               <!-- Categories assigned to event 2. -->
               <hr>
-              <p class="card-title-header">Categories {{event2chosenCategories.length}}</p>
+              <p class="card-title-header">Challenge Categories {{event2chosenCategories.length}}</p>
               <div class="row item-row ml-1">
                 <div v-for="category in event2chosenCategories" :key="category.id">
                   <p class="mt-2 card-text-selected">

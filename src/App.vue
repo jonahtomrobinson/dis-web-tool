@@ -8,9 +8,9 @@
           <b-nav-item to="/technologies">Technologies</b-nav-item>
           <b-nav-item to="/ctf-events">CTF Events</b-nav-item>
           <b-nav-item to="/infrastructures">Infrastructures</b-nav-item>
-          <b-nav-item class="auth-nav" href="#" @click.prevent="login" v-if="!activeUser">Login</b-nav-item>
-          <b-nav-item class="auth-nav" href="#" @click.prevent="logout" v-else>Logout</b-nav-item>
           <b-nav-item v-if="activeUser" to="/admin">Admin</b-nav-item>
+          <b-nav-item class="auth-nav" to="/admin" href="#" @click.prevent="login" v-if="!activeUser">Admin</b-nav-item>
+          <b-nav-item class="auth-nav" href="#" @click.prevent="logout" v-else>Logout</b-nav-item>
         </b-navbar-nav>
       </b-collapse>
     </b-navbar>

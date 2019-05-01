@@ -37,7 +37,7 @@
 
               <!-- Categories assigned to the technology. -->
               <hr>
-              <p class="card-title-header">Categories {{chosenCategories.length}}</p>
+              <p class="card-title-header">Challenge Categories {{chosenCategories.length}}</p>
               <div class="row item-row ml-1">
                 <div v-for="category in chosenCategories" :key="category.id">
                   <p class="mt-2 card-text-selected">

@@ -49,7 +49,7 @@
 
               <!-- Categories assigned to technology 1. -->
               <hr>
-              <p class="card-title-header">Categories {{tech1chosenCategories.length}}</p>
+              <p class="card-title-header">Challenge Categories {{tech1chosenCategories.length}}</p>
               <div class="row item-row ml-1">
                 <div v-for="category in tech1chosenCategories" :key="category.id">
                   <p class="mt-2 card-text-selected">
@@ -122,7 +122,7 @@
 
               <!-- Categories assigned to technology 2. -->
               <hr>
-              <p class="card-title-header">Categories {{tech2chosenCategories.length}}</p>
+              <p class="card-title-header">Challenge Categories {{tech2chosenCategories.length}}</p>
               <div class="row item-row ml-1">
                 <div v-for="category in tech2chosenCategories" :key="category.id">
                   <p class="mt-2 card-text-selected">
