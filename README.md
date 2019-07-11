@@ -42,15 +42,10 @@ Alternatively download and unzip https://github.com/jonahtomrobinson/dis-web-too
 **Admin side**
 
 1. Add a new CTF event.
-
 2. Add a new technology.
-
 3. Assign your technology to your new event.
-
 4. Delete a technology/event/category/purpose.
-
 5. Edit a technology/event/category/purpose.
-
 6. Unassign your technology from your event.
 
    
